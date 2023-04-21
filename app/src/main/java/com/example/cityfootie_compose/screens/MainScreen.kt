@@ -45,8 +45,8 @@ fun MainBodyContent(navController: NavController){
         Row() {
             Button(onClick = {
                 navController.navigate(route = AppScreens.LoginScreen.route)
-            }, Modifier.background(Color.Black)) {
-                Text(text = "Inicia Sesión", Modifier.background(Color.Black))
+            }) {
+                Text(text = "Inicia Sesión")
             }
         }
     }
