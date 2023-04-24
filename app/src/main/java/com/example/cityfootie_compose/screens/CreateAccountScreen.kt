@@ -1,6 +1,5 @@
 package com.example.cityfootie_compose.screens
 
-import android.text.format.DateFormat
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -16,13 +15,11 @@ import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import java.util.Date
 
 @Composable
 fun CreateAccountScreen(navController: NavController){
@@ -139,7 +136,7 @@ fun BodyContentAccount(navController: NavController) {
             },
             value = name5,
             onValueChange = { name5 = it },
-            label = { Text("Nombre de usuario") },
+            label = { Text("* Nombre de usuario") },
             modifier = Modifier.width(350.dp)
         )
         Spacer(modifier = Modifier.padding(4.dp))
@@ -157,7 +154,7 @@ fun BodyContentAccount(navController: NavController) {
             },
             value = pass,
             onValueChange = { pass = it },
-            label = { Text("Contraseña")},
+            label = { Text("* Contraseña")},
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.width(350.dp),
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password),
@@ -203,7 +200,11 @@ fun BodyContentAccount(navController: NavController) {
             label = { Text("Equipo favorito") },
             modifier = Modifier.width(350.dp)
         )
-        Spacer(modifier = Modifier.padding(5.dp))
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        Text(text = "* = Obligatorio")
+        
+
 
         //BOTÓN
         Button(onClick = { }, enabled = name5.length > 4 && pass.length > 8 ) {
