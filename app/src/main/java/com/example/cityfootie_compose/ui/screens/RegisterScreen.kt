@@ -1,5 +1,6 @@
-package com.example.cityfootie_compose.screens
+package com.example.cityfootie_compose.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun CreateAccountScreen(navController: NavController){
     Scaffold(topBar = {
@@ -57,33 +59,33 @@ fun BodyContentAccount(navController: NavController) {
         Spacer(modifier = Modifier.padding(15.dp))
 
         //NOMBRE
-        var name1 by remember {
+        var name by remember {
             mutableStateOf("")
         }
 
         OutlinedTextField(
-            value = name1,
-            onValueChange = { name1 = it },
+            value = name,
+            onValueChange = { name = it },
             label = { Text("Nombre") },
             modifier = Modifier.width(350.dp)
         )
         Spacer(modifier = Modifier.padding(4.dp))
 
         //APELLIDOS
-        var name2 by remember {
+        var surname by remember {
             mutableStateOf("")
         }
 
         OutlinedTextField(
-            value = name2,
-            onValueChange = { name2 = it },
+            value = surname,
+            onValueChange = { surname = it },
             label = { Text("Apellidos") },
             modifier = Modifier.width(350.dp)
         )
         Spacer(modifier = Modifier.padding(4.dp))
 
         //FECHA DE NACIMIENTO
-        var name3 by remember {
+        var dateOfBirth by remember {
             mutableStateOf("")
         }
 
@@ -94,15 +96,15 @@ fun BodyContentAccount(navController: NavController) {
                     contentDescription = "Date Icon"
                 )
             },
-            value = name3,
-            onValueChange = { name3 = it },
+            value = dateOfBirth,
+            onValueChange = { dateOfBirth = it },
             label = { Text("Fecha de Nacimiento") },
             modifier = Modifier.width(350.dp),
         )
         Spacer(modifier = Modifier.padding(4.dp))
 
         //CORREO ELECTRÓNICO
-        var name4 by remember {
+        var email by remember {
             mutableStateOf("")
         }
 
@@ -113,8 +115,8 @@ fun BodyContentAccount(navController: NavController) {
                     contentDescription = "Email Icon"
                 )
             },
-            value = name4,
-            onValueChange = { name4 = it },
+            value = email,
+            onValueChange = { email = it },
             label = { Text("Correo electrónico") },
             modifier = Modifier.width(350.dp),
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
@@ -123,7 +125,7 @@ fun BodyContentAccount(navController: NavController) {
 
 
         //NOMBRE DE USUARIO
-        var name5 by remember {
+        var username by remember {
             mutableStateOf("")
         }
 
@@ -134,15 +136,15 @@ fun BodyContentAccount(navController: NavController) {
                     contentDescription = "Person Icon"
                 )
             },
-            value = name5,
-            onValueChange = { name5 = it },
+            value = username,
+            onValueChange = { username = it },
             label = { Text("* Nombre de usuario") },
             modifier = Modifier.width(350.dp)
         )
         Spacer(modifier = Modifier.padding(4.dp))
 
         //CONTRASEÑA
-        var pass by remember {
+        var password by remember {
             mutableStateOf("")
         }
         OutlinedTextField(
@@ -152,8 +154,8 @@ fun BodyContentAccount(navController: NavController) {
                     contentDescription = "Lock Icon"
                 )
             },
-            value = pass,
-            onValueChange = { pass = it },
+            value = password,
+            onValueChange = { password = it },
             label = { Text("* Contraseña")},
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.width(350.dp),
@@ -163,13 +165,13 @@ fun BodyContentAccount(navController: NavController) {
 
 
         //DORSAL
-        var name6 by remember {
+        var number by remember {
             mutableStateOf("")
         }
 
         OutlinedTextField(
-            value = name6,
-            onValueChange = { name6 = it },
+            value = number,
+            onValueChange = { number = it },
             label = { Text("Dorsal") },
             modifier = Modifier.width(350.dp),
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
@@ -177,26 +179,26 @@ fun BodyContentAccount(navController: NavController) {
         Spacer(modifier = Modifier.padding(4.dp))
 
         //JUGADOR FAVORITO
-        var name7 by remember {
+        var favoritePlayer by remember {
             mutableStateOf("")
         }
 
         OutlinedTextField(
-            value = name7,
-            onValueChange = { name7 = it },
+            value = favoritePlayer,
+            onValueChange = { favoritePlayer = it },
             label = { Text("Jugador favorito") },
             modifier = Modifier.width(350.dp)
         )
         Spacer(modifier = Modifier.padding(4.dp))
 
         //EQUIPO FAVORITO
-        var name8 by remember {
+        var favoriteTeam by remember {
             mutableStateOf("")
         }
 
         OutlinedTextField(
-            value = name8,
-            onValueChange = { name8 = it },
+            value = favoriteTeam,
+            onValueChange = { favoriteTeam = it },
             label = { Text("Equipo favorito") },
             modifier = Modifier.width(350.dp)
         )
@@ -207,8 +209,10 @@ fun BodyContentAccount(navController: NavController) {
 
 
         //BOTÓN
-        Button(onClick = { }, enabled = name5.length > 4 && pass.length > 8 ) {
+        Button(onClick = { }, enabled = username.length > 4 && password.length > 8 ) {
             Text(text = "Crear cuenta")
         }
+
+        Spacer(modifier = Modifier.padding(10.dp))
     }
 }
