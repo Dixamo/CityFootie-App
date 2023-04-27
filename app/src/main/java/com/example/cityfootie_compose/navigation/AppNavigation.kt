@@ -4,9 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.cityfootie_compose.screens.*
 import com.example.cityfootie_compose.ui.screens.*
-import com.example.cityfootie_compose.ui.theme.screens.*
 
 
 @Composable
@@ -20,7 +18,7 @@ fun AppNavigation() {
             MainScreen(navController)
         }
         composable(route = AppScreens.LoginScreen.route) {
-            LoginScreen(navController)
+            LoginScreen(navController, loginViewModel = LoginViewModel())
         }
         composable(route = AppScreens.CreateAccountScreen.route) {
             CreateAccountScreen(navController)

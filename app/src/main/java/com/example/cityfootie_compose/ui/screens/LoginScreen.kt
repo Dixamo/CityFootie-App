@@ -39,7 +39,7 @@ import com.example.cityfootie_compose.navigation.AppScreens
 @Composable
 fun LoginScreen(
     navController: NavController,
-    loginViewModel: LoginViewModel = hiltViewModel()
+    loginViewModel: LoginViewModel //= hiltViewModel()
 ){
     Scaffold(topBar = {
         TopAppBar() {
@@ -199,7 +199,7 @@ fun EmailField(
             value = text,
             onValueChange = { onChange(it) },
             textStyle = TextStyle(fontSize = 18.sp),
-            keyboardOptions = KeyboardOptions(imeAction = imeAction, keyboardType = keyboardType),
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
             keyboardActions = keyBoardActions,
             enabled = isEnabled,
             colors = TextFieldDefaults.outlinedTextFieldColors(

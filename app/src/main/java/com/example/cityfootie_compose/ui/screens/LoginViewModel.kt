@@ -6,7 +6,7 @@ import kotlinx.coroutines.delay
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
-@HiltViewModel
+//@HiltViewModel
 class LoginViewModel : BaseViewModel() {
 
     private val _email = MutableLiveData<String>()
@@ -33,4 +33,8 @@ class LoginViewModel : BaseViewModel() {
         delay(4000)
         _isLoading.value = false
     }
+}
+
+open class BaseViewModel {
+
 }

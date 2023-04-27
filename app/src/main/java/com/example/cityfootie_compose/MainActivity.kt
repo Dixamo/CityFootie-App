@@ -16,7 +16,7 @@ import com.example.cityfootie_compose.ui.theme.CityFootieComposeTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val loginViewModel: LoginViewModel by viewModels()
+        //val loginViewModel: LoginViewModel by viewModels()
         setContent {
             CityFootieComposeTheme() {
                 Surface(
