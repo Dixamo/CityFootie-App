@@ -16,8 +16,6 @@ import com.example.cityfootie_compose.ui.screens.register.CreateAccountScreen
 
 
 @Composable
-fun AppNavigation() {
-    val navController = rememberNavController()
 fun AppNavigation(navController: NavHostController) {
     NavHost(navController = navController, startDestination = AppScreens.SplashScreen.route) {
         composable(route = AppScreens.SplashScreen.route){
