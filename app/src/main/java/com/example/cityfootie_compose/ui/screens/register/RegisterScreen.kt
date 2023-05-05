@@ -1,4 +1,4 @@
-package com.example.cityfootie_compose.ui.screens
+package com.example.cityfootie_compose.ui.screens.register
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable

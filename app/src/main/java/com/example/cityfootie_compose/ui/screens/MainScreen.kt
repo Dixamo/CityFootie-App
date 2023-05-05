@@ -1,5 +1,6 @@
 package com.example.cityfootie_compose.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -12,13 +13,19 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.cityfootie_compose.navigation.AppScreens
+import com.example.cityfootie_compose.ui.screens.prueba.UserViewModel
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MainScreen(navController: NavController){
+fun MainScreen(
+    navController: NavController,
+    viewModel: UserViewModel = hiltViewModel()
+){
     Scaffold(topBar = {
         TopAppBar() {
             Spacer(modifier = Modifier.width(18.dp))
