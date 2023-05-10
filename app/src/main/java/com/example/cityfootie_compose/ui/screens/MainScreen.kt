@@ -18,13 +18,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.cityfootie_compose.navigation.AppScreens
-import com.example.cityfootie_compose.ui.screens.prueba.UserViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainScreen(
-    navController: NavController,
-    viewModel: UserViewModel = hiltViewModel()
+    navController: NavController
 ){
     Scaffold(topBar = {
         TopAppBar() {

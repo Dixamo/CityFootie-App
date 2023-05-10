@@ -4,15 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-<<<<<<< Updated upstream
-import androidx.navigation.compose.rememberNavController
 import com.example.cityfootie_compose.ui.screens.*
-=======
-import com.example.cityfootie_compose.ui.screens.*
+
 import com.example.cityfootie_compose.ui.screens.login.LoginScreen
-import com.example.cityfootie_compose.ui.screens.prueba.UserViewModel
 import com.example.cityfootie_compose.ui.screens.register.CreateAccountScreen
->>>>>>> Stashed changes
 
 
 @Composable
@@ -25,7 +20,7 @@ fun AppNavigation(navController: NavHostController) {
             MainScreen(navController)
         }
         composable(route = AppScreens.LoginScreen.route) {
-            LoginScreen(navController, loginViewModel = LoginViewModel())
+            LoginScreen(navController)
         }
         composable(route = AppScreens.CreateAccountScreen.route) {
             CreateAccountScreen(navController)

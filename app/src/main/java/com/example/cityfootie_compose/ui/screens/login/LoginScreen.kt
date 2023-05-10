@@ -1,6 +1,7 @@
 package com.example.cityfootie_compose.ui.screens.login
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -35,16 +37,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.cityfootie_compose.R
 import com.example.cityfootie_compose.navigation.AppScreens
+import com.example.cityfootie_compose.util.toFloat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(
     navController: NavController,
-<<<<<<< Updated upstream:app/src/main/java/com/example/cityfootie_compose/ui/screens/LoginScreen.kt
-    loginViewModel: LoginViewModel //= hiltViewModel()
-=======
-    viewModel: LoginViewModel = hiltViewModel()
->>>>>>> Stashed changes:app/src/main/java/com/example/cityfootie_compose/ui/screens/login/LoginScreen.kt
+    loginViewModel: LoginViewModel = hiltViewModel()
 ){
     Scaffold(topBar = {
         TopAppBar() {
@@ -57,7 +56,7 @@ fun LoginScreen(
             )
         }
     }) {
-        BodyContent(navController, loginViewModel)
+        BodyContent(navController)
     }
 }
 
@@ -76,16 +75,19 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun BodyContent(navController: NavController, loginViewModel: LoginViewModel){
+fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = hiltViewModel()){
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     var passwordVisible by remember { mutableStateOf(false) }
 
-    val email: String by loginViewModel.email.observeAsState(initial = "")
-    val password: String by loginViewModel.password.observeAsState(initial = "")
-    val enableButton: Boolean by loginViewModel.enableButton.observeAsState(initial = false)
+    val isButtonEnabled: Boolean by loginViewModel.isButtonEnabled.observeAsState(initial = false)
+    val isError: Boolean by loginViewModel.isError.observeAsState(initial = false)
     val coroutineScope = rememberCoroutineScope()
+    val loading: Boolean by loginViewModel.loading.observeAsState(initial = false)
 
+    if (loading == true) {
+        CircularProgressIndicator()
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -119,7 +121,7 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel){
                 .focusRequester(focusRequester),
             label = "E-Mail",
             placeholder = "E-Mail",
-            text = email,
+            text = loginViewModel.email,
             imeAction = ImeAction.Next,
             isEnabled = true,
             keyBoardActions = KeyboardActions(
@@ -128,7 +130,7 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel){
                 }
             ),
             keyboardType = KeyboardType.Text,
-            onChange = { loginViewModel.onLoginChange(it, password) }
+            onChange = { loginViewModel.onEmailChange(it)  }
         )
 
         Spacer(modifier = Modifier.padding(8.dp))
@@ -141,7 +143,7 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel){
                 .focusRequester(focusRequester),
             label = "Password",
             placeholder = "Password",
-            text = password,
+            text = loginViewModel.password,
             imeAction = ImeAction.Done,
             isEnabled = true,
             keyboardType = KeyboardType.Password,
@@ -155,17 +157,21 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel){
                         passwordVisible = it
                     }
                 ) },
-                onChange = { loginViewModel.onLoginChange(email, it) }
+                onChange = { loginViewModel.onPasswordChange(it) }
             )
 
         Spacer(modifier = Modifier.padding(8.dp))
 
         Button(
-            onClick = {  },
-            enabled = enableButton
+            onClick = {
+                      loginViewModel.getUser()
+            },
+            enabled = isButtonEnabled
         ) {
             Text(text = "Iniciar sesión")
         }
+
+        Text(text = "Correo o contraseña incorrectas", modifier = Modifier.alpha(isError.toFloat()))
 
         Spacer(modifier = Modifier.padding(8.dp))
 
