@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class GetLoginImpl @Inject constructor(
     private val playerRepository: PlayerRepository
-): GetLogin {
+) : GetLogin {
     override suspend fun login(email: String, password: String): Response<Player> {
         return playerRepository.login(email, password)
     }

@@ -17,8 +17,8 @@ import com.example.cityfootie_compose.navigation.AppScreens
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController){
-    LaunchedEffect(key1 = true){
+fun SplashScreen(navController: NavHostController) {
+    LaunchedEffect(key1 = true) {
         delay(4000)
         navController.popBackStack()
         navController.navigate(AppScreens.MainScreen.route)
@@ -28,7 +28,7 @@ fun SplashScreen(navController: NavHostController){
 }
 
 @Composable
-fun Splash(){
+fun Splash() {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,

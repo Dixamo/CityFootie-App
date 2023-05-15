@@ -1,10 +1,8 @@
 package com.example.cityfootie_compose.di
 
-import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import com.example.cityfootie_compose.BuildConfig
 import com.example.cityfootie_compose.datasource.PlayerRepository
 import com.example.cityfootie_compose.datasource.PlayerRepositoryImpl
 import com.example.cityfootie_compose.datasource.remote.FootieAPI
@@ -19,7 +17,6 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -54,8 +51,8 @@ object DataSourceModule {
                 Log.d("SIGNALCALL ", request.toString())
             }
             //request
-                //.addHeader("FootieAPI-Key", "928e842ff4msh9b152a26f3ab1aap173fbdjsn2e110048ce6c")
-                //.addHeader("FootieAPI-Host", "twelve-data1.p.rapidapi.com")
+            //.addHeader("FootieAPI-Key", "928e842ff4msh9b152a26f3ab1aap173fbdjsn2e110048ce6c")
+            //.addHeader("FootieAPI-Host", "twelve-data1.p.rapidapi.com")
             val actualRequest = request.build()
             it.proceed(actualRequest)
         }
@@ -97,7 +94,7 @@ object DataSourceModule {
         gson: Gson
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://localhost/8080/")
+            .baseUrl("https://localhost:8080")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()
@@ -131,5 +128,6 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun providesGetLoginUseCase(playerRepository: PlayerRepository): GetLogin = GetLoginImpl(playerRepository)
+    fun providesGetLoginUseCase(playerRepository: PlayerRepository): GetLogin =
+        GetLoginImpl(playerRepository)
 }

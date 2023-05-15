@@ -1,7 +1,6 @@
 package com.example.cityfootie_compose.ui.screens.login
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -44,7 +43,7 @@ import com.example.cityfootie_compose.util.toFloat
 fun LoginScreen(
     navController: NavController,
     loginViewModel: LoginViewModel = hiltViewModel()
-){
+) {
     Scaffold(topBar = {
         TopAppBar() {
             Icon(
@@ -75,7 +74,7 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = hiltViewModel()){
+fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = hiltViewModel()) {
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     var passwordVisible by remember { mutableStateOf(false) }
@@ -130,7 +129,7 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = h
                 }
             ),
             keyboardType = KeyboardType.Text,
-            onChange = { loginViewModel.onEmailChange(it)  }
+            onChange = { loginViewModel.onEmailChange(it) }
         )
 
         Spacer(modifier = Modifier.padding(8.dp))
@@ -156,15 +155,16 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = h
                     isVisible = passwordVisible, setVisible = { it ->
                         passwordVisible = it
                     }
-                ) },
-                onChange = { loginViewModel.onPasswordChange(it) }
-            )
+                )
+            },
+            onChange = { loginViewModel.onPasswordChange(it) }
+        )
 
         Spacer(modifier = Modifier.padding(8.dp))
 
         Button(
             onClick = {
-                      loginViewModel.getUser()
+                loginViewModel.getUser()
             },
             enabled = isButtonEnabled
         ) {
@@ -276,7 +276,7 @@ fun PasswordField(
 }
 
 @Composable
-fun SeePassword(isVisible: Boolean, setVisible:(Boolean)->Unit){
+fun SeePassword(isVisible: Boolean, setVisible: (Boolean) -> Unit) {
     if (isVisible) {
         Icon(
             imageVector = Icons.Default.Search,

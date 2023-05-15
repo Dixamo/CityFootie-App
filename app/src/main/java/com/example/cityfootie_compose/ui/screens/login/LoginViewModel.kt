@@ -10,7 +10,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.example.cityfootie_compose.model.Player
+import com.example.cityfootie_compose.navigation.AppScreens
 import com.example.cityfootie_compose.usecases.login.GetLogin
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,11 +24,11 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val getLogin: GetLogin
-): ViewModel() {
+) : ViewModel() {
 
     var email: String by mutableStateOf("")
     var password: String by mutableStateOf("")
-    private val _isButtonEnabled = MutableLiveData(false)
+    private val _isButtonEnabled = MutableLiveData(true)
     val isButtonEnabled: LiveData<Boolean> = _isButtonEnabled
     val isLoading: Boolean = false
 
@@ -35,13 +37,16 @@ class LoginViewModel @Inject constructor(
     val loading: LiveData<Boolean> get() = _loading
 
 
-    private fun isValidEmail(email: String): Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    private fun isValidEmail(email: String): Boolean =
+        Patterns.EMAIL_ADDRESS.matcher(email).matches()
+
     fun onEmailChange(value: String) {
         email = value
         if (isValidEmail(value) && isValidPassword(password)) {
             _isButtonEnabled.value = true
         }
     }
+
     private fun isValidPassword(password: String): Boolean = password.length > 6
     fun onPasswordChange(value: String) {
         password = value
@@ -69,6 +74,7 @@ class LoginViewModel @Inject constructor(
                     }
                 }
                 Log.d("UserViewModel", player.toString())
+
             }
         }
     }

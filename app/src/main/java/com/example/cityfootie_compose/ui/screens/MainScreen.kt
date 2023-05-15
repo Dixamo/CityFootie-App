@@ -1,20 +1,15 @@
 package com.example.cityfootie_compose.ui.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.cityfootie_compose.navigation.AppScreens
@@ -23,7 +18,7 @@ import com.example.cityfootie_compose.navigation.AppScreens
 @Composable
 fun MainScreen(
     navController: NavController
-){
+) {
     Scaffold(topBar = {
         TopAppBar() {
             Spacer(modifier = Modifier.width(18.dp))
@@ -33,13 +28,13 @@ fun MainScreen(
                 fontWeight = FontWeight.Black,
             )
         }
-    }){
+    }) {
         MainBodyContent(navController)
     }
 }
 
 @Composable
-fun MainBodyContent(navController: NavController){
+fun MainBodyContent(navController: NavController) {
     AsyncImage(
         model = "https://w0.peakpx.com/wallpaper/941/855/HD-wallpaper-football-field-aerial-view-trees-playground-green.jpg",
         contentDescription = null,
