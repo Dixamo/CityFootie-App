@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.cityfootie_compose.R
+import com.example.cityfootie_compose.model.Player
 import com.example.cityfootie_compose.navigation.AppScreens
 import com.example.cityfootie_compose.util.toFloat
 
@@ -162,6 +163,10 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = h
 
         Spacer(modifier = Modifier.padding(8.dp))
 
+        val player: Player? by loginViewModel.player.observeAsState()
+        if (player != null) {
+            navController.navigate(route = AppScreens.UserScreen.route + "/${player!!.username}/${player!!.dorsal}")
+        }
         Button(
             onClick = {
                 loginViewModel.getUser()
@@ -171,7 +176,13 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = h
             Text(text = "Iniciar sesión")
         }
 
-        Text(text = "Correo o contraseña incorrectas", modifier = Modifier.alpha(isError.toFloat()))
+        Spacer(modifier = Modifier.padding(8.dp))
+
+        Text(
+            text = "Correo o contraseña incorrectas",
+            modifier = Modifier.alpha(isError.toFloat()),
+            color = MaterialTheme.colors.error
+        )
 
         Spacer(modifier = Modifier.padding(8.dp))
 
@@ -186,7 +197,7 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = h
                     color = MaterialTheme.colors.primary
                 ),
                 onClick = {
-                    navController.navigate(route = AppScreens.CreateAccountScreen.route)
+                    navController.navigate(route = AppScreens.RegisterScreen.route)
                 }
             )
         }

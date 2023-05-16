@@ -94,7 +94,7 @@ object DataSourceModule {
         gson: Gson
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://localhost:8080")
+            .baseUrl("http://10.0.2.2:8080")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()
@@ -102,8 +102,9 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun provideFootieService(retrofit: Retrofit): FootieAPI =
-        retrofit.create(FootieAPI::class.java)
+    fun provideFootieService(retrofit: Retrofit): FootieAPI {
+        return retrofit.create(FootieAPI::class.java)
+    }
 
     @Provides
     @Singleton
