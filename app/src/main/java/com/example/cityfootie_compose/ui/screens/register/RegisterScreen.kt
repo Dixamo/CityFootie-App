@@ -9,7 +9,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Lock
@@ -22,14 +21,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.cityfootie_compose.ui.screens.login.LoginViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun RegisterScreen(
     navController: NavController,
     registerViewModel: RegisterViewModel = hiltViewModel()
-){
+) {
     Scaffold(topBar = {
         TopAppBar() {
             Icon(
@@ -89,25 +87,6 @@ fun BodyContentAccount(navController: NavController) {
         )
         Spacer(modifier = Modifier.padding(4.dp))
 
-        //FECHA DE NACIMIENTO
-        var dateOfBirth by remember {
-            mutableStateOf("")
-        }
-
-        OutlinedTextField(
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.DateRange,
-                    contentDescription = "Date Icon"
-                )
-            },
-            value = dateOfBirth,
-            onValueChange = { dateOfBirth = it },
-            label = { Text("Fecha de Nacimiento") },
-            modifier = Modifier.width(350.dp),
-        )
-        Spacer(modifier = Modifier.padding(4.dp))
-
         //CORREO ELECTRÓNICO
         var email by remember {
             mutableStateOf("")
@@ -126,8 +105,22 @@ fun BodyContentAccount(navController: NavController) {
             modifier = Modifier.width(350.dp),
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
         )
-        Spacer(modifier = Modifier.padding(25.dp))
+        Spacer(modifier = Modifier.padding(4.dp))
 
+        //DORSAL
+        var number by remember {
+            mutableStateOf("")
+        }
+
+        OutlinedTextField(
+            value = number,
+            onValueChange = { number = it },
+            label = { Text("Dorsal") },
+            modifier = Modifier.width(350.dp),
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+        )
+
+        Spacer(modifier = Modifier.padding(25.dp))
 
         //NOMBRE DE USUARIO
         var username by remember {
@@ -161,60 +154,17 @@ fun BodyContentAccount(navController: NavController) {
             },
             value = password,
             onValueChange = { password = it },
-            label = { Text("* Contraseña")},
+            label = { Text("* Contraseña") },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.width(350.dp),
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password),
         )
-        Spacer(modifier = Modifier.padding(25.dp))
-
-
-        //DORSAL
-        var number by remember {
-            mutableStateOf("")
-        }
-
-        OutlinedTextField(
-            value = number,
-            onValueChange = { number = it },
-            label = { Text("Dorsal") },
-            modifier = Modifier.width(350.dp),
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-        )
-        Spacer(modifier = Modifier.padding(4.dp))
-
-        //JUGADOR FAVORITO
-        var favoritePlayer by remember {
-            mutableStateOf("")
-        }
-
-        OutlinedTextField(
-            value = favoritePlayer,
-            onValueChange = { favoritePlayer = it },
-            label = { Text("Jugador favorito") },
-            modifier = Modifier.width(350.dp)
-        )
-        Spacer(modifier = Modifier.padding(4.dp))
-
-        //EQUIPO FAVORITO
-        var favoriteTeam by remember {
-            mutableStateOf("")
-        }
-
-        OutlinedTextField(
-            value = favoriteTeam,
-            onValueChange = { favoriteTeam = it },
-            label = { Text("Equipo favorito") },
-            modifier = Modifier.width(350.dp)
-        )
         Spacer(modifier = Modifier.padding(10.dp))
 
         Text(text = "* = Obligatorio")
-        
-
 
         //BOTÓN
-        Button(onClick = { }, enabled = username.length > 4 && password.length > 8 ) {
+        Button(onClick = { }, enabled = username.length > 4 && password.length > 8) {
             Text(text = "Crear cuenta")
         }
 
