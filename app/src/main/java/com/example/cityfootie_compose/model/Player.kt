@@ -11,7 +11,7 @@ data class Player(
     var username: String? = null,
     var email: String? = null,
     var password: String? = null,
-    var dorsal: Int? = null,
+    var number: Int? = null,
     var favoritePlayer: String? = null,
     var favoriteTeam: String? = null
 )

@@ -165,7 +165,7 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = h
 
         val player: Player? by loginViewModel.player.observeAsState()
         if (player != null) {
-            navController.navigate(route = AppScreens.UserScreen.route + "/${player!!.username}/${player!!.dorsal}")
+            navController.navigate(route = AppScreens.UserScreen.route + "/${player!!.username}/${player!!.number}")
         }
         Button(
             onClick = {
