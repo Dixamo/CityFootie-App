@@ -35,7 +35,7 @@ fun UserScreen(
     Scaffold(
         bottomBar = {
             val bottomNavigationItems = listOf(
-                BottomNavigationItem("Profile", Icons.Default.Person, AppScreens.UserScreen.route + "/${username}/${number}"),
+                BottomNavigationItem("Profile", Icons.Default.Person, route = null),
                 BottomNavigationItem("Map", Icons.Default.Map, route = AppScreens.MapScreen.route)
             )
             BottomNavigationBar(navController = navController, items = bottomNavigationItems, selectedItem = selectedItem)

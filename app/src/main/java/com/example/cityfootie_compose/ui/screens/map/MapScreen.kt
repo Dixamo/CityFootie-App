@@ -28,7 +28,7 @@ fun MapScreen(
                 BottomNavigationItem(
                     "Profile",
                     Icons.Default.Person,
-                    null
+                    route = null
                 ),
                 BottomNavigationItem(
                     "Map",
