@@ -8,8 +8,8 @@ import com.example.cityfootie_compose.datasource.PlayerRepositoryImpl
 import com.example.cityfootie_compose.datasource.remote.FootieAPI
 import com.example.cityfootie_compose.datasource.remote.PlayerRemoteDataSource
 import com.example.cityfootie_compose.datasource.remote.PlayerRemoteDataSourceImpl
-import com.example.cityfootie_compose.usecases.login.GetLogin
-import com.example.cityfootie_compose.usecases.login.GetLoginImpl
+import com.example.cityfootie_compose.usecases.login.GetPlayer
+import com.example.cityfootie_compose.usecases.login.GetPlayerImpl
 import com.example.cityfootie_compose.util.DispatcherProvider
 import com.example.cityfootie_compose.util.DispatcherProviderImpl
 import com.google.gson.Gson
@@ -94,7 +94,7 @@ object DataSourceModule {
         gson: Gson
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080") // Emulador AndoridStudio 10.0.2.2 // JuanDa 192.168.1.63 // Miguel 192.168.1.132 // Sebas 192.168.1.11
+            .baseUrl("http://192.168.1.63:8080") // Emulador AndoridStudio 10.0.2.2 // JuanDa 192.168.1.63 // Miguel 192.168.1.132 // Sebas 192.168.1.11
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()
@@ -129,6 +129,6 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun providesGetLoginUseCase(playerRepository: PlayerRepository): GetLogin =
-        GetLoginImpl(playerRepository)
+    fun providesGetLoginUseCase(playerRepository: PlayerRepository): GetPlayer =
+        GetPlayerImpl(playerRepository)
 }

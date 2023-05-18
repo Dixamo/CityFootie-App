@@ -10,8 +10,8 @@ class PlayerRemoteDataSourceImpl @Inject constructor(
     private val footieAPI: FootieAPI,
     private val dispatcherProvider: DispatcherProvider
 ) : PlayerRemoteDataSource {
-    override suspend fun login(email: String, password: String): Response<Player> =
+    override suspend fun getPlayer(email: String, password: String): Response<Player> =
         withContext(dispatcherProvider.ioDispatcher) {
-            return@withContext footieAPI.login(email, password)
+            return@withContext footieAPI.getPlayer(email, password)
         }
 }

@@ -8,7 +8,7 @@ import javax.inject.Inject
 class PlayerRepositoryImpl @Inject constructor(
     private val playerRemoteDataSource: PlayerRemoteDataSource
 ) : PlayerRepository {
-    override suspend fun login(email: String, password: String): Response<Player> {
-        return playerRemoteDataSource.login(email, password)
+    override suspend fun getPlayer(email: String, password: String): Response<Player> {
+        return playerRemoteDataSource.getPlayer(email, password)
     }
 }

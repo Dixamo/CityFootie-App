@@ -1,7 +1,6 @@
 package com.example.cityfootie_compose.ui.screens.login
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
@@ -9,8 +8,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -20,9 +18,8 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -34,16 +31,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.cityfootie_compose.R
 import com.example.cityfootie_compose.model.Player
 import com.example.cityfootie_compose.navigation.AppScreens
+import com.example.cityfootie_compose.ui.screens.user.BottomNavigationBar
+import com.example.cityfootie_compose.ui.screens.user.BottomNavigationItem
 import com.example.cityfootie_compose.util.toFloat
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(
-    navController: NavController,
-    loginViewModel: LoginViewModel = hiltViewModel()
+    navController: NavController
 ) {
     Scaffold(topBar = {
         TopAppBar() {
@@ -61,32 +60,18 @@ fun LoginScreen(
 }
 
 @Composable
-fun LoadingScreen(modifier: Modifier = Modifier) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier.fillMaxSize()
-    ) {
-        Image(
-            modifier = Modifier.size(200.dp),
-            painter = painterResource(R.drawable.loading_img),
-            contentDescription = stringResource(R.string.app_name)
-        )
-    }
-}
-
-@Composable
-fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = hiltViewModel()) {
-    val focusRequester = remember { FocusRequester() }
-    val focusManager = LocalFocusManager.current
-    var passwordVisible by remember { mutableStateOf(false) }
-
-    val isButtonEnabled: Boolean by loginViewModel.isButtonEnabled.observeAsState(initial = false)
-    val isError: Boolean by loginViewModel.isError.observeAsState(initial = false)
-    val coroutineScope = rememberCoroutineScope()
+fun BodyContent(
+    navController: NavController,
+    loginViewModel: LoginViewModel = hiltViewModel()
+) {
     val loading: Boolean by loginViewModel.loading.observeAsState(initial = false)
-
     if (loading == true) {
-        CircularProgressIndicator()
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
+        }
     }
 
     Column(
@@ -113,12 +98,15 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = h
 
         Spacer(modifier = Modifier.padding(25.dp))
 
+        val focusRequester = remember { FocusRequester() }
+        val focusManager = LocalFocusManager.current
         EmailField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp)
                 .padding(top = 24.dp)
                 .focusRequester(focusRequester),
+            icon = Icons.Default.Person,
             label = "E-Mail",
             placeholder = "E-Mail",
             text = loginViewModel.email,
@@ -129,18 +117,25 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = h
                     focusManager.moveFocus(FocusDirection.Down)
                 }
             ),
-            keyboardType = KeyboardType.Text,
+            keyboardType = KeyboardType.Email,
             onChange = { loginViewModel.onEmailChange(it) }
         )
 
         Spacer(modifier = Modifier.padding(8.dp))
 
+        val player: Player? by loginViewModel.player.observeAsState()
+        if (player != null) {
+            navController.navigate(route = AppScreens.UserScreen.route + "/${player!!.username}/${player!!.number}")
+        }
+
+        var passwordVisible by remember { mutableStateOf(false) }
         PasswordField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp)
                 .padding(top = 24.dp)
                 .focusRequester(focusRequester),
+            icon = Icons.Default.Lock,
             label = "Password",
             placeholder = "Password",
             text = loginViewModel.password,
@@ -163,10 +158,7 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = h
 
         Spacer(modifier = Modifier.padding(8.dp))
 
-        val player: Player? by loginViewModel.player.observeAsState()
-        if (player != null) {
-            navController.navigate(route = AppScreens.UserScreen.route + "/${player!!.username}/${player!!.number}")
-        }
+        val isButtonEnabled: Boolean by loginViewModel.isButtonEnabled.observeAsState(initial = false)
         Button(
             onClick = {
                 loginViewModel.getUser()
@@ -178,6 +170,7 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = h
 
         Spacer(modifier = Modifier.padding(8.dp))
 
+        val isError: Boolean by loginViewModel.isError.observeAsState(initial = false)
         Text(
             text = "Correo o contraseña incorrectas",
             modifier = Modifier.alpha(isError.toFloat()),
@@ -207,6 +200,7 @@ fun BodyContent(navController: NavController, loginViewModel: LoginViewModel = h
 @Composable
 fun EmailField(
     modifier: Modifier,
+    icon: ImageVector,
     text: String,
     label: String,
     placeholder: String,
@@ -218,6 +212,12 @@ fun EmailField(
 ) {
     Column(modifier = Modifier.height(90.dp)) {
         OutlinedTextField(
+            leadingIcon = {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = "User Icon"
+                )
+            },
             value = text,
             onValueChange = { onChange(it) },
             textStyle = TextStyle(fontSize = 18.sp),
@@ -246,6 +246,7 @@ fun EmailField(
 @Composable
 fun PasswordField(
     modifier: Modifier,
+    icon: ImageVector,
     text: String,
     label: String,
     placeholder: String,
@@ -259,6 +260,12 @@ fun PasswordField(
 ) {
     Column(modifier = Modifier.height(90.dp)) {
         OutlinedTextField(
+            leadingIcon = {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = "Lock Icon"
+                )
+            },
             value = text,
             onValueChange = { onChange(it) },
             trailingIcon = trailingIcon,
@@ -290,7 +297,7 @@ fun PasswordField(
 fun SeePassword(isVisible: Boolean, setVisible: (Boolean) -> Unit) {
     if (isVisible) {
         Icon(
-            imageVector = Icons.Default.Search,
+            imageVector = Icons.Default.RemoveRedEye,
             contentDescription = null,
             modifier = Modifier.clickable {
                 setVisible(false)
@@ -299,7 +306,7 @@ fun SeePassword(isVisible: Boolean, setVisible: (Boolean) -> Unit) {
         )
     } else {
         Icon(
-            imageVector = Icons.Default.Search,
+            imageVector = Icons.Default.RemoveRedEye,
             contentDescription = null,
             modifier = Modifier.clickable {
                 setVisible(true)

@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.example.cityfootie_compose.ui.screens.MainScreen
 import com.example.cityfootie_compose.ui.screens.SplashScreen
 import com.example.cityfootie_compose.ui.screens.login.LoginScreen
+import com.example.cityfootie_compose.ui.screens.map.MapScreen
 import com.example.cityfootie_compose.ui.screens.register.RegisterScreen
 import com.example.cityfootie_compose.ui.screens.user.UserScreen
 
@@ -33,7 +34,10 @@ fun AppNavigation(navController: NavHostController) {
                 navArgument(name = "username") { type = NavType.StringType },
                 navArgument(name = "dorsal") { type = NavType.StringType }
             )) {
-            UserScreen(navController, username = it.arguments!!.getString("username", "Nombre"), dorsal = it.arguments!!.getString("dorsal", "Dorsal"))
+            UserScreen(navController, username = it.arguments!!.getString("username", "Nombre"), number = it.arguments!!.getString("dorsal", "Dorsal"))
+        }
+        composable(route = AppScreens.MapScreen.route) {
+            MapScreen(navController)
         }
     }
 }

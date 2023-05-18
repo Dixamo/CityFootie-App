@@ -1,32 +1,43 @@
 package com.example.cityfootie_compose.ui.screens.register
 
 import android.annotation.SuppressLint
+import android.provider.ContactsContract.CommonDataKinds.Email
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.cityfootie_compose.ui.screens.login.EmailField
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun RegisterScreen(
-    navController: NavController,
-    registerViewModel: RegisterViewModel = hiltViewModel()
+    navController: NavController
 ) {
     Scaffold(topBar = {
         TopAppBar() {
@@ -38,12 +49,15 @@ fun RegisterScreen(
                 })
         }
     }) {
-        BodyContentAccount(navController)
+        BodyContent(navController)
     }
 }
 
 @Composable
-fun BodyContentAccount(navController: NavController) {
+fun BodyContent(
+    navController: NavController,
+    registerViewModel: RegisterViewModel = hiltViewModel()
+) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -52,122 +66,333 @@ fun BodyContentAccount(navController: NavController) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Spacer(modifier = Modifier.padding(10.dp))
 
         Text(
             "Crear cuenta",
-            fontSize = 40.sp,
+            color = MaterialTheme.colors.primary,
+            fontSize = 30.sp,
+            style = MaterialTheme.typography.subtitle1,
+            fontWeight = FontWeight.Light
         )
 
-        Spacer(modifier = Modifier.padding(15.dp))
+        Spacer(modifier = Modifier.padding(0.dp))
+
+        val focusRequester = remember { FocusRequester() }
+        val focusManager = LocalFocusManager.current
 
         //NOMBRE
-        var name by remember {
-            mutableStateOf("")
-        }
-
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Nombre") },
-            modifier = Modifier.width(350.dp)
+        DataField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp)
+                .padding(top = 0.dp)
+                .focusRequester(focusRequester),
+            label = "Nombre",
+            placeholder = "Nombre",
+            text = registerViewModel.name,
+            imeAction = ImeAction.Next,
+            isEnabled = true,
+            keyBoardActions = KeyboardActions(
+                onNext = {
+                    focusManager.moveFocus(FocusDirection.Down)
+                }
+            ),
+            keyboardType = KeyboardType.Text,
+            onChange = { registerViewModel.onNameChange(it) }
         )
-        Spacer(modifier = Modifier.padding(4.dp))
+
+        Spacer(modifier = Modifier.padding(0.dp))
 
         //APELLIDOS
-        var surname by remember {
-            mutableStateOf("")
-        }
-
-        OutlinedTextField(
-            value = surname,
-            onValueChange = { surname = it },
-            label = { Text("Apellidos") },
-            modifier = Modifier.width(350.dp)
+        DataField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp)
+                .padding(top = 0.dp)
+                .focusRequester(focusRequester),
+            label = "Apellidos",
+            placeholder = "Apellidos",
+            text = registerViewModel.surnames,
+            imeAction = ImeAction.Next,
+            isEnabled = true,
+            keyBoardActions = KeyboardActions(
+                onNext = {
+                    focusManager.moveFocus(FocusDirection.Down)
+                }
+            ),
+            keyboardType = KeyboardType.Text,
+            onChange = { registerViewModel.onSurnamesChange(it) }
         )
-        Spacer(modifier = Modifier.padding(4.dp))
+
+        Spacer(modifier = Modifier.padding(0.dp))
 
         //CORREO ELECTRÓNICO
-        var email by remember {
-            mutableStateOf("")
-        }
-
-        OutlinedTextField(
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Email,
-                    contentDescription = "Email Icon"
-                )
-            },
-            value = email,
-            onValueChange = { email = it },
-            label = { Text("Correo electrónico") },
-            modifier = Modifier.width(350.dp),
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+        DataField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp)
+                .padding(top = 0.dp)
+                .focusRequester(focusRequester),
+            label = "E-Mail",
+            placeholder = "E-Mail",
+            text = registerViewModel.email,
+            imeAction = ImeAction.Next,
+            isEnabled = true,
+            keyBoardActions = KeyboardActions(
+                onNext = {
+                    focusManager.moveFocus(FocusDirection.Down)
+                }
+            ),
+            keyboardType = KeyboardType.Email,
+            onChange = { registerViewModel.onEmailChange(it) }
         )
-        Spacer(modifier = Modifier.padding(4.dp))
+
+        Spacer(modifier = Modifier.padding(0.dp))
 
         //DORSAL
-        var number by remember {
-            mutableStateOf("")
-        }
-
-        OutlinedTextField(
-            value = number,
-            onValueChange = { number = it },
-            label = { Text("Dorsal") },
-            modifier = Modifier.width(350.dp),
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+        DataField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp)
+                .padding(top = 0.dp)
+                .focusRequester(focusRequester),
+            label = "Dorsal",
+            placeholder = "Dorsal",
+            text = registerViewModel.number,
+            imeAction = ImeAction.Next,
+            isEnabled = true,
+            keyBoardActions = KeyboardActions(
+                onNext = {
+                    focusManager.moveFocus(FocusDirection.Down)
+                }
+            ),
+            keyboardType = KeyboardType.Number,
+            onChange = { registerViewModel.onNumberChange(it) }
         )
 
-        Spacer(modifier = Modifier.padding(25.dp))
-
-        //NOMBRE DE USUARIO
-        var username by remember {
-            mutableStateOf("")
-        }
-
-        OutlinedTextField(
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = "Person Icon"
-                )
-            },
-            value = username,
-            onValueChange = { username = it },
-            label = { Text("* Nombre de usuario") },
-            modifier = Modifier.width(350.dp)
-        )
-        Spacer(modifier = Modifier.padding(4.dp))
-
-        //CONTRASEÑA
-        var password by remember {
-            mutableStateOf("")
-        }
-        OutlinedTextField(
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.Lock,
-                    contentDescription = "Lock Icon"
-                )
-            },
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("* Contraseña") },
-            visualTransformation = PasswordVisualTransformation(),
-            modifier = Modifier.width(350.dp),
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password),
-        )
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "* = Obligatorio")
+        //USERNAME
+        UsernameField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp)
+                .padding(top = 24.dp)
+                .focusRequester(focusRequester),
+            icon = Icons.Default.Person,
+            label = "Username",
+            placeholder = "Username",
+            text = registerViewModel.username,
+            imeAction = ImeAction.Next,
+            isEnabled = true,
+            keyBoardActions = KeyboardActions(
+                onNext = {
+                    focusManager.moveFocus(FocusDirection.Down)
+                }
+            ),
+            keyboardType = KeyboardType.Text,
+            onChange = { registerViewModel.onUsernameChange(it) }
+        )
 
-        //BOTÓN
-        Button(onClick = { }, enabled = username.length > 4 && password.length > 8) {
+        Spacer(modifier = Modifier.padding(1.dp))
+
+        //PASSWORD
+        var passwordVisible by remember { mutableStateOf(false) }
+        PasswordField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp)
+                .padding(top = 20.dp)
+                .focusRequester(focusRequester),
+            icon = Icons.Default.Lock,
+            label = "Password",
+            placeholder = "Password",
+            text = registerViewModel.password,
+            imeAction = ImeAction.Done,
+            isEnabled = true,
+            keyboardType = KeyboardType.Password,
+            keyBoardActions = KeyboardActions(
+                onDone = {}
+            ),
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                SeePassword(
+                    isVisible = passwordVisible, setVisible = { it ->
+                        passwordVisible = it
+                    }
+                )
+            },
+            onChange = { registerViewModel.onPasswordChange(it) }
+        )
+
+        Spacer(modifier = Modifier.padding(1.dp))
+
+        val isButtonEnabled: Boolean by registerViewModel.isButtonEnabled.observeAsState(initial = false)
+        Button(
+            onClick = {
+                //registerViewModel.postUser()
+            },
+            enabled = isButtonEnabled
+        ) {
             Text(text = "Crear cuenta")
         }
+    }
+}
 
-        Spacer(modifier = Modifier.padding(10.dp))
+@Composable
+fun DataField(
+    modifier: Modifier,
+    text: String,
+    label: String,
+    placeholder: String,
+    onChange: (String) -> Unit,
+    imeAction: ImeAction = ImeAction.Next,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    keyBoardActions: KeyboardActions = KeyboardActions(),
+    isEnabled: Boolean = true
+) {
+    Column(modifier = Modifier.height(90.dp)) {
+        OutlinedTextField(
+            value = text,
+            onValueChange = { onChange(it) },
+            textStyle = TextStyle(fontSize = 18.sp),
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+            keyboardActions = keyBoardActions,
+            enabled = isEnabled,
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = MaterialTheme.colors.primary,
+                unfocusedBorderColor = Color.Gray,
+                disabledBorderColor = Color.Gray,
+                disabledTextColor = Color.Black
+            ),
+            placeholder = {
+                Text(
+                    text = placeholder,
+                    style = TextStyle(fontSize = 18.sp, color = Color.LightGray)
+                )
+            },
+            label = {
+                Text(text = label, fontSize = 14.sp)
+            }
+        )
+    }
+}
+
+@Composable
+fun UsernameField(
+    modifier: Modifier,
+    icon: ImageVector,
+    text: String,
+    label: String,
+    placeholder: String,
+    onChange: (String) -> Unit,
+    imeAction: ImeAction = ImeAction.Next,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    keyBoardActions: KeyboardActions = KeyboardActions(),
+    isEnabled: Boolean = true
+) {
+    Column(modifier = Modifier.height(90.dp)) {
+        OutlinedTextField(
+            leadingIcon = {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = "User Icon"
+                )
+            },
+            value = text,
+            onValueChange = { onChange(it) },
+            textStyle = TextStyle(fontSize = 18.sp),
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+            keyboardActions = keyBoardActions,
+            enabled = isEnabled,
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = MaterialTheme.colors.primary,
+                unfocusedBorderColor = Color.Gray,
+                disabledBorderColor = Color.Gray,
+                disabledTextColor = Color.Black
+            ),
+            placeholder = {
+                Text(
+                    text = placeholder,
+                    style = TextStyle(fontSize = 18.sp, color = Color.LightGray)
+                )
+            },
+            label = {
+                Text(text = label, fontSize = 14.sp)
+            }
+        )
+    }
+}
+
+@Composable
+fun PasswordField(
+    modifier: Modifier,
+    icon: ImageVector,
+    text: String,
+    label: String,
+    placeholder: String,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    onChange: (String) -> Unit,
+    imeAction: ImeAction = ImeAction.Next,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    keyBoardActions: KeyboardActions = KeyboardActions(),
+    isEnabled: Boolean = true,
+    visualTransformation: VisualTransformation = VisualTransformation.None
+) {
+    Column(modifier = Modifier.height(90.dp)) {
+        OutlinedTextField(
+            leadingIcon = {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = ""
+                )
+            },
+            value = text,
+            onValueChange = { onChange(it) },
+            trailingIcon = trailingIcon,
+            textStyle = TextStyle(fontSize = 18.sp),
+            visualTransformation = visualTransformation,
+            keyboardOptions = KeyboardOptions(imeAction = imeAction, keyboardType = keyboardType),
+            keyboardActions = keyBoardActions,
+            enabled = isEnabled,
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = MaterialTheme.colors.primary,
+                unfocusedBorderColor = Color.Gray,
+                disabledBorderColor = Color.Gray,
+                disabledTextColor = Color.Black
+            ),
+            placeholder = {
+                Text(
+                    text = placeholder,
+                    style = TextStyle(fontSize = 18.sp, color = Color.LightGray)
+                )
+            },
+            label = {
+                Text(text = label, fontSize = 14.sp)
+            }
+        )
+    }
+}
+
+@Composable
+fun SeePassword(isVisible: Boolean, setVisible: (Boolean) -> Unit) {
+    if (isVisible) {
+        Icon(
+            imageVector = Icons.Default.RemoveRedEye,
+            contentDescription = null,
+            modifier = Modifier.clickable {
+                setVisible(false)
+            },
+            tint = MaterialTheme.colors.primary
+        )
+    } else {
+        Icon(
+            imageVector = Icons.Default.RemoveRedEye,
+            contentDescription = null,
+            modifier = Modifier.clickable {
+                setVisible(true)
+            },
+            tint = MaterialTheme.colors.primary
+        )
     }
 }

@@ -35,13 +35,13 @@ fun MainScreen(
 
 @Composable
 fun MainBodyContent(navController: NavController) {
-    AsyncImage(
+    /*AsyncImage(
         model = "https://w0.peakpx.com/wallpaper/941/855/HD-wallpaper-football-field-aerial-view-trees-playground-green.jpg",
         contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .size(10000.dp)
-    )
+    )*/
 
     Column(
         modifier = Modifier.fillMaxSize(),
