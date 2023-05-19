@@ -31,16 +31,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataSourceModule {
 
-    //@Singleton
-    //@Provides
-    //@Named("BaseUrl")
-    //fun provideBaseUrl() = "https://randomuser.me/api/"
-    //
-    //
-    //
-    //
-    //
-
     @Provides
     @Singleton
     fun getInterceptor(/*@ApplicationContext context: Context*/): Interceptor {
@@ -94,7 +84,7 @@ object DataSourceModule {
         gson: Gson
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.63:8080") // Emulador AndoridStudio 10.0.2.2 // JuanDa 192.168.1.63 // Miguel 192.168.1.132 // Sebas 192.168.1.11
+            .baseUrl("http://10.0.2.2:8080") // Emulador AndoridStudio 10.0.2.2 // JuanDa 192.168.1.63 // Miguel 192.168.1.132 // Sebas 192.168.1.11
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(client)
             .build()

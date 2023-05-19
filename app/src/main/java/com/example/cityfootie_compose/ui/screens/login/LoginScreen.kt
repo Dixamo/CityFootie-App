@@ -1,6 +1,7 @@
 package com.example.cityfootie_compose.ui.screens.login
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
@@ -30,42 +31,28 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import com.example.cityfootie_compose.model.Player
-import com.example.cityfootie_compose.navigation.AppScreens
-import com.example.cityfootie_compose.ui.screens.user.BottomNavigationBar
-import com.example.cityfootie_compose.ui.screens.user.BottomNavigationItem
 import com.example.cityfootie_compose.util.toFloat
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
+import okhttp3.internal.wait
+import java.lang.Thread.sleep
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(
-    navController: NavController
+    goUserScreen: () -> Unit,
+    goRegisterScreen: () -> Unit
 ) {
-    Scaffold(topBar = {
-        TopAppBar() {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Arrow Back",
-                modifier = Modifier.clickable {
-                    navController.popBackStack()
-                }
-            )
-        }
-    }) {
-        BodyContent(navController)
-    }
+    BodyContent(goUserScreen, goRegisterScreen)
 }
 
 @Composable
 fun BodyContent(
-    navController: NavController,
+    goUserScreen: () -> Unit,
+    goRegisterScreen: () -> Unit,
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
-    val loading: Boolean by loginViewModel.loading.observeAsState(initial = false)
-    if (loading == true) {
+    /*val isLoading: Boolean by loginViewModel.isLoading.observeAsState(initial = false)*/
+    var isLoading: Boolean = loginViewModel.isLoading
+    if (isLoading) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()
@@ -73,6 +60,8 @@ fun BodyContent(
             CircularProgressIndicator()
         }
     }
+
+    Spacer(modifier = Modifier.padding(10.dp))
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -123,10 +112,8 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(8.dp))
 
-        val player: Player? by loginViewModel.player.observeAsState()
-        if (player != null) {
-            navController.navigate(route = AppScreens.UserScreen.route + "/${player!!.username}/${player!!.number}")
-        }
+        /*var player = loginViewModel.player
+        val isCompleted = loginViewModel.isCompleted*/
 
         var passwordVisible by remember { mutableStateOf(false) }
         PasswordField(
@@ -161,7 +148,11 @@ fun BodyContent(
         val isButtonEnabled: Boolean by loginViewModel.isButtonEnabled.observeAsState(initial = false)
         Button(
             onClick = {
-                loginViewModel.getUser()
+                loginViewModel.getPlayer()
+                sleep(200)
+                if (loginViewModel.getPlayer()) {
+                    goUserScreen()
+                }
             },
             enabled = isButtonEnabled
         ) {
@@ -170,7 +161,7 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(8.dp))
 
-        val isError: Boolean by loginViewModel.isError.observeAsState(initial = false)
+        var isError: Boolean = loginViewModel.isError
         Text(
             text = "Correo o contraseña incorrectas",
             modifier = Modifier.alpha(isError.toFloat()),
@@ -190,7 +181,7 @@ fun BodyContent(
                     color = MaterialTheme.colors.primary
                 ),
                 onClick = {
-                    navController.navigate(route = AppScreens.RegisterScreen.route)
+                   goRegisterScreen()
                 }
             )
         }

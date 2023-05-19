@@ -13,7 +13,6 @@ import com.example.cityfootie_compose.model.Player
 import com.example.cityfootie_compose.usecases.login.GetPlayer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,9 +28,8 @@ class LoginViewModel @Inject constructor(
     val isButtonEnabled: LiveData<Boolean> = _isButtonEnabled
 
     // Loading Circular ProgressBar
-    private val _loading = MutableLiveData<Boolean>()
-    val loading: LiveData<Boolean> get() = _loading
-
+    /*private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading*/
 
     private fun isValidEmail(email: String): Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
     fun onEmailChange(value: String) {
@@ -45,23 +43,25 @@ class LoginViewModel @Inject constructor(
         _isButtonEnabled.value = isValidEmail(email) && isValidPassword(value)
     }
 
-    private val _player: MutableLiveData<Player> = MutableLiveData()
-    val player: LiveData<Player> = _player
-    private val _isError: MutableLiveData<Boolean> = MutableLiveData()
-    val isError: LiveData<Boolean> = _isError
-    fun getUser() {
-        _loading.value = true
+    var player: Player? = null
+    var isLoading: Boolean by mutableStateOf(false)
+    var isCompleted: Boolean by mutableStateOf(false)
+    var isError: Boolean by mutableStateOf(false)
+    fun getPlayer(): Boolean {
         viewModelScope.launch(Dispatchers.IO) {
+            isLoading = true
             val response = getPlayer.getPlayer(email, password)
-            delay(1000)
-            _loading.postValue(false)
             if (response != null) {
                 if (response.isSuccessful) {
-                    _player.postValue(response.body())
+                    isCompleted = true
+                    player = response.body()
                 } else {
-                    _isError.postValue(true)
+                    isError = true
                 }
             }
+            delay(700)
+            isLoading = false
         }
+        return isCompleted
     }
 }

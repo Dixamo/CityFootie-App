@@ -5,51 +5,46 @@ import androidx.compose.foundation.background
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Map
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import com.example.cityfootie_compose.navigation.AppScreens
-import kotlinx.coroutines.cancel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MapScreen(
-    navController: NavController
-) {
-    val selectedItem = remember { mutableStateOf(0) }
+fun MapScreen(goBack: () -> Unit) {
+    val selectedItem = remember { mutableStateOf(1) }
 
     Scaffold(
         bottomBar = {
             val bottomNavigationItems = listOf(
                 BottomNavigationItem(
-                    "Profile",
-                    Icons.Default.Person,
-                    route = null
+                    title = "Profile",
+                    icon = Icons.Outlined.Person,
+                    color = Color.White
                 ),
                 BottomNavigationItem(
-                    "Map",
-                    Icons.Default.Map,
-                    route = AppScreens.MapScreen.route
+                    title = "Map",
+                    icon = Icons.Filled.Map,
+                    color = Color.White
                 )
             )
             BottomNavigationBar(
-                navController = navController,
+                goBack = goBack,
                 items = bottomNavigationItems,
                 selectedItem = selectedItem
             )
         }
     ) {
-        BodyContent(navController)
+        BodyContent(goBack)
     }
 }
 
 @Composable
 fun BodyContent(
-    navController: NavController,
+    goBack: () -> Unit,
     mapViewModel: MapViewModel = hiltViewModel()
 ) {
     Text(text = "Mapa")
@@ -57,7 +52,7 @@ fun BodyContent(
 
 @Composable
 fun BottomNavigationBar(
-    navController: NavController,
+    goBack: () -> Unit,
     items: List<BottomNavigationItem>,
     selectedItem: MutableState<Int>
 ) {
@@ -68,13 +63,15 @@ fun BottomNavigationBar(
             BottomNavigationItem(
                 selected = selectedItem.value == index,
                 onClick = {
-                    if (item.route == null)
-                        navController.popBackStack()
+                    if (selectedItem.value != index) {
+                        goBack()
+                    }
                 },
                 icon = {
                     Icon(
                         imageVector = item.icon,
-                        contentDescription = item.title
+                        contentDescription = item.title,
+                        tint = item.color
                     )
                 },
                 label = { Text(text = item.title) }
@@ -86,5 +83,6 @@ fun BottomNavigationBar(
 data class BottomNavigationItem(
     val title: String,
     val icon: ImageVector,
-    val route: String?
+    val color: Color,
+    val navigation: Unit? = null
 )

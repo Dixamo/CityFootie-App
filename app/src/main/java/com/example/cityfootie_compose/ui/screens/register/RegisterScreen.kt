@@ -1,7 +1,6 @@
 package com.example.cityfootie_compose.ui.screens.register
 
 import android.annotation.SuppressLint
-import android.provider.ContactsContract.CommonDataKinds.Email
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -11,7 +10,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -31,13 +29,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import com.example.cityfootie_compose.ui.screens.login.EmailField
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun RegisterScreen(
-    navController: NavController
+    goBack: () -> Unit
 ) {
     Scaffold(topBar = {
         TopAppBar() {
@@ -45,17 +41,17 @@ fun RegisterScreen(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "Arrow Back",
                 modifier = Modifier.clickable {
-                    navController.popBackStack()
+                    goBack()
                 })
         }
     }) {
-        BodyContent(navController)
+        BodyContent(goBack)
     }
 }
 
 @Composable
 fun BodyContent(
-    navController: NavController,
+    goBack: () -> Unit,
     registerViewModel: RegisterViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()

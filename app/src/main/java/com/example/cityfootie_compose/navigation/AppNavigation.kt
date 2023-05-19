@@ -2,10 +2,8 @@ package com.example.cityfootie_compose.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.example.cityfootie_compose.ui.screens.MainScreen
 import com.example.cityfootie_compose.ui.screens.SplashScreen
 import com.example.cityfootie_compose.ui.screens.login.LoginScreen
@@ -18,26 +16,49 @@ import com.example.cityfootie_compose.ui.screens.user.UserScreen
 fun AppNavigation(navController: NavHostController) {
     NavHost(navController = navController, startDestination = AppScreens.SplashScreen.route) {
         composable(route = AppScreens.SplashScreen.route) {
-            SplashScreen(navController)
+            SplashScreen(goMainScreen = {
+                navController.popBackStack()
+                navController.navigate(AppScreens.MainScreen.route)
+            })
         }
         composable(route = AppScreens.MainScreen.route) {
-            MainScreen(navController)
+            MainScreen(goLoginScreen = {
+                navController.popBackStack()
+                navController.navigate(route = AppScreens.LoginScreen.route)
+            })
         }
         composable(route = AppScreens.LoginScreen.route) {
-            LoginScreen(navController)
+            LoginScreen(
+                goUserScreen = {
+                    navController.popBackStack()
+                    navController.navigate(AppScreens.UserScreen.route)
+                },
+                goRegisterScreen = {
+                    navController.navigate(AppScreens.RegisterScreen.route)
+                }
+            )
         }
+
+        composable(route = AppScreens.UserScreen.route) {
+            UserScreen {
+                navController.navigate(AppScreens.MapScreen.route)
+            }
+        }
+
         composable(route = AppScreens.RegisterScreen.route) {
-            RegisterScreen(navController)
+            RegisterScreen(
+                goBack = {
+                    navController.navigateUp()
+                }
+            )
         }
-        composable(route = AppScreens.UserScreen.route + "/{username}/{dorsal}",
-            arguments = listOf(
-                navArgument(name = "username") { type = NavType.StringType },
-                navArgument(name = "dorsal") { type = NavType.StringType }
-            )) {
-            UserScreen(navController, username = it.arguments!!.getString("username", "Nombre"), number = it.arguments!!.getString("dorsal", "Dorsal"))
-        }
+
         composable(route = AppScreens.MapScreen.route) {
-            MapScreen(navController)
+            MapScreen(
+                goBack = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }

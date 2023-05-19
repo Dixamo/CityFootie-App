@@ -7,6 +7,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.Map
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,40 +18,43 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
-import com.example.cityfootie_compose.model.Player
-import com.example.cityfootie_compose.navigation.AppScreens
-import kotlinx.coroutines.cancel
+import com.example.cityfootie_compose.ui.screens.map.MapViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun UserScreen(
-    navController: NavController,
-    username: String,
-    number: String
-) {
+fun UserScreen(goMapScreen: () -> Unit) {
+
     val selectedItem = remember { mutableStateOf(0) }
 
     Scaffold(
+
         bottomBar = {
             val bottomNavigationItems = listOf(
-                BottomNavigationItem("Profile", Icons.Default.Person, route = null),
-                BottomNavigationItem("Map", Icons.Default.Map, route = AppScreens.MapScreen.route)
+                BottomNavigationItem(
+                    title = "Profile",
+                    icon = Icons.Filled.Person,
+                    color = Color.White
+                ),
+                BottomNavigationItem(
+                    title = "Map",
+                    icon = Icons.Outlined.Map,
+                    color = Color.White
+                )
             )
-            BottomNavigationBar(navController = navController, items = bottomNavigationItems, selectedItem = selectedItem)
+            BottomNavigationBar(
+                goMapScreen = goMapScreen,
+                items = bottomNavigationItems,
+                selectedItem = selectedItem
+            )
         }
     ) {
-        BodyContent(navController, username, number)
+        BodyContent(goMapScreen)
     }
 }
 
 @Composable
 fun BodyContent(
-    navController: NavController,
-    username: String,
-    dorsal: String,
+    goMapScreen: () -> Unit,
     userViewModel: UserViewModel = hiltViewModel()
 ) {
     Column(
@@ -60,14 +65,14 @@ fun BodyContent(
         Spacer(modifier = Modifier.padding(10.dp))
 
         Text(
-            text = "BIENVENIDO $username",
+            text = "BIENVENIDO username",
             color = MaterialTheme.colors.primary,
             fontSize = 30.sp,
             style = MaterialTheme.typography.subtitle1,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = dorsal,
+            text = "dorsal",
             color = MaterialTheme.colors.primary,
             fontSize = 50.sp,
             style = MaterialTheme.typography.h1,
@@ -78,7 +83,7 @@ fun BodyContent(
 
 @Composable
 fun BottomNavigationBar(
-    navController: NavController,
+    goMapScreen: () -> Unit,
     items: List<BottomNavigationItem>,
     selectedItem: MutableState<Int>
 ) {
@@ -89,13 +94,15 @@ fun BottomNavigationBar(
             BottomNavigationItem(
                 selected = selectedItem.value == index,
                 onClick = {
-                    if (item.route != null)
-                        navController.navigate(item.route)
-                          },
+                    if (selectedItem.value != index) {
+                        goMapScreen()
+                    }
+                },
                 icon = {
                     Icon(
                         imageVector = item.icon,
-                        contentDescription = item.title
+                        contentDescription = item.title,
+                        tint = item.color
                     )
                 },
                 label = { Text(text = item.title) }
@@ -107,33 +114,6 @@ fun BottomNavigationBar(
 data class BottomNavigationItem(
     val title: String,
     val icon: ImageVector,
-    val route: String?
+    val color: Color,
+    val navigation: Unit? = null
 )
-
-/*Scaffold(
-        bottomBar = {
-            BottomAppBar() {
-                Row(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Button(onClick = { /*TODO*/ }) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "Profile"
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.padding(5.dp))
-
-                    Button(onClick = { navController.navigate(route = AppScreens.MapScreen.route) }) {
-                        Icon(
-                            imageVector = Icons.Default.Map,
-                            contentDescription = "Map"
-                        )
-                    }
-                }
-            }
-        }
-    )*/

@@ -17,7 +17,7 @@ import com.example.cityfootie_compose.navigation.AppScreens
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainScreen(
-    navController: NavController
+    goLoginScreen: () -> Unit
 ) {
     Scaffold(topBar = {
         TopAppBar() {
@@ -29,19 +29,19 @@ fun MainScreen(
             )
         }
     }) {
-        MainBodyContent(navController)
+        MainBodyContent(goLoginScreen)
     }
 }
 
 @Composable
-fun MainBodyContent(navController: NavController) {
-    /*AsyncImage(
+fun MainBodyContent(goLoginScreen: () -> Unit) {
+    AsyncImage(
         model = "https://w0.peakpx.com/wallpaper/941/855/HD-wallpaper-football-field-aerial-view-trees-playground-green.jpg",
         contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .size(10000.dp)
-    )*/
+    )
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -51,7 +51,7 @@ fun MainBodyContent(navController: NavController) {
         Row() {
             Button(
                 onClick = {
-                    navController.navigate(route = AppScreens.LoginScreen.route)
+                    goLoginScreen()
                 }
             ) {
                 Text(
