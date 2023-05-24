@@ -90,7 +90,7 @@ fun BodyContent(
         })
 
     GoogleMap(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.padding(bottom = 50.dp),
         cameraPositionState = cameraPositionState,
         properties = properties,
         uiSettings = uiSettings
