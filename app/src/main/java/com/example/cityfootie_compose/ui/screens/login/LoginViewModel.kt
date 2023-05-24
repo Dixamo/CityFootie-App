@@ -47,7 +47,7 @@ class LoginViewModel @Inject constructor(
     var isLoading: Boolean by mutableStateOf(false)
     var isCompleted: Boolean by mutableStateOf(false)
     var isError: Boolean by mutableStateOf(false)
-    fun getPlayer(): Boolean {
+    fun getPlayer() {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
             val response = getPlayer.getPlayer(email, password)
@@ -59,9 +59,21 @@ class LoginViewModel @Inject constructor(
                     isError = true
                 }
             }
-            delay(700)
+            //delay(700)
             isLoading = false
         }
-        return isCompleted
+    }
+    fun validatePlayer(playerToValidate: Player?): Boolean {
+        if (playerToValidate != null) {
+            if (playerToValidate!!.id != null) {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+        else {
+            return false
+        }
     }
 }

@@ -112,9 +112,6 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(8.dp))
 
-        /*var player = loginViewModel.player
-        val isCompleted = loginViewModel.isCompleted*/
-
         var passwordVisible by remember { mutableStateOf(false) }
         PasswordField(
             modifier = Modifier
@@ -145,18 +142,24 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(8.dp))
 
+        var player = loginViewModel.player
+        var isCompleted = loginViewModel.isCompleted
         val isButtonEnabled: Boolean by loginViewModel.isButtonEnabled.observeAsState(initial = false)
         Button(
             onClick = {
                 loginViewModel.getPlayer()
-                sleep(200)
-                if (loginViewModel.getPlayer()) {
-                    goUserScreen()
-                }
             },
             enabled = isButtonEnabled
         ) {
             Text(text = "Iniciar sesión")
+        }
+
+        LaunchedEffect(isLoading) {
+            if (isCompleted) {
+                if (player != null) {
+                    goUserScreen()
+                }
+            }
         }
 
         Spacer(modifier = Modifier.padding(8.dp))
