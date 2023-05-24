@@ -7,11 +7,18 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.cityfootie_compose.model.Player
+import com.example.cityfootie_compose.usecases.register.PostPlayerUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(): ViewModel() {
+class RegisterViewModel @Inject constructor(
+    private val postPlayerUsecases: PostPlayerUsecases
+): ViewModel() {
     var name: String by mutableStateOf("")
     var surnames: String by mutableStateOf("")
     var email: String by mutableStateOf("")
@@ -55,5 +62,24 @@ class RegisterViewModel @Inject constructor(): ViewModel() {
     fun onPasswordChange(value: String) {
         password = value
         _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(number) && isValidUsername(username) && isValidPassword(value)
+    }
+
+    var isLoading: Boolean by mutableStateOf(false)
+    var isCompleted: Boolean by mutableStateOf(false)
+    var isError: Boolean by mutableStateOf(false)
+    fun postUser() {
+        viewModelScope.launch(Dispatchers.IO) {
+            isLoading = true
+            var newPlayer : Player = Player(name, surnames, username, email, password, number.toInt())
+            val response = postPlayerUsecases.postPlayer(newPlayer)
+            if (response != null) {
+                if (response.isSuccessful) {
+                    isCompleted = true
+                    response.body()
+                } else {
+                    isError = true
+                }
+            }
+        }
     }
 }

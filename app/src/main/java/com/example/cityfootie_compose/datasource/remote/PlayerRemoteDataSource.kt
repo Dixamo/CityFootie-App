@@ -5,4 +5,5 @@ import retrofit2.Response
 
 interface PlayerRemoteDataSource {
     suspend fun getPlayer(email: String, password: String): Response<Player>
+    suspend fun postPlayer(newPlayer: Player): Response<Void>
 }

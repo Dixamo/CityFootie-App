@@ -1,6 +1,5 @@
 package com.example.cityfootie_compose.ui.screens.login
 
-import android.util.Log
 import android.util.Patterns
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,16 +9,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cityfootie_compose.model.Player
-import com.example.cityfootie_compose.usecases.login.GetPlayer
+import com.example.cityfootie_compose.usecases.login.GetPlayerUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val getPlayer: GetPlayer
+    private val getPlayerUsecases: GetPlayerUsecases
 ) : ViewModel() {
 
     var email: String by mutableStateOf("")
@@ -50,7 +48,7 @@ class LoginViewModel @Inject constructor(
     fun getPlayer() {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
-            val response = getPlayer.getPlayer(email, password)
+            val response = getPlayerUsecases.getPlayer(email, password)
             if (response != null) {
                 if (response.isSuccessful) {
                     isCompleted = true
@@ -59,21 +57,7 @@ class LoginViewModel @Inject constructor(
                     isError = true
                 }
             }
-            //delay(700)
             isLoading = false
-        }
-    }
-    fun validatePlayer(playerToValidate: Player?): Boolean {
-        if (playerToValidate != null) {
-            if (playerToValidate!!.id != null) {
-                return true
-            }
-            else {
-                return false
-            }
-        }
-        else {
-            return false
         }
     }
 }

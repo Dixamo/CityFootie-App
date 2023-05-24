@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -29,6 +30,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.cityfootie_compose.util.toFloat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -224,14 +226,23 @@ fun BodyContent(
         Spacer(modifier = Modifier.padding(1.dp))
 
         val isButtonEnabled: Boolean by registerViewModel.isButtonEnabled.observeAsState(initial = false)
+
+        var isError: Boolean = registerViewModel.isError
+        Text(
+            text = "Nombre de Usuario o correo existentes",
+            modifier = Modifier.alpha(isError.toFloat()),
+            color = MaterialTheme.colors.error
+        )
+
         Button(
             onClick = {
-                //registerViewModel.postUser()
+                registerViewModel.postUser()
             },
             enabled = isButtonEnabled
         ) {
             Text(text = "Crear cuenta")
         }
+
     }
 }
 

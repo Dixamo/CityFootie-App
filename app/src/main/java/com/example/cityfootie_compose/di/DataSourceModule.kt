@@ -8,8 +8,10 @@ import com.example.cityfootie_compose.datasource.PlayerRepositoryImpl
 import com.example.cityfootie_compose.datasource.remote.FootieAPI
 import com.example.cityfootie_compose.datasource.remote.PlayerRemoteDataSource
 import com.example.cityfootie_compose.datasource.remote.PlayerRemoteDataSourceImpl
-import com.example.cityfootie_compose.usecases.login.GetPlayer
-import com.example.cityfootie_compose.usecases.login.GetPlayerImpl
+import com.example.cityfootie_compose.usecases.login.GetPlayerUsecases
+import com.example.cityfootie_compose.usecases.login.GetPlayerUsecasesImpl
+import com.example.cityfootie_compose.usecases.register.PostPlayerUsecases
+import com.example.cityfootie_compose.usecases.register.PostPlayerUsecasesImpl
 import com.example.cityfootie_compose.util.DispatcherProvider
 import com.example.cityfootie_compose.util.DispatcherProviderImpl
 import com.google.gson.Gson
@@ -119,6 +121,11 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun providesGetLoginUseCase(playerRepository: PlayerRepository): GetPlayer =
-        GetPlayerImpl(playerRepository)
+    fun providesGetLoginUseCase(playerRepository: PlayerRepository): GetPlayerUsecases =
+        GetPlayerUsecasesImpl(playerRepository)
+
+    @Provides
+    @Singleton
+    fun providesPostPlayerUseCase(playerRepository: PlayerRepository): PostPlayerUsecases =
+        PostPlayerUsecasesImpl(playerRepository)
 }
