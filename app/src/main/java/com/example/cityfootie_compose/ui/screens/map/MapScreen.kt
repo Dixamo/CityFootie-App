@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,7 +24,10 @@ import com.google.maps.android.compose.*
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun MapScreen(goBack: () -> Unit) {
+fun MapScreen(
+    goBack: () -> Unit,
+    goFootballMatch: () -> Unit
+) {
     val selectedItem = remember { mutableStateOf(1) }
 
     Scaffold(
@@ -48,9 +52,20 @@ fun MapScreen(goBack: () -> Unit) {
         }
     ) {
         BodyContent(goBack)
+        Buttons(goFootballMatch)
     }
 }
 
+@Composable
+fun Buttons(goFootballMatch: () -> Unit) {
+    Button(
+        onClick = {
+            goFootballMatch()
+        }
+    ) {
+        Text(text = "Crear partido")
+    }
+}
 @Composable
 fun BodyContent(
     goBack: () -> Unit,

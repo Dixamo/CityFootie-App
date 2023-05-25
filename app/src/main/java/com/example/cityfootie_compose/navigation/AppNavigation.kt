@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.cityfootie_compose.ui.screens.MainScreen
 import com.example.cityfootie_compose.ui.screens.SplashScreen
+import com.example.cityfootie_compose.ui.screens.footballMatch.FootballMatchScreen
 import com.example.cityfootie_compose.ui.screens.login.LoginScreen
 import com.example.cityfootie_compose.ui.screens.map.MapScreen
 import com.example.cityfootie_compose.ui.screens.register.RegisterScreen
@@ -55,6 +56,17 @@ fun AppNavigation(navController: NavHostController) {
 
         composable(route = AppScreens.MapScreen.route) {
             MapScreen(
+                goBack = {
+                    navController.navigateUp()
+                },
+                goFootballMatch = {
+                    navController.navigate(AppScreens.FootBallMatchScreen.route)
+                }
+            )
+        }
+
+        composable(route = AppScreens.FootBallMatchScreen.route) {
+            FootballMatchScreen(
                 goBack = {
                     navController.navigateUp()
                 }
