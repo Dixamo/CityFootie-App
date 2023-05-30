@@ -7,13 +7,13 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
 private val DarkColorPalette = darkColors(
-    primary = LightBlue,
+    primary = Darkgreen,
     primaryVariant = AquaGreen,
     secondary = SebasGreen
 )
 
 private val LightColorPalette = lightColors(
-    primary = LightBlue,
+    primary = Darkgreen,
     primaryVariant = AquaGreen,
     secondary = SebasGreen
 

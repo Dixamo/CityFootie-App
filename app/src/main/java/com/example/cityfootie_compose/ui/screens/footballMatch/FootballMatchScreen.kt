@@ -63,6 +63,8 @@ fun BodyContent(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
+        Spacer(modifier = Modifier.padding(10.dp))
+
         Text(
             "Crear Partido",
             color = MaterialTheme.colors.primary,

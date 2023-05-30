@@ -38,7 +38,7 @@ import java.lang.Thread.sleep
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(
-    goUserScreen: () -> Unit,
+    goUserScreen: (String, String) -> Unit,
     goRegisterScreen: () -> Unit
 ) {
     BodyContent(goUserScreen, goRegisterScreen)
@@ -46,7 +46,7 @@ fun LoginScreen(
 
 @Composable
 fun BodyContent(
-    goUserScreen: () -> Unit,
+    goUserScreen: (String, String) -> Unit,
     goRegisterScreen: () -> Unit,
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
@@ -157,7 +157,8 @@ fun BodyContent(
         LaunchedEffect(isLoading) {
             if (isCompleted) {
                 if (player != null) {
-                    goUserScreen()
+                    Log.d("player", player.name.toString())
+                    goUserScreen(player.email!!, player.password!!)
                 }
             }
         }
@@ -184,7 +185,7 @@ fun BodyContent(
                     color = MaterialTheme.colors.primary
                 ),
                 onClick = {
-                   goRegisterScreen()
+                    goRegisterScreen()
                 }
             )
         }
