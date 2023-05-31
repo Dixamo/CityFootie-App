@@ -257,7 +257,7 @@ fun DataField(
     placeholder: String,
     onChange: (String) -> Unit,
     imeAction: ImeAction = ImeAction.Next,
-    keyboardType: KeyboardType = KeyboardType.Text,
+    keyboardType: KeyboardType,
     keyBoardActions: KeyboardActions = KeyboardActions(),
     isEnabled: Boolean = true
 ) {
@@ -266,7 +266,10 @@ fun DataField(
             value = text,
             onValueChange = { onChange(it) },
             textStyle = TextStyle(fontSize = 18.sp),
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
             keyboardActions = keyBoardActions,
             enabled = isEnabled,
             colors = TextFieldDefaults.outlinedTextFieldColors(

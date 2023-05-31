@@ -64,8 +64,10 @@ fun AppNavigation(navController: NavHostController) {
                     navController.navigate(AppScreens.MapScreen.route)
                 },
 
-                goModifyScreen = {
-                    navController.navigate(AppScreens.ModifyScreen.route)
+                goModifyScreen = { email ->
+                    navController.navigate(
+                        AppScreens.ModifyScreen.route + "/${email}"
+                    )
                 }
             )
         }
@@ -97,8 +99,14 @@ fun AppNavigation(navController: NavHostController) {
             )
         }
 
-        composable(route = AppScreens.ModifyScreen.route) {
+        composable(
+            route = AppScreens.ModifyScreen.route + "/{email}", arguments = listOf(
+                navArgument("email") {
+                    type = NavType.StringType
+                })
+        ) { backStackEntry ->
             ModifyScreen(
+                email = backStackEntry.arguments?.getString("email") ?: "null",
                 goBack = {
                     navController.navigateUp()
                 }

@@ -5,6 +5,8 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface FootieAPI {
@@ -18,4 +20,13 @@ interface FootieAPI {
     suspend fun postPlayer(
         @Body newPlayer: Player
     ): Response<Void>
+
+    @PUT("players/{email}")
+    suspend fun updatePlayer(
+        //@Body newPlayer: Player,
+        @Path("email") email: String,
+        @Query("name") name: String,
+        @Query("surnames") surnames: String,
+        @Query("number") number: Int
+    ) :Response<Void>
 }

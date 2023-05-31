@@ -10,6 +10,8 @@ import com.example.cityfootie_compose.datasource.remote.PlayerRemoteDataSource
 import com.example.cityfootie_compose.datasource.remote.PlayerRemoteDataSourceImpl
 import com.example.cityfootie_compose.usecases.login.GetPlayerUsecases
 import com.example.cityfootie_compose.usecases.login.GetPlayerUsecasesImpl
+import com.example.cityfootie_compose.usecases.modify.UpdatePlayerUsecases
+import com.example.cityfootie_compose.usecases.modify.UpdatePlayerUsecasesImpl
 import com.example.cityfootie_compose.usecases.register.PostPlayerUsecases
 import com.example.cityfootie_compose.usecases.register.PostPlayerUsecasesImpl
 import com.example.cityfootie_compose.util.DispatcherProvider
@@ -128,4 +130,9 @@ object DataSourceModule {
     @Singleton
     fun providesPostPlayerUseCase(playerRepository: PlayerRepository): PostPlayerUsecases =
         PostPlayerUsecasesImpl(playerRepository)
+
+    @Provides
+    @Singleton
+    fun providesUpdatePlayerUseCase(playerRepository: PlayerRepository): UpdatePlayerUsecases =
+        UpdatePlayerUsecasesImpl(playerRepository)
 }

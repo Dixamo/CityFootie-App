@@ -19,4 +19,9 @@ class PlayerRemoteDataSourceImpl @Inject constructor(
         withContext(dispatcherProvider.ioDispatcher) {
             return@withContext footieAPI.postPlayer(newPlayer)
         }
+
+    override suspend fun updatePlayer(email: String, name: String, surnames: String, number: Int): Response<Void> =
+        withContext(dispatcherProvider.ioDispatcher) {
+            return@withContext footieAPI.updatePlayer(email, name, surnames, number)
+        }
 }

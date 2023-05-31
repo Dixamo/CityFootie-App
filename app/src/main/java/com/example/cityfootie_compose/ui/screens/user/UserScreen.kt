@@ -27,7 +27,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun UserScreen(
     goMapScreen: () -> Unit,
-    goModifyScreen: () -> Unit,
+    goModifyScreen: (String) -> Unit,
     email: String,
     password: String
 ) {
@@ -62,7 +62,7 @@ fun UserScreen(
 @Composable
 fun BodyContent(
     goMapScreen: () -> Unit,
-    goModifyScreen: () -> Unit,
+    goModifyScreen: (String) -> Unit,
     email: String,
     password: String,
     userViewModel: UserViewModel = hiltViewModel()
@@ -79,7 +79,6 @@ fun BodyContent(
         }
     }
 
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -93,7 +92,7 @@ fun BodyContent(
             //ICONO
             Button(
                 onClick = {
-                    goModifyScreen()
+                    goModifyScreen(email)
                 }
             ) {
                 Icon(

@@ -15,4 +15,8 @@ class PlayerRepositoryImpl @Inject constructor(
     override suspend fun postPlayer(newPlayer: Player): Response<Void> {
         return playerRemoteDataSource.postPlayer(newPlayer)
     }
+
+    override suspend fun updatePlayer(email: String, name: String, surnames: String, number: Int): Response<Void> {
+        return playerRemoteDataSource.updatePlayer(email, name, surnames, number)
+    }
 }
