@@ -51,24 +51,14 @@ fun MapScreen(
             )
         }
     ) {
-        BodyContent(goBack)
-        Buttons(goFootballMatch)
+        BodyContent(goBack, goFootballMatch)
     }
 }
 
 @Composable
-fun Buttons(goFootballMatch: () -> Unit) {
-    Button(
-        onClick = {
-            goFootballMatch()
-        }
-    ) {
-        Text(text = "Crear partido")
-    }
-}
-@Composable
 fun BodyContent(
     goBack: () -> Unit,
+    goFootballMatch: () -> Unit,
     mapViewModel: MapViewModel = hiltViewModel()
 ) {
     val marker1 = LatLng(40.35105282074944, -3.700295054544909)
@@ -97,7 +87,9 @@ fun BodyContent(
         position = CameraPosition.fromLatLngZoom(marker1,12f)
     }
     val properties by remember { mutableStateOf(MapProperties(mapType = MapType.HYBRID)) }
-    var uiSettings by remember { mutableStateOf(MapUiSettings())}
+    var uiSettings by remember { mutableStateOf(MapUiSettings()) }
+
+    val markerClicked = remember { mutableStateOf(false) }
 
     Switch(checked = uiSettings.zoomControlsEnabled,
         onCheckedChange = {
@@ -112,7 +104,10 @@ fun BodyContent(
     ) {
         MarkerInfoWindow(
             state = MarkerState(position = marker1),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -135,23 +130,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker2),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -174,23 +161,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker3),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -213,23 +192,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker4),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -252,23 +223,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker5),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -291,23 +254,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker6),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -330,23 +285,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker7),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -369,23 +316,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker8),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -408,23 +347,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker9),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -447,23 +378,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker10),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -486,23 +409,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker11),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -525,23 +440,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker12),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -564,23 +471,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker13),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -603,23 +502,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker14),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -642,23 +533,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker15),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -681,23 +564,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker16),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -720,23 +595,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker17),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -759,23 +626,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker18),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -798,23 +657,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker19),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -837,23 +688,15 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
             }
         }
         MarkerInfoWindow(
             state = MarkerState(position = marker20),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
+            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+            onInfoWindowClick = {
+                markerClicked.value = true
+            }
         ) { marker ->
             Box(
                 modifier = Modifier
@@ -876,18 +719,12 @@ fun BodyContent(
                         style = MaterialTheme.typography.h5,
                         color = MaterialTheme.colors.primary
                     )
-                    Spacer(modifier = Modifier.height(5.dp))
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Crear Partido")
-                    }
-                    Button(
-                        onClick = { },
-                    ) {
-                        Text(text = "Unirse al partido")
-                    }
                 }
+            }
+        }
+        if (markerClicked.value) {
+            LaunchedEffect(Unit) {
+                goFootballMatch()
             }
         }
     }
