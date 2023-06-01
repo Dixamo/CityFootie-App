@@ -46,7 +46,7 @@ class RegisterViewModel @Inject constructor(
         _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidEmail(value) && isValidNumber(number) && isValidUsername(username) && isValidPassword(password)
     }
 
-    private fun isValidNumber(number: String): Boolean = number.length < 3
+    private fun isValidNumber(number: String): Boolean = number.length in 1..2
     fun onNumberChange(value: String) {
         number = value
         _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(value) && isValidUsername(username) && isValidPassword(password)
@@ -58,7 +58,7 @@ class RegisterViewModel @Inject constructor(
         _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(number) && isValidUsername(value) && isValidPassword(password)
     }
 
-    private fun isValidPassword(password: String): Boolean = password.length > 4
+    private fun isValidPassword(password: String): Boolean = password.length > 3
     fun onPasswordChange(value: String) {
         password = value
         _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(number) && isValidUsername(username) && isValidPassword(value)

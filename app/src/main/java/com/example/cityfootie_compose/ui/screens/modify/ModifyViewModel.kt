@@ -38,7 +38,7 @@ class ModifyViewModel @Inject constructor(
     }
 
 
-    private fun isValidNumber(number: String): Boolean = number.length < 3
+    private fun isValidNumber(number: String): Boolean = number.length in 1..2
     fun onNumberChange(value: String) {
         number = value
         _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidNumber(value)
