@@ -94,7 +94,8 @@ fun BodyContent(
     Switch(checked = uiSettings.zoomControlsEnabled,
         onCheckedChange = {
             uiSettings = uiSettings.copy(zoomControlsEnabled = it)
-        })
+        }
+    )
 
     GoogleMap(
         modifier = Modifier.padding(bottom = 50.dp),
@@ -102,626 +103,126 @@ fun BodyContent(
         properties = properties,
         uiSettings = uiSettings
     ) {
-        MarkerInfoWindow(
-            state = MarkerState(position = marker1),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: C. de la Vírgen de los Desamparados, 20",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker2),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: C. Hermandad de Donantes de Sangre, 7",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker3),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: C. Santiago Amón, 8",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker4),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: C. Sta. Florencia, 27",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker5),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: C. del Payaso Fofó, 9, Madrid",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker6),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: P.º de Juan XXIII, 39",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker7),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: C. Puerto Real, 7",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker8),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: Puente de Tres Olivos",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker9),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: Av. de los Rosales, 91",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker10),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: C. Juan Bautista de Alderete, 8",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker11),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: C. Río Guadiana, 10",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker12),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: C. Constitución de Cádiz, 5",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker13),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: Avenida Alemania, 2",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker14),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: Av. de María Guerrero, 10",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker15),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: Paseo de Ramón González Peña, 3",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker16),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: C. Zurbarán, 3",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker17),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: C. de Francisco Largo Caballero, 21",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker18),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: C. del Cerro Minguete, 156",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker19),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: C. del Camino Viejo de Villaverde, 32",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
-        MarkerInfoWindow(
-            state = MarkerState(position = marker20),
-            icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-            onInfoWindowClick = {
-                markerClicked.value = true
-            }
-        ) { marker ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                    )
-            ) {
-                Column(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Dirección: C. Rda. de las Cooperativas, 10",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                            .width(200.dp),
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.primary
-                    )
-                }
-            }
-        }
+        FootieMarker(
+            position = marker1,
+            markerClicked = markerClicked,
+            direction = "Dirección: C. de la Vírgen de los Desamparados, 20"
+        )
+        
+        FootieMarker(
+            position = marker2,
+            markerClicked = markerClicked,
+            direction = "Dirección: C. Hermandad de Donantes de Sangre, 7"
+        )
+        
+        FootieMarker(
+            position = marker3,
+            markerClicked = markerClicked,
+            direction = "Dirección: C. Santiago Amón, 8"
+        )
+        
+        FootieMarker(
+            position = marker4,
+            markerClicked = markerClicked,
+            direction = "Dirección: C. Sta. Florencia, 27"
+        )
+        
+        FootieMarker(
+            position = marker5,
+            markerClicked = markerClicked,
+            direction = "Dirección: C. del Payaso Fofó, 9, Madrid"
+        )
+        
+        FootieMarker(
+            position = marker6,
+            markerClicked = markerClicked,
+            direction = "Dirección: P.º de Juan XXIII, 39"
+        )
+        
+        FootieMarker(
+            position = marker7,
+            markerClicked = markerClicked,
+            direction = "Dirección: C. Puerto Real, 7"
+        )
+        
+        FootieMarker(
+            position = marker8,
+            markerClicked = markerClicked,
+            direction = "Dirección: Puente de Tres Olivos"
+        )
+        
+        FootieMarker(
+            position = marker9,
+            markerClicked = markerClicked,
+            direction = "Dirección: Av. de los Rosales, 91"
+        )
+        
+        FootieMarker(
+            position = marker10,
+            markerClicked = markerClicked,
+            direction = "Dirección: C. Juan Bautista de Alderete, 8"
+        )
+        
+        FootieMarker(
+            position = marker11,
+            markerClicked = markerClicked,
+            direction = "Dirección: C. Río Guadiana, 10"
+        )
+        
+        FootieMarker(
+            position = marker12,
+            markerClicked = markerClicked,
+            direction = "Dirección: C. Constitución de Cádiz, 5"
+        )
+        
+        FootieMarker(
+            position = marker13,
+            markerClicked = markerClicked,
+            direction = "Dirección: Avenida Alemania, 2"
+        )
+        
+        FootieMarker(
+            position = marker14,
+            markerClicked = markerClicked,
+            direction = "Dirección: Av. de María Guerrero, 10"
+        )
+        
+        FootieMarker(
+            position = marker15,
+            markerClicked = markerClicked,
+            direction = "Dirección: Paseo de Ramón González Peña, 3"
+        )
+        
+        FootieMarker(
+            position = marker16,
+            markerClicked = markerClicked,
+            direction = "Dirección: C. Zurbarán, 3"
+        )
+        
+        FootieMarker(
+            position = marker17,
+            markerClicked = markerClicked,
+            direction = "Dirección: C. de Francisco Largo Caballero, 21"
+        )
+        
+        FootieMarker(
+            position = marker18,
+            markerClicked = markerClicked,
+            direction = "Dirección: C. del Cerro Minguete, 156"
+        )
+
+        FootieMarker(
+            position = marker19,
+            markerClicked = markerClicked,
+            direction = "Dirección: C. del Camino Viejo de Villaverde, 32"
+        )
+
+        FootieMarker(
+            position = marker20,
+            markerClicked = markerClicked,
+            direction = "Dirección: C. Rda. de las Cooperativas, 10"
+        )
+
         if (markerClicked.value) {
             LaunchedEffect(Unit) {
                 goFootballMatch()
@@ -730,6 +231,44 @@ fun BodyContent(
     }
 }
 
+@Composable
+fun FootieMarker(
+    position: LatLng,
+    markerClicked: MutableState<Boolean>,
+    direction: String
+) {
+    MarkerInfoWindow(
+        state = MarkerState(position = position),
+        icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
+        onInfoWindowClick = {
+            markerClicked.value = true
+        }
+    ) { marker ->
+        Box(
+            modifier = Modifier
+                .background(
+                    color = Color.White,
+                    shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
+                )
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = direction,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .width(200.dp),
+                    style = MaterialTheme.typography.h5,
+                    color = MaterialTheme.colors.primary
+                )
+            }
+        }
+    }
+}
 @Composable
 fun BottomNavigationBar(
     goBack: () -> Unit,

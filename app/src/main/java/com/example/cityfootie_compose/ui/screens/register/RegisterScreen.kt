@@ -169,7 +169,7 @@ fun BodyContent(
             onChange = { registerViewModel.onNumberChange(it) }
         )
 
-        Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = Modifier.padding(0.dp))
 
         //USERNAME
         UsernameField(
@@ -193,7 +193,7 @@ fun BodyContent(
             onChange = { registerViewModel.onUsernameChange(it) }
         )
 
-        Spacer(modifier = Modifier.padding(1.dp))
+        Spacer(modifier = Modifier.padding(0.dp))
 
         //PASSWORD
         var passwordVisible by remember { mutableStateOf(false) }
@@ -245,7 +245,6 @@ fun BodyContent(
         ) {
             Text(text = "Crear cuenta")
         }
-
     }
 }
 
