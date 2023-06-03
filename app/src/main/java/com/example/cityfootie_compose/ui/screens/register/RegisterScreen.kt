@@ -57,11 +57,8 @@ fun BodyContent(
     goBack: () -> Unit,
     registerViewModel: RegisterViewModel = hiltViewModel()
 ) {
-    val scrollState = rememberScrollState()
     Column(
-        modifier = Modifier
-            .verticalScroll(scrollState)
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -166,7 +163,9 @@ fun BodyContent(
                 }
             ),
             keyboardType = KeyboardType.Number,
-            onChange = { registerViewModel.onNumberChange(it) }
+            onChange = {
+                registerViewModel.onNumberChange(it)
+            }
         )
 
         Spacer(modifier = Modifier.padding(0.dp))

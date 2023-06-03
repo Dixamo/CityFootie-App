@@ -7,7 +7,8 @@ sealed class AppScreens(val route: String) {
     object LoginScreen : AppScreens("login_screen")
     object RegisterScreen : AppScreens("register_screen")
     object UserScreen : AppScreens("user_screen")
-    object MapScreen : AppScreens("map_screen")
-    object FootBallMatchScreen : AppScreens("footballMatch_screen")
     object ModifyScreen : AppScreens("modify_screen")
+    object MapScreen : AppScreens("map_screen")
+    object CreateFootballMatchScreen : AppScreens("create_football_match_screen")
+    object JoinToFootballMatchScreen : AppScreens("join_to_football_match_screen")
 }

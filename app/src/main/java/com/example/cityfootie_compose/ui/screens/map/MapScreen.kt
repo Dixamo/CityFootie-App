@@ -9,7 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +25,8 @@ import com.google.maps.android.compose.*
 @Composable
 fun MapScreen(
     goBack: () -> Unit,
-    goFootballMatch: () -> Unit
+    goJoinToFootballMatchScreen: (String, String) -> Unit,
+    goCreateFootballMatchScreen: (String, String) -> Unit
 ) {
     val selectedItem = remember { mutableStateOf(1) }
 
@@ -51,16 +51,27 @@ fun MapScreen(
             )
         }
     ) {
-        BodyContent(goBack, goFootballMatch)
+        BodyContent(goBack, goJoinToFootballMatchScreen, goCreateFootballMatchScreen)
     }
 }
 
 @Composable
 fun BodyContent(
     goBack: () -> Unit,
-    goFootballMatch: () -> Unit,
+    goJoinToFootballMatchScreen: (String, String) -> Unit,
+    goCreateFootballMatchScreen: (String, String) -> Unit,
     mapViewModel: MapViewModel = hiltViewModel()
 ) {
+    var isLoading: Boolean = mapViewModel.isLoading
+    if (isLoading) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
+        }
+    }
+
     val marker1 = LatLng(40.35105282074944, -3.700295054544909)
     val marker2 = LatLng(40.354911925370416, -3.7005084128650765)
     val marker3 = LatLng(40.34924765147908, -3.693923893405747)
@@ -103,6 +114,7 @@ fun BodyContent(
         properties = properties,
         uiSettings = uiSettings
     ) {
+        var actualMarker: LatLng
         FootieMarker(
             position = marker1,
             markerClicked = markerClicked,
@@ -223,11 +235,40 @@ fun BodyContent(
             direction = "Dirección: C. Rda. de las Cooperativas, 10"
         )
 
-        if (markerClicked.value) {
+        var footballMatch = mapViewModel.footballMatch
+        var isCompleted = mapViewModel.isCompleted
+        var isSuccessful = mapViewModel.isSuccessful
+        var isError = mapViewModel.isError
+        var latitude = mapViewModel.markerLatitude
+        var longitude = mapViewModel.markerLongitude
+
+        if (isCompleted && isSuccessful) {
+            isCompleted = false
+            markerClicked.value = false
+            LaunchedEffect(footballMatch) {
+                markerClicked.value = false
+                isCompleted = false
+                isSuccessful = false
+                isError = false
+                goJoinToFootballMatchScreen(latitude.toString(), longitude.toString())
+            }
+        }
+        else if (isCompleted && isError) {
+            isCompleted = false
+            markerClicked.value = false
+            LaunchedEffect(footballMatch) {
+                markerClicked.value = false
+                isCompleted = false
+                isSuccessful = false
+                isError = false
+                goCreateFootballMatchScreen(latitude.toString(), longitude.toString())
+            }
+        }
+        /*if (markerClicked.value) {
             LaunchedEffect(Unit) {
                 goFootballMatch()
             }
-        }
+        }*/
     }
 }
 
@@ -235,13 +276,16 @@ fun BodyContent(
 fun FootieMarker(
     position: LatLng,
     markerClicked: MutableState<Boolean>,
-    direction: String
+    direction: String,
+    mapViewModel: MapViewModel = hiltViewModel()
 ) {
     MarkerInfoWindow(
         state = MarkerState(position = position),
         icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
         onInfoWindowClick = {
+            mapViewModel.getFootballMatch(position.latitude, position.longitude)
             markerClicked.value = true
+            markerClicked.value = false
         }
     ) { marker ->
         Box(

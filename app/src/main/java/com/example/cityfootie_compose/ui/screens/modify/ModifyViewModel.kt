@@ -40,7 +40,7 @@ class ModifyViewModel @Inject constructor(
 
     private fun isValidNumber(number: String): Boolean = number.length in 1..2
     fun onNumberChange(value: String) {
-        number = value
+        number = value.filter { it.isDigit() }
         _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidNumber(value)
     }
 
@@ -77,6 +77,7 @@ class ModifyViewModel @Inject constructor(
 
     fun updatePlayer(email: String){
         viewModelScope.launch (Dispatchers.IO) {
+            isLoading = true
             val response = updatePlayerUsecases.updatePlayer(
                 email,
                 name,
@@ -90,6 +91,7 @@ class ModifyViewModel @Inject constructor(
                     isError = true
                 }
             }
+            isLoading = false
         }
     }
 }

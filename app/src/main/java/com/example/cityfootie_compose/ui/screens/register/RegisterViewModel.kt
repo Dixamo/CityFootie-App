@@ -4,6 +4,7 @@ import android.util.Patterns
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -48,7 +49,7 @@ class RegisterViewModel @Inject constructor(
 
     private fun isValidNumber(number: String): Boolean = number.length in 1..2
     fun onNumberChange(value: String) {
-        number = value
+        number = value.filter { it.isDigit() }
         _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(value) && isValidUsername(username) && isValidPassword(password)
     }
 

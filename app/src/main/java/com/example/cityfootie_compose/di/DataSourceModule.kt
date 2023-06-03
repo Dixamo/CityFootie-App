@@ -3,11 +3,13 @@ package com.example.cityfootie_compose.di
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import com.example.cityfootie_compose.datasource.PlayerRepository
-import com.example.cityfootie_compose.datasource.PlayerRepositoryImpl
+import com.example.cityfootie_compose.datasource.FootieRepository
+import com.example.cityfootie_compose.datasource.FootieRepositoryImpl
 import com.example.cityfootie_compose.datasource.remote.FootieAPI
-import com.example.cityfootie_compose.datasource.remote.PlayerRemoteDataSource
-import com.example.cityfootie_compose.datasource.remote.PlayerRemoteDataSourceImpl
+import com.example.cityfootie_compose.datasource.remote.FootieRemoteDataSource
+import com.example.cityfootie_compose.datasource.remote.FootieRemoteDataSourceImpl
+import com.example.cityfootie_compose.usecases.get_match.GetFootballMatchUsecases
+import com.example.cityfootie_compose.usecases.get_match.GetFootballMatchUsecasesImpl
 import com.example.cityfootie_compose.usecases.login.GetPlayerUsecases
 import com.example.cityfootie_compose.usecases.login.GetPlayerUsecasesImpl
 import com.example.cityfootie_compose.usecases.modify.UpdatePlayerUsecases
@@ -106,33 +108,38 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun providePlayerRemoteDataSource(
+    fun provideFootieRemoteDataSource(
         footieAPI: FootieAPI,
         dispatcherProvider: DispatcherProvider
-    ): PlayerRemoteDataSource {
-        return PlayerRemoteDataSourceImpl(footieAPI, dispatcherProvider)
+    ): FootieRemoteDataSource {
+        return FootieRemoteDataSourceImpl(footieAPI, dispatcherProvider)
     }
 
     @Provides
     @Singleton
     fun provideRepository(
-        playerRemoteDataSource: PlayerRemoteDataSource
-    ): PlayerRepository {
-        return PlayerRepositoryImpl(playerRemoteDataSource)
+        footieRemoteDataSource: FootieRemoteDataSource
+    ): FootieRepository {
+        return FootieRepositoryImpl(footieRemoteDataSource)
     }
 
     @Provides
     @Singleton
-    fun providesGetLoginUseCase(playerRepository: PlayerRepository): GetPlayerUsecases =
-        GetPlayerUsecasesImpl(playerRepository)
+    fun providesGetLoginUseCase(footieRepository: FootieRepository): GetPlayerUsecases =
+        GetPlayerUsecasesImpl(footieRepository)
 
     @Provides
     @Singleton
-    fun providesPostPlayerUseCase(playerRepository: PlayerRepository): PostPlayerUsecases =
-        PostPlayerUsecasesImpl(playerRepository)
+    fun providesPostPlayerUseCase(footieRepository: FootieRepository): PostPlayerUsecases =
+        PostPlayerUsecasesImpl(footieRepository)
 
     @Provides
     @Singleton
-    fun providesUpdatePlayerUseCase(playerRepository: PlayerRepository): UpdatePlayerUsecases =
-        UpdatePlayerUsecasesImpl(playerRepository)
+    fun providesUpdatePlayerUseCase(footieRepository: FootieRepository): UpdatePlayerUsecases =
+        UpdatePlayerUsecasesImpl(footieRepository)
+
+    @Provides
+    @Singleton
+    fun providesGetFootballMatchUseCase(footieRepository: FootieRepository): GetFootballMatchUsecases =
+        GetFootballMatchUsecasesImpl(footieRepository)
 }

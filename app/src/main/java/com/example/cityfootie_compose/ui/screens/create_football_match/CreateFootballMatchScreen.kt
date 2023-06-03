@@ -1,12 +1,10 @@
-package com.example.cityfootie_compose.ui.screens.footballMatch
+package com.example.cityfootie_compose.ui.screens.create_football_match
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -29,12 +27,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cityfootie_compose.ui.screens.register.DataField
-import com.example.cityfootie_compose.ui.screens.register.RegisterViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun FootballMatchScreen(
-    goBack: () -> Unit, ) {
+fun CreateFootballMatchScreen(
+    latitude: String,
+    longitude: String,
+    goBack: () -> Unit
+) {
     Scaffold(topBar = {
         TopAppBar() {
             Icon(
@@ -52,13 +52,10 @@ fun FootballMatchScreen(
 @Composable
 fun BodyContent(
     goBack: () -> Unit,
-    footBallMatchViewModel: FootBallMatchViewModel = hiltViewModel()
+    createFootBallMatchViewModel: CreateFootballMatchViewModel = hiltViewModel()
 ) {
-    val scrollState = rememberScrollState()
     Column(
-        modifier = Modifier
-            .verticalScroll(scrollState)
-            .fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -87,7 +84,7 @@ fun BodyContent(
                 .focusRequester(focusRequester),
             label = "Date",
             placeholder = "Date",
-            text = footBallMatchViewModel.date,
+            text = createFootBallMatchViewModel.date,
             imeAction = ImeAction.Next,
             isEnabled = true,
             keyBoardActions = KeyboardActions(
@@ -96,7 +93,7 @@ fun BodyContent(
                 }
             ),
             keyboardType = KeyboardType.Text,
-            onChange = { footBallMatchViewModel.onDateChange(it) }
+            onChange = { createFootBallMatchViewModel.onDateChange(it) }
         )
 
         Spacer(modifier = Modifier.padding(0.dp))
@@ -110,7 +107,7 @@ fun BodyContent(
                 .focusRequester(focusRequester),
             label = "Número máximo",
             placeholder = "Número máximo",
-            text = footBallMatchViewModel.numberMax,
+            text = createFootBallMatchViewModel.numberMax,
             imeAction = ImeAction.Next,
             isEnabled = true,
             keyBoardActions = KeyboardActions(
@@ -119,7 +116,7 @@ fun BodyContent(
                 }
             ),
             keyboardType = KeyboardType.Text,
-            onChange = { footBallMatchViewModel.onNumberMaxChange(it) }
+            onChange = { createFootBallMatchViewModel.onNumberMaxChange(it) }
         )
 
         Spacer(modifier = Modifier.padding(0.dp))
@@ -133,7 +130,7 @@ fun BodyContent(
                 .focusRequester(focusRequester),
             label = "E-Mail",
             placeholder = "E-Mail",
-            text = footBallMatchViewModel.numberPlayers,
+            text = createFootBallMatchViewModel.numberPlayers,
             imeAction = ImeAction.Next,
             isEnabled = true,
             keyBoardActions = KeyboardActions(
@@ -142,38 +139,16 @@ fun BodyContent(
                 }
             ),
             keyboardType = KeyboardType.Email,
-            onChange = { footBallMatchViewModel.onNumberPlayersChange(it) }
-        )
-
-        Spacer(modifier = Modifier.padding(0.dp))
-
-        //STREET
-        DataField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp)
-                .padding(top = 0.dp)
-                .focusRequester(focusRequester),
-            label = "Dorsal",
-            placeholder = "Dorsal",
-            text = footBallMatchViewModel.street,
-            imeAction = ImeAction.Next,
-            isEnabled = true,
-            keyBoardActions = KeyboardActions(
-                onNext = {
-                    focusManager.moveFocus(FocusDirection.Down)
-                }
-            ),
-            keyboardType = KeyboardType.Number,
-            onChange = { footBallMatchViewModel.onStreetChange(it) }
+            onChange = { createFootBallMatchViewModel.onNumberPlayersChange(it) }
         )
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        val isButtonEnabled: Boolean by footBallMatchViewModel.isButtonEnabled.observeAsState(initial = false)
+        val isButtonEnabled: Boolean by createFootBallMatchViewModel.isButtonEnabled.observeAsState(initial = false)
 
         Button(
             onClick = {
+                goBack()
             },
             enabled = isButtonEnabled
         ) {

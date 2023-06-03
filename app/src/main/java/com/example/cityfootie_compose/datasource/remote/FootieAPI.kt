@@ -1,5 +1,6 @@
 package com.example.cityfootie_compose.datasource.remote
 
+import com.example.cityfootie_compose.model.FootballMatch
 import com.example.cityfootie_compose.model.Player
 import retrofit2.Response
 import retrofit2.http.Body
@@ -16,6 +17,11 @@ interface FootieAPI {
         @Query("password") password: String
     ): Response<Player>
 
+    @GET("players/{email}")
+    suspend fun getPlayerByEmail(
+        @Path("email") email: String
+    ): Response<Player>
+
     @POST("players")
     suspend fun postPlayer(
         @Body newPlayer: Player
@@ -29,4 +35,10 @@ interface FootieAPI {
         @Query("surnames") surnames: String,
         @Query("number") number: Int
     ) :Response<Void>
+
+    @GET("footballMatches")
+    suspend fun getFootballMatch(
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double
+    ): Response<FootballMatch>
 }

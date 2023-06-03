@@ -1,4 +1,4 @@
-package com.example.cityfootie_compose.ui.screens.footballMatch
+package com.example.cityfootie_compose.ui.screens.create_football_match
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,12 +6,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.cityfootie_compose.usecases.register.PostPlayerUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class FootBallMatchViewModel @Inject constructor(
+class CreateFootballMatchViewModel @Inject constructor(
 ): ViewModel() {
     var date: String by mutableStateOf("")
     var numberMax: String by mutableStateOf("")
@@ -45,3 +44,4 @@ class FootBallMatchViewModel @Inject constructor(
         _isButtonEnabled.value = isValidDate(date) && isValidNumberMax(numberMax) && isValidNumberPlayers(numberPlayers) && isValidStreet(value)
     }
 }
+
