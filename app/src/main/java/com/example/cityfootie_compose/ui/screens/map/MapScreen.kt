@@ -24,8 +24,9 @@ import com.google.maps.android.compose.*
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MapScreen(
+    email: String,
     goBack: () -> Unit,
-    goJoinToFootballMatchScreen: (String, String) -> Unit,
+    goJoinToFootballMatchScreen: (String, String, String) -> Unit,
     goCreateFootballMatchScreen: (String, String) -> Unit
 ) {
     val selectedItem = remember { mutableStateOf(1) }
@@ -51,14 +52,15 @@ fun MapScreen(
             )
         }
     ) {
-        BodyContent(goBack, goJoinToFootballMatchScreen, goCreateFootballMatchScreen)
+        BodyContent(email, goBack, goJoinToFootballMatchScreen, goCreateFootballMatchScreen)
     }
 }
 
 @Composable
 fun BodyContent(
+    email: String,
     goBack: () -> Unit,
-    goJoinToFootballMatchScreen: (String, String) -> Unit,
+    goJoinToFootballMatchScreen: (String, String, String) -> Unit,
     goCreateFootballMatchScreen: (String, String) -> Unit,
     mapViewModel: MapViewModel = hiltViewModel()
 ) {
@@ -242,25 +244,17 @@ fun BodyContent(
         var latitude = mapViewModel.markerLatitude
         var longitude = mapViewModel.markerLongitude
 
-        if (isCompleted && isSuccessful) {
+        LaunchedEffect (isCompleted) {
             isCompleted = false
             markerClicked.value = false
-            LaunchedEffect(footballMatch) {
+            if (isSuccessful) {
                 markerClicked.value = false
-                isCompleted = false
-                isSuccessful = false
-                isError = false
-                goJoinToFootballMatchScreen(latitude.toString(), longitude.toString())
+                mapViewModel.resetValues()
+                goJoinToFootballMatchScreen(email, latitude.toString(), longitude.toString())
             }
-        }
-        else if (isCompleted && isError) {
-            isCompleted = false
-            markerClicked.value = false
-            LaunchedEffect(footballMatch) {
+            else if (isError) {
                 markerClicked.value = false
-                isCompleted = false
-                isSuccessful = false
-                isError = false
+                mapViewModel.resetValues()
                 goCreateFootballMatchScreen(latitude.toString(), longitude.toString())
             }
         }

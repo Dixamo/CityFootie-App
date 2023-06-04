@@ -25,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun JoinToFootballMatchScreen(
+    email: String,
     latitude: String,
     longitude: String,
     goBack: () -> Unit

@@ -26,7 +26,7 @@ import kotlinx.coroutines.delay
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun UserScreen(
-    goMapScreen: () -> Unit,
+    goMapScreen: (String) -> Unit,
     goModifyScreen: (String) -> Unit,
     email: String,
     password: String
@@ -49,7 +49,7 @@ fun UserScreen(
                 )
             )
             BottomNavigationBar(
-                goMapScreen = goMapScreen,
+                goMapScreen = { goMapScreen(email) },
                 items = bottomNavigationItems,
                 selectedItem = selectedItem
             )
@@ -61,7 +61,7 @@ fun UserScreen(
 
 @Composable
 fun BodyContent(
-    goMapScreen: () -> Unit,
+    goMapScreen: (String) -> Unit,
     goModifyScreen: (String) -> Unit,
     email: String,
     password: String,

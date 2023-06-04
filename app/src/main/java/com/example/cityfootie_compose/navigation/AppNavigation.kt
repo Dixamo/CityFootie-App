@@ -61,8 +61,8 @@ fun AppNavigation(navController: NavHostController) {
                 email = backStackEntry.arguments?.getString("email") ?: "null",
                 password = backStackEntry.arguments?.getString("password") ?: "null",
 
-                goMapScreen = {
-                    navController.navigate(AppScreens.MapScreen.route)
+                goMapScreen = { email ->
+                    navController.navigate(AppScreens.MapScreen.route + "/${email}")
                 },
 
                 goModifyScreen = { email ->
@@ -81,14 +81,22 @@ fun AppNavigation(navController: NavHostController) {
             )
         }
 
-        composable(route = AppScreens.MapScreen.route) {
+        composable(
+            route = AppScreens.MapScreen.route + "/{email}",
+            arguments = listOf(
+                navArgument("email") {
+                    type = NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
             MapScreen(
+                email = backStackEntry.arguments?.getString("email") ?: "null",
                 goBack = {
                     navController.navigateUp()
                 },
-                goJoinToFootballMatchScreen = { latitude, longitude ->
+                goJoinToFootballMatchScreen = { email, latitude, longitude ->
                     navController.navigate(
-                        AppScreens.JoinToFootballMatchScreen.route + "/${latitude}/${longitude}"
+                        AppScreens.JoinToFootballMatchScreen.route + "/${email}/${latitude}/${longitude}"
                     )
                 },
                 goCreateFootballMatchScreen = { latitude, longitude ->
@@ -113,12 +121,11 @@ fun AppNavigation(navController: NavHostController) {
 
                 goBack = {
                     navController.navigateUp()
-                    navController.navigateUp()
                 }
             )
         }
 
-        composable(route = AppScreens.JoinToFootballMatchScreen.route + "/{latitude}/{longitude}", arguments = listOf(
+        composable(route = AppScreens.JoinToFootballMatchScreen.route + "/{email}/{latitude}/{longitude}", arguments = listOf(
             navArgument("latitude") {
                 type = NavType.StringType
             },
@@ -127,11 +134,11 @@ fun AppNavigation(navController: NavHostController) {
             })
         ) { backStackEntry ->
             JoinToFootballMatchScreen(
+                email = backStackEntry.arguments?.getString("email") ?: "null",
                 latitude = backStackEntry.arguments?.getString("latitude") ?: "null",
                 longitude = backStackEntry.arguments?.getString("longitude") ?: "null",
 
                 goBack = {
-                    navController.navigateUp()
                     navController.navigateUp()
                 }
             )

@@ -27,6 +27,9 @@ class MapViewModel @Inject constructor(
     var isError: Boolean by mutableStateOf(false)
     var markerLatitude: Double? by mutableStateOf(null)
     var markerLongitude: Double? by mutableStateOf(null)
+    init {
+        footballMatch = null
+    }
     fun getFootballMatch(latitude: Double, longitude: Double) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
@@ -46,5 +49,11 @@ class MapViewModel @Inject constructor(
             }
             isLoading = false
         }
+    }
+
+    fun resetValues() {
+        isCompleted = false
+        isSuccessful = false
+        isError = false
     }
 }
