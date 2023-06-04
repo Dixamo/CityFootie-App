@@ -14,6 +14,8 @@ import com.example.cityfootie_compose.usecases.login.GetPlayerUsecases
 import com.example.cityfootie_compose.usecases.login.GetPlayerUsecasesImpl
 import com.example.cityfootie_compose.usecases.modify.UpdatePlayerUsecases
 import com.example.cityfootie_compose.usecases.modify.UpdatePlayerUsecasesImpl
+import com.example.cityfootie_compose.usecases.post_match.PostFootballMatchUsecases
+import com.example.cityfootie_compose.usecases.post_match.PostFootballMatchUsecasesImpl
 import com.example.cityfootie_compose.usecases.register.PostPlayerUsecases
 import com.example.cityfootie_compose.usecases.register.PostPlayerUsecasesImpl
 import com.example.cityfootie_compose.util.DispatcherProvider
@@ -142,4 +144,9 @@ object DataSourceModule {
     @Singleton
     fun providesGetFootballMatchUseCase(footieRepository: FootieRepository): GetFootballMatchUsecases =
         GetFootballMatchUsecasesImpl(footieRepository)
+
+    @Provides
+    @Singleton
+    fun providesPostFootballMatchUsecase(footieRepository: FootieRepository): PostFootballMatchUsecases =
+        PostFootballMatchUsecasesImpl(footieRepository)
 }

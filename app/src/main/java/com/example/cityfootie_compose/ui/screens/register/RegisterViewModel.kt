@@ -71,7 +71,7 @@ class RegisterViewModel @Inject constructor(
     fun postUser() {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
-            var newPlayer : Player = Player(name, surnames, username, email, password, number.toInt())
+            val newPlayer : Player = Player(name, surnames, username, email, password, number.toInt())
             val response = postPlayerUsecases.postPlayer(newPlayer)
             if (response != null) {
                 if (response.isSuccessful) {

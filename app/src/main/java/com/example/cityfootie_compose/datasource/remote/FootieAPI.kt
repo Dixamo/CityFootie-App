@@ -41,4 +41,9 @@ interface FootieAPI {
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double
     ): Response<FootballMatch>
+
+    @POST("footballMatches")
+    suspend fun postFootballMatch(
+        @Body newFootballMatch: FootballMatch
+    ): Response<Void>
 }

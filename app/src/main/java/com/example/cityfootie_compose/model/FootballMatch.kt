@@ -7,14 +7,14 @@ data class FootballMatch(
     //@SerializedName("latitude")
     var latitude: Double? = null,
 
-    //@SerializedName("surnames")
+    //@SerializedName("longitude")
     var longitude: Double? = null,
 
     @SerializedName("number_max")
     var numberMax: Int? = null,
 
     @SerializedName("number_players")
-    var number_players: String? = null,
+    var numberPlayers: Int? = null,
 
     //@SerializedName("date")
     var date: Timestamp? = null,

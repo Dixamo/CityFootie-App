@@ -45,12 +45,14 @@ fun CreateFootballMatchScreen(
                 })
         }
     }) {
-        BodyContent(goBack)
+        BodyContent(latitude, longitude, goBack)
     }
 }
 
 @Composable
 fun BodyContent(
+    latitude: String,
+    longitude: String,
     goBack: () -> Unit,
     createFootBallMatchViewModel: CreateFootballMatchViewModel = hiltViewModel()
 ) {
@@ -84,7 +86,7 @@ fun BodyContent(
                 .focusRequester(focusRequester),
             label = "Date",
             placeholder = "Date",
-            text = createFootBallMatchViewModel.date,
+            text = createFootBallMatchViewModel.dateString,
             imeAction = ImeAction.Next,
             isEnabled = true,
             keyBoardActions = KeyboardActions(
@@ -115,7 +117,7 @@ fun BodyContent(
                     focusManager.moveFocus(FocusDirection.Down)
                 }
             ),
-            keyboardType = KeyboardType.Text,
+            keyboardType = KeyboardType.Number,
             onChange = { createFootBallMatchViewModel.onNumberMaxChange(it) }
         )
 
@@ -128,8 +130,8 @@ fun BodyContent(
                 .padding(start = 16.dp, end = 16.dp)
                 .padding(top = 0.dp)
                 .focusRequester(focusRequester),
-            label = "E-Mail",
-            placeholder = "E-Mail",
+            label = "Numero de Jugadores",
+            placeholder = "Numero de Jugadores",
             text = createFootBallMatchViewModel.numberPlayers,
             imeAction = ImeAction.Next,
             isEnabled = true,
@@ -138,7 +140,7 @@ fun BodyContent(
                     focusManager.moveFocus(FocusDirection.Down)
                 }
             ),
-            keyboardType = KeyboardType.Email,
+            keyboardType = KeyboardType.Number,
             onChange = { createFootBallMatchViewModel.onNumberPlayersChange(it) }
         )
 
@@ -148,9 +150,10 @@ fun BodyContent(
 
         Button(
             onClick = {
+                createFootBallMatchViewModel.postFootballMatch(latitude, longitude)
                 goBack()
             },
-            enabled = isButtonEnabled
+            //enabled = isButtonEnabled
         ) {
             Text(text = "Crear partido")
         }
