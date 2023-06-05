@@ -11,4 +11,8 @@ class GetPlayerUsecasesImpl @Inject constructor(
     override suspend fun getPlayer(email: String, password: String): Response<Player> {
         return footieRepository.getPlayer(email, password)
     }
+
+    override suspend fun getPlayerByEmail(email: String): Response<Player>? {
+        return footieRepository.getPlayerByEmail(email)
+    }
 }

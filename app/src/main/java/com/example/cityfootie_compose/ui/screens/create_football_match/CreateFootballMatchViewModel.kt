@@ -82,4 +82,3 @@ class CreateFootballMatchViewModel @Inject constructor(
         }
     }
 }
-

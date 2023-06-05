@@ -17,6 +17,8 @@ import com.example.cityfootie_compose.usecases.modify.UpdatePlayerUsecases
 import com.example.cityfootie_compose.usecases.modify.UpdatePlayerUsecasesImpl
 import com.example.cityfootie_compose.usecases.post_match.PostFootballMatchUsecases
 import com.example.cityfootie_compose.usecases.post_match.PostFootballMatchUsecasesImpl
+import com.example.cityfootie_compose.usecases.put_match.PutFootballMatchUsecases
+import com.example.cityfootie_compose.usecases.put_match.PutFootballMatchUsecasesImpl
 import com.example.cityfootie_compose.usecases.register.PostPlayerUsecases
 import com.example.cityfootie_compose.usecases.register.PostPlayerUsecasesImpl
 import com.example.cityfootie_compose.util.DispatcherProvider
@@ -69,8 +71,8 @@ object DataSourceModule {
     @SuppressLint("SimpleDateFormat")
     @Provides
     fun provideGson(): Gson {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss+02:00")
+        dateFormat.timeZone = TimeZone.getTimeZone("Europe/Madrid")
         return GsonBuilder().serializeNulls().setLenient().setDateFormat(dateFormat.toPattern()).create()
     }
 
@@ -157,4 +159,10 @@ object DataSourceModule {
     @Singleton
     fun providesPostFootballMatchUsecase(footieRepository: FootieRepository): PostFootballMatchUsecases =
         PostFootballMatchUsecasesImpl(footieRepository)
+
+    @Provides
+    @Singleton
+    fun providesPutFootballMatchUsecase(footieRepository: FootieRepository): PutFootballMatchUsecases =
+        PutFootballMatchUsecasesImpl(footieRepository)
+
 }

@@ -28,4 +28,12 @@ class FootieRepositoryImpl @Inject constructor(
     override suspend fun postFootballMatch(newFootballMatch: FootballMatch): Response<Void> {
         return footieRemoteDataSource.postFootballMatch(newFootballMatch)
     }
+
+    override suspend fun putFootballMatch(email: String, latitude: Double, longitude: Double): Response<Void> {
+        return footieRemoteDataSource.putFootballMatch(email, latitude, longitude)
+    }
+
+    override suspend fun getPlayerByEmail(email: String): Response<Player> {
+        return footieRemoteDataSource.getPlayerByEmail(email)
+    }
 }

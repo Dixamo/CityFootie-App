@@ -46,4 +46,11 @@ interface FootieAPI {
     suspend fun postFootballMatch(
         @Body newFootballMatch: FootballMatch
     ): Response<Void>
+
+    @PUT("footballMatches")
+    suspend fun putFootballMatch(
+        @Query("email") email: String,
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double
+    ): Response<Void>
 }
