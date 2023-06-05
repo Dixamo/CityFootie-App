@@ -1,5 +1,6 @@
 package com.example.cityfootie_compose.ui.screens.create_football_match
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 import javax.inject.Inject
@@ -29,17 +31,11 @@ class CreateFootballMatchViewModel @Inject constructor(
     private val _isButtonEnabled = MutableLiveData(false)
     val isButtonEnabled: LiveData<Boolean> = _isButtonEnabled
 
-    private fun parseDate(dateString: String): Timestamp {
-        val inputFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-        val date = inputFormat.parse(dateString)
+    @SuppressLint("SimpleDateFormat")
+    fun parseStringToTimestamp(dateTimeString: String): Timestamp {
+        val format = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        val date: Date = format.parse(dateTimeString) as Date
         return Timestamp(date.time)
-    }
-
-    private fun formatDateString(timestamp: Timestamp): String {
-        val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        outputFormat.timeZone = TimeZone.getTimeZone("UTC")
-        val formattedDate = outputFormat.format(timestamp)
-        return formattedDate.replace("'", "").replace("Z", "").replace("T", " ")
     }
 
     private fun isValidDate(date: String): Boolean = date.length > 0
@@ -66,14 +62,13 @@ class CreateFootballMatchViewModel @Inject constructor(
 
     fun postFootballMatch(latitude : String, longitude : String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val timestamp = parseDate(dateString)
-            val formattedDate = formatDateString(timestamp)
+            val formattedDate = parseStringToTimestamp(dateString)
             val newFootballMatch: FootballMatch = FootballMatch(
                 latitude.toDouble(),
                 longitude.toDouble(),
                 numberMax.toInt(),
                 numberPlayers.toInt(),
-                Timestamp.valueOf(formattedDate)
+                formattedDate
             )
             val response = postFootballMatchUsecases.postFootballMatch(newFootballMatch)
             if (response != null) {

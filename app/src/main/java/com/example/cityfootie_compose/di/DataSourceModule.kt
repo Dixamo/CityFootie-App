@@ -1,5 +1,6 @@
 package com.example.cityfootie_compose.di
 
+import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -32,6 +33,8 @@ import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.TimeZone
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -63,8 +66,13 @@ object DataSourceModule {
         }.apply { level = HttpLoggingInterceptor.Level.BODY }
     }
 
+    @SuppressLint("SimpleDateFormat")
     @Provides
-    fun provideGson(): Gson = GsonBuilder().serializeNulls().setLenient().create()
+    fun provideGson(): Gson {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
+        return GsonBuilder().serializeNulls().setLenient().setDateFormat(dateFormat.toPattern()).create()
+    }
 
     @Provides
     @Singleton
