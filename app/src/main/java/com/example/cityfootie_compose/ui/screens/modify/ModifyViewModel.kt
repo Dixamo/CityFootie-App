@@ -20,53 +20,61 @@ class ModifyViewModel @Inject constructor(
     private val updatePlayerUsecases: UpdatePlayerUsecases,
     private val getPlayerUsecases: GetPlayerUsecases
 ): ViewModel() {
+    var player: Player? = null
     var name: String by mutableStateOf("")
     var surnames: String by mutableStateOf("")
+    var username: String by mutableStateOf("")
     var number: String by mutableStateOf("")
 
     private fun isValidName(name: String): Boolean = name.length > 1
     fun onNameChange(value: String) {
         name = value
-        _isButtonEnabled.value = isValidName(value) && isValidSurnames(surnames) && isValidNumber(number)
+        _isButtonEnabled.value = isValidName(value) && isValidSurnames(surnames) && isValidUsername(username) && isValidNumber(number)
     }
 
 
     private fun isValidSurnames(surnames: String): Boolean = surnames.length > 1
     fun onSurnameChange(value: String) {
         surnames = value
-        _isButtonEnabled.value = isValidName(name) && isValidSurnames(value) && isValidNumber(number)
+        _isButtonEnabled.value = isValidName(name) && isValidSurnames(value) && isValidUsername(username) && isValidNumber(number)
+    }
+
+    private fun isValidUsername(username: String): Boolean = username.length > 2
+    fun onUsernameChange(value: String) {
+        username = value
+        _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidUsername(value) && isValidNumber(number)
     }
 
 
     private fun isValidNumber(number: String): Boolean = number.length in 1..2
     fun onNumberChange(value: String) {
         number = value.filter { it.isDigit() }
-        _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidNumber(value)
+        _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidUsername(username) && isValidNumber(value)
     }
 
     private val _isButtonEnabled = MutableLiveData(false)
     val isButtonEnabled: LiveData<Boolean> = _isButtonEnabled
 
 
-    var player: Player? = null
+
     var isLoading: Boolean by mutableStateOf(false)
     var isCompleted: Boolean by mutableStateOf(false)
     var isError: Boolean by mutableStateOf(false)
 
-    /*init {
-        getPlayer()
-    }*/
-    fun getPlayer(email: String, password: String) {
+    fun getPlayer(email: String) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
-            val response = getPlayerUsecases.getPlayer(
-                email,
-                password
+            val response = getPlayerUsecases.getPlayerByEmail(
+                email
             )
             if (response != null) {
                 if (response.isSuccessful) {
                     isCompleted = true
                     player = response.body()
+                    name = player!!.name!!
+                    surnames = player!!.surnames!!
+                    username = player!!.username!!
+                    number = player!!.number!!.toString()
                 } else {
                     isError = true
                 }
@@ -82,6 +90,7 @@ class ModifyViewModel @Inject constructor(
                 email,
                 name,
                 surnames,
+                username,
                 number.toInt()
             )
             if (response != null) {

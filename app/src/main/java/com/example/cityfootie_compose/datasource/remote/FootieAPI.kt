@@ -33,6 +33,7 @@ interface FootieAPI {
         @Path("email") email: String,
         @Query("name") name: String,
         @Query("surnames") surnames: String,
+        @Query("username") username: String,
         @Query("number") number: Int
     ) :Response<Void>
 

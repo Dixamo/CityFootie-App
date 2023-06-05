@@ -55,7 +55,7 @@ fun UserScreen(
             )
         }
     ) {
-        BodyContent(goMapScreen, goModifyScreen, email, password)
+        BodyContent(goMapScreen, goModifyScreen, email)
     }
 }
 
@@ -64,7 +64,6 @@ fun BodyContent(
     goMapScreen: (String) -> Unit,
     goModifyScreen: (String) -> Unit,
     email: String,
-    password: String,
     userViewModel: UserViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
@@ -73,7 +72,7 @@ fun BodyContent(
     var isLoading: Boolean = userViewModel.isLoading
 
     LaunchedEffect(Unit) {
-        userViewModel.getPlayer(email, password)
+        userViewModel.getPlayer(email)
         while (player == null) {
             delay(100)
         }

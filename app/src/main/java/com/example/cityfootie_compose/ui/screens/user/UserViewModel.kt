@@ -29,15 +29,11 @@ class UserViewModel @Inject constructor(
     var isCompleted: Boolean by mutableStateOf(false)
     var isError: Boolean by mutableStateOf(false)
 
-    /*init {
-        getPlayer()
-    }*/
-    fun getPlayer(email: String, password: String) {
+    fun getPlayer(email: String) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
-            val response = getPlayerUsecases.getPlayer(
-                email,
-                password
+            val response = getPlayerUsecases.getPlayerByEmail(
+                email
             )
             if (response != null) {
                 if (response.isSuccessful) {

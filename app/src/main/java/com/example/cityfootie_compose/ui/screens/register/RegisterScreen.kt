@@ -210,7 +210,9 @@ fun BodyContent(
             isEnabled = true,
             keyboardType = KeyboardType.Password,
             keyBoardActions = KeyboardActions(
-                onDone = {}
+                onNext = {
+                    focusManager.moveFocus(FocusDirection.Down)
+                }
             ),
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
@@ -256,7 +258,7 @@ fun DataField(
     onChange: (String) -> Unit,
     imeAction: ImeAction = ImeAction.Next,
     keyboardType: KeyboardType,
-    keyBoardActions: KeyboardActions = KeyboardActions(),
+    keyBoardActions: KeyboardActions,
     isEnabled: Boolean = true
 ) {
     Column(modifier = Modifier.height(90.dp)) {
@@ -299,7 +301,7 @@ fun UsernameField(
     onChange: (String) -> Unit,
     imeAction: ImeAction = ImeAction.Next,
     keyboardType: KeyboardType = KeyboardType.Text,
-    keyBoardActions: KeyboardActions = KeyboardActions(),
+    keyBoardActions: KeyboardActions,
     isEnabled: Boolean = true
 ) {
     Column(modifier = Modifier.height(90.dp)) {
@@ -346,7 +348,7 @@ fun PasswordField(
     onChange: (String) -> Unit,
     imeAction: ImeAction = ImeAction.Next,
     keyboardType: KeyboardType = KeyboardType.Text,
-    keyBoardActions: KeyboardActions = KeyboardActions(),
+    keyBoardActions: KeyboardActions,
     isEnabled: Boolean = true,
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {

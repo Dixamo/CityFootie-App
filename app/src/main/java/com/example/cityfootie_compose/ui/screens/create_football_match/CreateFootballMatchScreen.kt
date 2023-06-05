@@ -189,7 +189,7 @@ fun DataField(
     onChange: (String) -> Unit,
     imeAction: ImeAction = ImeAction.Next,
     keyboardType: KeyboardType = KeyboardType.Text,
-    keyBoardActions: KeyboardActions = KeyboardActions(),
+    keyBoardActions: KeyboardActions,
     isEnabled: Boolean = true
 ) {
     Column(modifier = Modifier.height(90.dp)) {

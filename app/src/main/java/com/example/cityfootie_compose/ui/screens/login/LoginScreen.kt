@@ -127,7 +127,9 @@ fun BodyContent(
             isEnabled = true,
             keyboardType = KeyboardType.Password,
             keyBoardActions = KeyboardActions(
-                onDone = {}
+                onNext = {
+                    focusManager.moveFocus(FocusDirection.Down)
+                }
             ),
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
@@ -200,9 +202,9 @@ fun EmailField(
     label: String,
     placeholder: String,
     onChange: (String) -> Unit,
-    imeAction: ImeAction = ImeAction.Next,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    keyBoardActions: KeyboardActions = KeyboardActions(),
+    imeAction: ImeAction,
+    keyboardType: KeyboardType,
+    keyBoardActions: KeyboardActions,
     isEnabled: Boolean = true
 ) {
     Column(modifier = Modifier.height(90.dp)) {
@@ -216,7 +218,10 @@ fun EmailField(
             value = text,
             onValueChange = { onChange(it) },
             textStyle = TextStyle(fontSize = 18.sp),
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
             keyboardActions = keyBoardActions,
             enabled = isEnabled,
             colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -247,9 +252,9 @@ fun PasswordField(
     placeholder: String,
     trailingIcon: @Composable (() -> Unit)? = null,
     onChange: (String) -> Unit,
-    imeAction: ImeAction = ImeAction.Next,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    keyBoardActions: KeyboardActions = KeyboardActions(),
+    imeAction: ImeAction,
+    keyboardType: KeyboardType,
+    keyBoardActions: KeyboardActions,
     isEnabled: Boolean = true,
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
@@ -266,7 +271,10 @@ fun PasswordField(
             trailingIcon = trailingIcon,
             textStyle = TextStyle(fontSize = 18.sp),
             visualTransformation = visualTransformation,
-            keyboardOptions = KeyboardOptions(imeAction = imeAction, keyboardType = keyboardType),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
             keyboardActions = keyBoardActions,
             enabled = isEnabled,
             colors = TextFieldDefaults.outlinedTextFieldColors(
