@@ -36,10 +36,10 @@ fun AppNavigation(navController: NavHostController) {
 
         composable(route = AppScreens.LoginScreen.route) {
             LoginScreen(
-                goUserScreen = { email, password ->
+                goUserScreen = { email ->
                     navController.popBackStack()
                     navController.navigate(
-                        AppScreens.UserScreen.route + "/${email}/${password}"
+                        AppScreens.UserScreen.route + "/${email}"
                     )
                 },
                 goRegisterScreen = {
@@ -49,22 +49,17 @@ fun AppNavigation(navController: NavHostController) {
         }
 
         composable(
-            route = AppScreens.UserScreen.route + "/{email}/{password}", arguments = listOf(
+            route = AppScreens.UserScreen.route + "/{email}", arguments = listOf(
                 navArgument("email") {
                     type = NavType.StringType
-                },
-                navArgument("password") {
-                    type = NavType.StringType
-                })
+                }
+            )
         ) { backStackEntry ->
             UserScreen(
                 email = backStackEntry.arguments?.getString("email") ?: "null",
-                password = backStackEntry.arguments?.getString("password") ?: "null",
-
                 goMapScreen = { email ->
                     navController.navigate(AppScreens.MapScreen.route + "/${email}")
                 },
-
                 goModifyScreen = { email ->
                     navController.navigate(
                         AppScreens.ModifyScreen.route + "/${email}"

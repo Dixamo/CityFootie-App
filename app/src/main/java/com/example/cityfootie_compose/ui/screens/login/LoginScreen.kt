@@ -38,7 +38,7 @@ import java.lang.Thread.sleep
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(
-    goUserScreen: (String, String) -> Unit,
+    goUserScreen: (String) -> Unit,
     goRegisterScreen: () -> Unit
 ) {
     BodyContent(goUserScreen, goRegisterScreen)
@@ -46,7 +46,7 @@ fun LoginScreen(
 
 @Composable
 fun BodyContent(
-    goUserScreen: (String, String) -> Unit,
+    goUserScreen: (String) -> Unit,
     goRegisterScreen: () -> Unit,
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
@@ -160,7 +160,7 @@ fun BodyContent(
             if (isCompleted) {
                 if (player != null) {
                     Log.d("player", player.name.toString())
-                    goUserScreen(player.email!!, player.password!!)
+                    goUserScreen(player.email!!)
                 }
             }
         }

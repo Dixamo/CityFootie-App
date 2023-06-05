@@ -315,7 +315,10 @@ fun UsernameField(
             value = text,
             onValueChange = { onChange(it) },
             textStyle = TextStyle(fontSize = 18.sp),
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
             keyboardActions = keyBoardActions,
             enabled = isEnabled,
             colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -365,7 +368,10 @@ fun PasswordField(
             trailingIcon = trailingIcon,
             textStyle = TextStyle(fontSize = 18.sp),
             visualTransformation = visualTransformation,
-            keyboardOptions = KeyboardOptions(imeAction = imeAction, keyboardType = keyboardType),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
             keyboardActions = keyBoardActions,
             enabled = isEnabled,
             colors = TextFieldDefaults.outlinedTextFieldColors(

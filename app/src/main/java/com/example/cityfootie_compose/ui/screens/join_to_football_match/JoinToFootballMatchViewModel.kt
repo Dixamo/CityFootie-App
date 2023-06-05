@@ -7,22 +7,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cityfootie_compose.model.FootballMatch
 import com.example.cityfootie_compose.model.Player
-import com.example.cityfootie_compose.usecases.get_match.GetFootballMatchUsecases
-import com.example.cityfootie_compose.usecases.login.GetPlayerUsecases
 import com.example.cityfootie_compose.usecases.put_match.PutFootballMatchUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
 class JoinToFootballMatchViewModel @Inject constructor(
     private val putFootballMatchUsecases: PutFootballMatchUsecases,
 ): ViewModel(){
-    var Email: String by mutableStateOf("")
+    var email: String by mutableStateOf("")
     var markerLatitude: Double? by mutableStateOf(null)
     var markerLongitude: Double? by mutableStateOf(null)
 
@@ -38,7 +34,7 @@ class JoinToFootballMatchViewModel @Inject constructor(
     fun putFootballMatch(email: String, latitude: Double, longitude: Double) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
-            Email = email
+            this@JoinToFootballMatchViewModel.email = email
             markerLatitude = latitude
             markerLongitude = longitude
             val response = putFootballMatchUsecases.putFootballMatch(email, latitude, longitude)

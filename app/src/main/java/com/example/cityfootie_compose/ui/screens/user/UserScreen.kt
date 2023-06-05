@@ -28,8 +28,7 @@ import kotlinx.coroutines.delay
 fun UserScreen(
     goMapScreen: (String) -> Unit,
     goModifyScreen: (String) -> Unit,
-    email: String,
-    password: String
+    email: String
 ) {
 
     val selectedItem = remember { mutableStateOf(0) }

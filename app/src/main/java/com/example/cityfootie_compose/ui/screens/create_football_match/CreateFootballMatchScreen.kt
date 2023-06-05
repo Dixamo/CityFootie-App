@@ -96,7 +96,7 @@ fun BodyContent(
         //DATE
 
         val context = LocalContext.current
-        showDatePicker(context)
+        DateTimePicker(context)
 
         /*DataField(
             modifier = Modifier
@@ -173,7 +173,7 @@ fun BodyContent(
                 createFootBallMatchViewModel.postFootballMatch(latitude, longitude)
                 goBack()
             },
-            //enabled = isButtonEnabled
+            enabled = isButtonEnabled
         ) {
             Text(text = "Crear partido")
         }
@@ -220,7 +220,53 @@ fun DataField(
 }
 
 @Composable
-fun showDatePicker(
+fun DateField(
+    modifier: Modifier = Modifier,
+    text: String,
+    label: String,
+    placeholder: String,
+    onChange: (String) -> Unit,
+    onClick: () -> Unit,
+    //imeAction: ImeAction,
+    //keyboardType: KeyboardType,
+    //keyBoardActions: KeyboardActions,
+    isEnabled: Boolean = false
+) {
+    Column(modifier = Modifier.height(90.dp)) {
+        OutlinedTextField(
+            modifier = Modifier.clickable {
+                onClick()
+            },
+            value = text,
+            onValueChange = { onChange(it) },
+            textStyle = TextStyle(fontSize = 18.sp),
+            //keyboardOptions = KeyboardOptions(
+            //    keyboardType = keyboardType,
+            //    imeAction = imeAction
+            //),
+            //keyboardActions = keyBoardActions,
+            enabled = isEnabled,
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = MaterialTheme.colors.primary,
+                unfocusedBorderColor = Color.Gray,
+                disabledBorderColor = Color.Gray,
+                disabledTextColor = Color.Black
+            ),
+            placeholder = {
+                Text(
+                    text = placeholder,
+                    style = TextStyle(fontSize = 18.sp, color = Color.LightGray)
+                )
+            },
+            label = {
+                Text(text = label, fontSize = 14.sp)
+            }
+        )
+    }
+}
+
+@Composable
+fun DateTimePicker(
     context: Context,
     createFootBallMatchViewModel: CreateFootballMatchViewModel = hiltViewModel(),
 ){
@@ -240,19 +286,9 @@ fun showDatePicker(
     val datePickerDialog = DatePickerDialog(
         context,
         { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-            date.value = "$year-$month-$dayOfMonth"
+            date.value = "$year-${createFootBallMatchViewModel.addLeadingZero(month.toString())}-${createFootBallMatchViewModel.addLeadingZero(dayOfMonth.toString())}"
         }, year, month, day
     )
-
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Text(text = "Selected Date: ${date.value}")
-        Spacer(modifier = Modifier.size(16.dp))
-    }
 
 
     //HORA
@@ -263,7 +299,7 @@ fun showDatePicker(
     val timePickerDialog = TimePickerDialog(
         context,
         {_, hour : Int, minute: Int ->
-            time.value = "$hour:$minute"
+            time.value = "${createFootBallMatchViewModel.addLeadingZero(hour.toString())}:${createFootBallMatchViewModel.addLeadingZero(month.toString())}"
         }, hour, minute, false
     )
 
@@ -272,15 +308,17 @@ fun showDatePicker(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-        Text(text = "Selected Time: ${time.value}")
         Spacer(modifier = Modifier.size(16.dp))
-        Button(onClick = {
-            timePickerDialog.show()
-            datePickerDialog.show()
-        }) {
-            Text(text = "Open Time Picker")
-        }
         createFootBallMatchViewModel.dateString = "${date.value} ${time.value}"
+        DateField(
+            onClick = {
+                timePickerDialog.show()
+                datePickerDialog.show()
+            },
+            text = createFootBallMatchViewModel.dateString,
+            label = "Fecha",
+            placeholder = "Fecha",
+            onChange = { createFootBallMatchViewModel.onDateChange(it) }
+        )
     }
 }

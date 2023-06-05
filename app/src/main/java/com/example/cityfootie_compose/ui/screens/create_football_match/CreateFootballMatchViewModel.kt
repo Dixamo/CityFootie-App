@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
+import java.time.Instant
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
@@ -37,8 +38,12 @@ class CreateFootballMatchViewModel @Inject constructor(
         val date: Date = format.parse(dateTimeString) as Date
         return Timestamp(date.time)
     }
+    fun addLeadingZero(string: String): String {
+        return string.padStart(2, '0')
+    }
 
-    private fun isValidDate(date: String): Boolean = date.length > 0
+    val currentDate = Date()
+    private fun isValidDate(date: String): Boolean = date.length > 1
     fun onDateChange(value: String) {
         dateString = value
         _isButtonEnabled.value = isValidDate(value) && isValidNumberMax(numberMax) && isValidNumberPlayers(numberPlayers)
