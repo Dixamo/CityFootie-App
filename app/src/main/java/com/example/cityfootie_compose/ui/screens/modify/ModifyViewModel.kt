@@ -28,14 +28,14 @@ class ModifyViewModel @Inject constructor(
 
     private fun isValidName(name: String): Boolean = name.length > 1
     fun onNameChange(value: String) {
-        name = value
+        name = value.filter { it.isLetter() }
         _isButtonEnabled.value = isValidName(value) && isValidSurnames(surnames) && isValidUsername(username) && isValidNumber(number)
     }
 
 
     private fun isValidSurnames(surnames: String): Boolean = surnames.length > 1
     fun onSurnameChange(value: String) {
-        surnames = value
+        surnames = value.filter { it.isLetter() }
         _isButtonEnabled.value = isValidName(name) && isValidSurnames(value) && isValidUsername(username) && isValidNumber(number)
     }
 

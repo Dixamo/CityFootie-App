@@ -45,16 +45,15 @@ class CreateFootballMatchViewModel @Inject constructor(
         return string.padStart(2, '0')
     }
 
-    //val currentDate = Date()
     private fun isValidDate(date: String): Boolean = date.length > 1
     fun onDateChange(value: String) {
         dateString = value
         _isButtonEnabled.value = isValidDate(value) && isValidNumberMax(numberMax)
     }
 
-    private fun isValidNumberMax(numberMax: String): Boolean = numberMax.length > 0 && numberMax.toInt() > 1
+    private fun isValidNumberMax(numberMax: String): Boolean = numberMax.length > 0 && numberMax.toInt() > 1 && numberMax.toInt() < 30
     fun onNumberMaxChange(value: String) {
-        numberMax = value
+        numberMax = value.filter { it.isDigit() }
         _isButtonEnabled.value = isValidDate(dateString) && isValidNumberMax(value)
     }
 

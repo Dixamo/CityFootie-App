@@ -22,11 +22,13 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -41,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cityfootie_compose.ui.screens.create_football_match.CreateFootballMatchViewModel
 import com.example.cityfootie_compose.ui.screens.login.LoginViewModel
+import com.example.cityfootie_compose.util.toFloat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -77,29 +80,62 @@ fun BodyContent(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        var isGetCompleted = joinToFootballMatchViewModel.isGetCompleted
+        var footballMatch = joinToFootballMatchViewModel.footballMatch
 
-        Spacer(modifier = Modifier.padding(10.dp))
+        if (!isGetCompleted) {
+            LaunchedEffect(Unit) {
+                joinToFootballMatchViewModel.getFootballMatch(latitude.toDouble(), longitude.toDouble())
+            }
+        }
 
-        Text(
-            "Unirse al Partido",
-            color = MaterialTheme.colors.primary,
-            fontSize = 30.sp,
-            style = MaterialTheme.typography.subtitle1,
-            fontWeight = FontWeight.Light
-        )
+        if (isGetCompleted) {
+            if (footballMatch != null) {
+                Spacer(modifier = Modifier.padding(10.dp))
 
-        Spacer(modifier = Modifier.padding(10.dp))
+                Text(
+                    "Unirse al Partido",
+                    color = MaterialTheme.colors.primary,
+                    fontSize = 30.sp,
+                    style = MaterialTheme.typography.subtitle1,
+                    fontWeight = FontWeight.Bold
+                )
 
-        //val isButtonEnabled: Boolean by joinToFootballMatchViewModel.isButtonEnabled.observeAsState(initial = false)
+                Text(
+                    text = "Usuarios apuntados:${footballMatch.numberPlayers}/${footballMatch.numberMax}" ,
+                    color = MaterialTheme.colors.primary,
+                    fontSize = 30.sp,
+                    style = MaterialTheme.typography.subtitle1,
+                    fontWeight = FontWeight.Light
+                )
 
-        Button(
-            onClick = {
-                joinToFootballMatchViewModel.putFootballMatch(email, latitude.toDouble(), longitude.toDouble())
-                goBack()
-            },
-            //enabled = isButtonEnabled
-        ) {
-            Text(text = "Unirse partido")
+                Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                    var isError: Boolean = joinToFootballMatchViewModel.isError
+                    Text(
+                        text = "Ya estas apuntado o el partido esta lleno",
+                        modifier = Modifier.alpha(isError.toFloat()),
+                        color = MaterialTheme.colors.error
+                    )
+                }
+
+                Button(
+                    onClick = {
+                        joinToFootballMatchViewModel.putFootballMatch(email, latitude.toDouble(), longitude.toDouble())
+                    },
+                ) {
+                    Text(text = "Unirse partido")
+                }
+
+                var isPostCompleted = joinToFootballMatchViewModel.isPostCompleted
+                var response = joinToFootballMatchViewModel.response
+                LaunchedEffect(response) {
+                    if (response != null) {
+                        if (isPostCompleted) {
+                            goBack()
+                        }
+                    }
+                }
+            }
         }
     }
 }

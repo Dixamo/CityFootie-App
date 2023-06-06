@@ -32,13 +32,13 @@ class RegisterViewModel @Inject constructor(
 
     private fun isValidName(name: String): Boolean = name.length > 1
     fun onNameChange(value: String) {
-        name = value
+        name = value.filter { it.isLetter() }
         _isButtonEnabled.value = isValidName(value) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(number) && isValidUsername(username) && isValidPassword(password)
     }
 
     private fun isValidSurnames(surnames: String): Boolean = surnames.length > 1
     fun onSurnamesChange(value: String) {
-        surnames = value
+        surnames = value.filter { it.isLetter() }
         _isButtonEnabled.value = isValidName(name) && isValidSurnames(value) && isValidEmail(email) && isValidNumber(number) && isValidUsername(username) && isValidPassword(password)
     }
 

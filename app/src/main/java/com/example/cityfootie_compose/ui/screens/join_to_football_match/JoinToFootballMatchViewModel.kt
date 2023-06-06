@@ -7,17 +7,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cityfootie_compose.model.FootballMatch
 import com.example.cityfootie_compose.model.Player
+import com.example.cityfootie_compose.usecases.get_match.GetFootballMatchUsecases
 import com.example.cityfootie_compose.usecases.put_match.PutFootballMatchUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
 class JoinToFootballMatchViewModel @Inject constructor(
-    private val putFootballMatchUsecases: PutFootballMatchUsecases,
+    private val getFootballMatchUsecases: GetFootballMatchUsecases,
+    private val putFootballMatchUsecases: PutFootballMatchUsecases
 ): ViewModel(){
+    var response: Response<Void>? by mutableStateOf(null)
+    var footballMatch: FootballMatch? = null
     var email: String by mutableStateOf("")
     var markerLatitude: Double? by mutableStateOf(null)
     var markerLongitude: Double? by mutableStateOf(null)
@@ -27,9 +33,32 @@ class JoinToFootballMatchViewModel @Inject constructor(
 
     var player: Player? = null
     var isLoading: Boolean by mutableStateOf(false)
-    var isCompleted: Boolean by mutableStateOf(false)
+    var isGetCompleted: Boolean by mutableStateOf(false)
+    var isPostCompleted: Boolean by mutableStateOf(false)
+    var isSuccessful: Boolean by mutableStateOf(false)
     var isError: Boolean by mutableStateOf(false)
 
+
+
+    fun getFootballMatch(latitude: Double, longitude: Double) {
+        viewModelScope.launch(Dispatchers.IO) {
+            isLoading = true
+            markerLatitude = latitude
+            markerLongitude = longitude
+            val response = getFootballMatchUsecases.getFootballMatch(latitude, longitude)
+            if (response != null) {
+                if (response!!.isSuccessful) {
+                    isGetCompleted = true
+                    isSuccessful = true
+                    footballMatch = response!!.body()
+                } else {
+                    isError = true
+                    footballMatch = null
+                }
+            }
+            isLoading = false
+        }
+    }
 
     fun putFootballMatch(email: String, latitude: Double, longitude: Double) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -37,10 +66,10 @@ class JoinToFootballMatchViewModel @Inject constructor(
             this@JoinToFootballMatchViewModel.email = email
             markerLatitude = latitude
             markerLongitude = longitude
-            val response = putFootballMatchUsecases.putFootballMatch(email, latitude, longitude)
+            response = putFootballMatchUsecases.putFootballMatch(email, latitude, longitude)
             if (response != null) {
-                if (response.isSuccessful) {
-                    isCompleted = true
+                if (response!!.isSuccessful) {
+                    isPostCompleted = true
                 } else {
                     isError = true
                 }
