@@ -14,6 +14,7 @@ import com.example.cityfootie_compose.usecases.register.PostPlayerUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
@@ -65,6 +66,7 @@ class RegisterViewModel @Inject constructor(
         _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(number) && isValidUsername(username) && isValidPassword(value)
     }
 
+    var response: Response<Void>? by mutableStateOf(null)
     var isLoading: Boolean by mutableStateOf(false)
     var isCompleted: Boolean by mutableStateOf(false)
     var isError: Boolean by mutableStateOf(false)
@@ -72,11 +74,11 @@ class RegisterViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
             val newPlayer : Player = Player(name, surnames, username, email, password, number.toInt())
-            val response = postPlayerUsecases.postPlayer(newPlayer)
+            response = postPlayerUsecases.postPlayer(newPlayer)
             if (response != null) {
-                if (response.isSuccessful) {
+                if (response!!.isSuccessful) {
                     isCompleted = true
-                    response.body()
+                    response!!.body()
                 } else {
                     isError = true
                 }

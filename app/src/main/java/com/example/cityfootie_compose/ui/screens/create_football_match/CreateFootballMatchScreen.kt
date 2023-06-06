@@ -19,6 +19,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -40,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cityfootie_compose.ui.screens.register.DataField
+import com.example.cityfootie_compose.util.toFloat
 import java.time.LocalDateTime
 import java.util.*
 
@@ -72,6 +75,15 @@ fun BodyContent(
     goBack: () -> Unit,
     createFootBallMatchViewModel: CreateFootballMatchViewModel = hiltViewModel(),
 ) {
+    var isLoading: Boolean = createFootBallMatchViewModel.isLoading
+    if (isLoading) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -165,6 +177,13 @@ fun BodyContent(
             onChange = { createFootBallMatchViewModel.onNumberPlayersChange(it) }
         )
 
+        var isError: Boolean = createFootBallMatchViewModel.isError
+        Text(
+            text = "No puedes crear un partido en el pasado",
+            modifier = Modifier.alpha(isError.toFloat()),
+            color = MaterialTheme.colors.error
+        )
+
         Spacer(modifier = Modifier.padding(10.dp))
 
         val isButtonEnabled: Boolean by createFootBallMatchViewModel.isButtonEnabled.observeAsState(initial = false)
@@ -172,11 +191,20 @@ fun BodyContent(
         Button(
             onClick = {
                 createFootBallMatchViewModel.postFootballMatch(latitude, longitude)
-                goBack()
             },
             enabled = isButtonEnabled
         ) {
             Text(text = "Crear partido")
+        }
+
+        var response = createFootBallMatchViewModel.response
+        var isCompleted = createFootBallMatchViewModel.isCompleted
+        LaunchedEffect(response) {
+            if (response != null) {
+                if (isCompleted) {
+                    goBack()
+                }
+            }
         }
     }
 }

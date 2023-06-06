@@ -142,6 +142,13 @@ fun BodyContent(
             onChange = { loginViewModel.onPasswordChange(it) }
         )
 
+        var isError: Boolean = loginViewModel.isError
+        Text(
+            text = "Correo o contraseña incorrectas",
+            modifier = Modifier.alpha(isError.toFloat()),
+            color = MaterialTheme.colors.error
+        )
+
         Spacer(modifier = Modifier.padding(8.dp))
 
         var player = loginViewModel.player
@@ -164,15 +171,6 @@ fun BodyContent(
                 }
             }
         }
-
-        Spacer(modifier = Modifier.padding(8.dp))
-
-        var isError: Boolean = loginViewModel.isError
-        Text(
-            text = "Correo o contraseña incorrectas",
-            modifier = Modifier.alpha(isError.toFloat()),
-            color = MaterialTheme.colors.error
-        )
 
         Spacer(modifier = Modifier.padding(8.dp))
 

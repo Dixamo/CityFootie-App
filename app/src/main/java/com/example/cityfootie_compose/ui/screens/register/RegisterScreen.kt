@@ -81,7 +81,6 @@ fun BodyContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp)
-                .padding(top = 0.dp)
                 .focusRequester(focusRequester),
             label = "Nombre",
             placeholder = "Nombre",
@@ -97,14 +96,11 @@ fun BodyContent(
             onChange = { registerViewModel.onNameChange(it) }
         )
 
-        Spacer(modifier = Modifier.padding(0.dp))
-
         //APELLIDOS
         DataField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp)
-                .padding(top = 0.dp)
                 .focusRequester(focusRequester),
             label = "Apellidos",
             placeholder = "Apellidos",
@@ -127,7 +123,6 @@ fun BodyContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp)
-                .padding(top = 0.dp)
                 .focusRequester(focusRequester),
             label = "E-Mail",
             placeholder = "E-Mail",
@@ -150,7 +145,6 @@ fun BodyContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp)
-                .padding(top = 0.dp)
                 .focusRequester(focusRequester),
             label = "Dorsal",
             placeholder = "Dorsal",
@@ -200,7 +194,6 @@ fun BodyContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp)
-                .padding(top = 20.dp)
                 .focusRequester(focusRequester),
             icon = Icons.Default.Lock,
             label = "Password",
@@ -236,11 +229,20 @@ fun BodyContent(
             color = MaterialTheme.colors.error
         )
 
+        var response = registerViewModel.response
+        var isCompleted = registerViewModel.isCompleted
+        LaunchedEffect(response) {
+            if (response != null) {
+                if (isCompleted) {
+                    goBack()
+                }
+            }
+        }
+
         //BOTÓN
         Button(
             onClick = {
                 registerViewModel.postUser()
-                goBack()
             },
             enabled = isButtonEnabled
         ) {
@@ -256,7 +258,7 @@ fun DataField(
     label: String,
     placeholder: String,
     onChange: (String) -> Unit,
-    imeAction: ImeAction = ImeAction.Next,
+    imeAction: ImeAction,
     keyboardType: KeyboardType,
     keyBoardActions: KeyboardActions,
     isEnabled: Boolean = true

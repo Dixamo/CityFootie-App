@@ -14,6 +14,7 @@ import com.example.cityfootie_compose.usecases.post_match.PostFootballMatchUseca
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.time.Instant
@@ -52,7 +53,7 @@ class CreateFootballMatchViewModel @Inject constructor(
         _isButtonEnabled.value = isValidDate(value) && isValidNumberMax(numberMax) && isValidNumberPlayers(numberPlayers)
     }
 
-    private fun isValidNumberMax(numberMax: String): Boolean = numberMax.length > 0
+    private fun isValidNumberMax(numberMax: String): Boolean = numberMax.length > 0 && numberMax.toInt() > 1
     fun onNumberMaxChange(value: String) {
         numberMax = value
         _isButtonEnabled.value = isValidDate(dateString) && isValidNumberMax(value) && isValidNumberPlayers(numberPlayers)
@@ -64,10 +65,10 @@ class CreateFootballMatchViewModel @Inject constructor(
         _isButtonEnabled.value = isValidDate(dateString) && isValidNumberMax(numberMax) && isValidNumberPlayers(value)
     }
 
+    var response: Response<Void>? by mutableStateOf(null)
     var isLoading: Boolean by mutableStateOf(false)
     var isCompleted: Boolean by mutableStateOf(false)
     var isError: Boolean by mutableStateOf(false)
-
     fun postFootballMatch(latitude : String, longitude : String) {
         viewModelScope.launch(Dispatchers.IO) {
             val formattedDate = parseStringToTimestamp(dateString)
@@ -78,11 +79,11 @@ class CreateFootballMatchViewModel @Inject constructor(
                 numberPlayers.toInt(),
                 formattedDate
             )
-            val response = postFootballMatchUsecases.postFootballMatch(newFootballMatch)
+            response = postFootballMatchUsecases.postFootballMatch(newFootballMatch)
             if (response != null) {
-                if (response.isSuccessful) {
+                if (response!!.isSuccessful) {
                     isCompleted = true
-                    response.body()
+                    response!!.body()
                 } else {
                     isError = true
                 }
