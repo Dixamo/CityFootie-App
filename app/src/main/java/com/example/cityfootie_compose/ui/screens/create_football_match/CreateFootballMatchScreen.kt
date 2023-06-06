@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.annotation.RequiresApi
@@ -286,7 +287,7 @@ fun DateTimePicker(
     val datePickerDialog = DatePickerDialog(
         context,
         { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-            date.value = "$year-${createFootBallMatchViewModel.addLeadingZero(month.toString())}-${createFootBallMatchViewModel.addLeadingZero(dayOfMonth.toString())}"
+            date.value = "$year-${createFootBallMatchViewModel.addLeadingZero((month + 1).toString())}-${createFootBallMatchViewModel.addLeadingZero(dayOfMonth.toString())}"
         }, year, month, day
     )
 
@@ -320,5 +321,6 @@ fun DateTimePicker(
             placeholder = "Fecha",
             onChange = { createFootBallMatchViewModel.onDateChange(it) }
         )
+        Log.d("Mes", Calendar.getInstance().get(Calendar.MONTH).toString())
     }
 }
