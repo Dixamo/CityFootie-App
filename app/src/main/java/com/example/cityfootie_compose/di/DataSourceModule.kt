@@ -11,6 +11,8 @@ import com.example.cityfootie_compose.datasource.remote.FootieRemoteDataSource
 import com.example.cityfootie_compose.datasource.remote.FootieRemoteDataSourceImpl
 import com.example.cityfootie_compose.usecases.get_match.GetFootballMatchUsecases
 import com.example.cityfootie_compose.usecases.get_match.GetFootballMatchUsecasesImpl
+import com.example.cityfootie_compose.usecases.get_players_by_match.GetPlayersByFootballMatchUsecases
+import com.example.cityfootie_compose.usecases.get_players_by_match.GetPlayersByFootballMatchUsecasesImpl
 import com.example.cityfootie_compose.usecases.login.GetPlayerUsecases
 import com.example.cityfootie_compose.usecases.login.GetPlayerUsecasesImpl
 import com.example.cityfootie_compose.usecases.modify.UpdatePlayerUsecases
@@ -164,5 +166,11 @@ object DataSourceModule {
     @Singleton
     fun providesPutFootballMatchUsecase(footieRepository: FootieRepository): PutFootballMatchUsecases =
         PutFootballMatchUsecasesImpl(footieRepository)
+
+    @Provides
+    @Singleton
+    fun providesGetPlayersByFootballMatchUsecase(footieRepository: FootieRepository): GetPlayersByFootballMatchUsecases =
+        GetPlayersByFootballMatchUsecasesImpl(footieRepository)
+
 
 }

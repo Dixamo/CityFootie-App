@@ -36,4 +36,8 @@ class FootieRepositoryImpl @Inject constructor(
     override suspend fun getPlayerByEmail(email: String): Response<Player> {
         return footieRemoteDataSource.getPlayerByEmail(email)
     }
+
+    override suspend fun getPlayersByFootballMatch(latitude: Double, longitude: Double): Response<Set<Player>> {
+        return footieRemoteDataSource.getPlayersByFootballMatch(latitude, longitude)
+    }
 }

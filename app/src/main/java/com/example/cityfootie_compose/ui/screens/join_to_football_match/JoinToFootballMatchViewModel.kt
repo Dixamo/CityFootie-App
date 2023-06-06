@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.cityfootie_compose.model.FootballMatch
 import com.example.cityfootie_compose.model.Player
 import com.example.cityfootie_compose.usecases.get_match.GetFootballMatchUsecases
+import com.example.cityfootie_compose.usecases.get_players_by_match.GetPlayersByFootballMatchUsecases
 import com.example.cityfootie_compose.usecases.put_match.PutFootballMatchUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class JoinToFootballMatchViewModel @Inject constructor(
+    private val getPlayersByFootballMatchUsecases: GetPlayersByFootballMatchUsecases,
     private val getFootballMatchUsecases: GetFootballMatchUsecases,
     private val putFootballMatchUsecases: PutFootballMatchUsecases
 ): ViewModel(){
@@ -31,14 +33,33 @@ class JoinToFootballMatchViewModel @Inject constructor(
     private val _isButtonEnabled = MutableLiveData(false)
     val isButtonEnabled: LiveData<Boolean> = _isButtonEnabled
 
-    var player: Player? = null
+    var players: Set<Player>? = null
     var isLoading: Boolean by mutableStateOf(false)
+    var isGetPlayersCompleted: Boolean by mutableStateOf(false)
     var isGetCompleted: Boolean by mutableStateOf(false)
     var isPostCompleted: Boolean by mutableStateOf(false)
     var isSuccessful: Boolean by mutableStateOf(false)
     var isError: Boolean by mutableStateOf(false)
 
-
+    fun getPlayersByFootballMatch(latitude: Double, longitude: Double) {
+        viewModelScope.launch(Dispatchers.IO) {
+            isLoading = true
+            markerLatitude = latitude
+            markerLongitude = longitude
+            val response = getPlayersByFootballMatchUsecases.getPlayersByFootballMatch(latitude, longitude)
+            if (response != null) {
+                if (response!!.isSuccessful) {
+                    isGetPlayersCompleted = true
+                    isSuccessful = true
+                    players = response!!.body()
+                } else {
+                    isError = true
+                    footballMatch = null
+                }
+            }
+            isLoading = false
+        }
+    }
 
     fun getFootballMatch(latitude: Double, longitude: Double) {
         viewModelScope.launch(Dispatchers.IO) {

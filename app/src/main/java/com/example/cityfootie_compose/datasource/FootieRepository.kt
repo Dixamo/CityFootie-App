@@ -12,4 +12,5 @@ interface FootieRepository {
     suspend fun postFootballMatch(newFootballMatch: FootballMatch): Response<Void>
     suspend fun putFootballMatch(latitude: Double, longitude: Double, email: String): Response<Void>
     suspend fun getPlayerByEmail(email: String): Response<Player>
+    suspend fun getPlayersByFootballMatch(latitude: Double, longitude: Double): Response<Set<Player>>
 }
