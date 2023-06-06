@@ -116,6 +116,26 @@ fun BodyContent(
                 val focusRequester = remember { FocusRequester() }
                 val focusManager = LocalFocusManager.current
 
+                DataField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp)
+                        .padding(top = 24.dp)
+                        .focusRequester(focusRequester),
+                    label = "Username",
+                    placeholder = "Username",
+                    text = modifyViewModel.username,
+                    imeAction = ImeAction.Next,
+                    isEnabled = true,
+                    keyBoardActions = KeyboardActions(
+                        onNext = {
+                            focusManager.moveFocus(FocusDirection.Down)
+                        }
+                    ),
+                    keyboardType = KeyboardType.Text,
+                    onChange = { modifyViewModel.onUsernameChange(it) }
+                )
+
                 //NOMBRE
                 DataField(
                     modifier = Modifier
@@ -158,25 +178,6 @@ fun BodyContent(
                     onChange = { modifyViewModel.onSurnameChange(it) }
                 )
 
-                DataField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp)
-                        .padding(top = 24.dp)
-                        .focusRequester(focusRequester),
-                    label = "Username",
-                    placeholder = "Username",
-                    text = modifyViewModel.username,
-                    imeAction = ImeAction.Next,
-                    isEnabled = true,
-                    keyBoardActions = KeyboardActions(
-                        onNext = {
-                            focusManager.moveFocus(FocusDirection.Down)
-                        }
-                    ),
-                    keyboardType = KeyboardType.Text,
-                    onChange = { modifyViewModel.onUsernameChange(it) }
-                )
                 //DORSAL
                 DataField(
                     modifier = Modifier

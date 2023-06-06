@@ -2,6 +2,7 @@ package com.example.cityfootie_compose.ui.screens.user
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -15,9 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -87,17 +90,18 @@ fun BodyContent(
 
         if (player != null) {
 
+            Spacer(modifier = Modifier.padding(7.dp))
             //ICONO
-            Button(
-                onClick = {
-                    goModifyScreen(email)
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = "Settings"
-                )
-            }
+            Icon(
+                imageVector = Icons.Default.Settings,
+                contentDescription = "Settings",
+                modifier = Modifier
+                    .size(45.dp)
+                    .clickable {
+                        goModifyScreen(email)
+                    },
+                tint = MaterialTheme.colors.primary
+            )
         }
     }
 
@@ -116,9 +120,9 @@ fun BodyContent(
             Text(
                 text = "${player.username}",
                 color = MaterialTheme.colors.primary,
-                fontSize = 30.sp,
+                fontSize = 35.sp,
                 style = MaterialTheme.typography.h1,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.ExtraBold,
                 fontFamily = FontFamily.SansSerif,
                 textAlign = TextAlign.Left
             )
@@ -155,44 +159,57 @@ fun BodyContent(
 
             if (player != null) {
 
-                Spacer(modifier = Modifier.padding(60.dp))
+                Spacer(modifier = Modifier.padding(35.dp))
 
                 //NOMBRE
-                Text(
-                    text = "Nombre: ${player.name}",
-                    color = MaterialTheme.colors.onBackground,
-                    fontSize = 20.sp,
-                    //style = MaterialTheme.typography.overline,
-                    fontWeight = FontWeight.Normal,
-                    fontFamily = FontFamily.SansSerif,
-                    textAlign = TextAlign.Center
+                OutlinedTextField(
+                    value = "${player.name}",
+                    onValueChange = {},
+                    enabled = false,
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        disabledBorderColor = Color.Gray,
+                        disabledLabelColor = MaterialTheme.colors.onBackground,
+                        disabledTextColor = MaterialTheme.colors.onBackground
+                    ),
+                    label = {
+                        Text(text = "Nombre", fontSize = 14.sp)
+                    }
                 )
 
 
                 Spacer(modifier = Modifier.padding(30.dp))
 
                 //APELLIDOS
-                Text(
-                    text = "Apellidos: ${player.surnames}",
-                    color = MaterialTheme.colors.onBackground,
-                    fontSize = 20.sp,
-                    //style = MaterialTheme.typography.overline,
-                    fontWeight = FontWeight.Normal,
-                    fontFamily = FontFamily.SansSerif,
-                    textAlign = TextAlign.Center
+                OutlinedTextField(
+                    value = "${player.surnames}",
+                    onValueChange = {},
+                    enabled = false,
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        disabledBorderColor = Color.Gray,
+                        disabledLabelColor = MaterialTheme.colors.onBackground,
+                        disabledTextColor = MaterialTheme.colors.onBackground
+                    ),
+                    label = {
+                        Text(text = "Apellidos", fontSize = 14.sp)
+                    }
                 )
+
 
                 Spacer(modifier = Modifier.padding(30.dp))
 
                 //DORSAL
-                Text(
-                    text = "Dorsal: ${player.number}",
-                    color = MaterialTheme.colors.onBackground,
-                    fontSize = 20.sp,
-                    //style = MaterialTheme.typography.overline,
-                    fontWeight = FontWeight.Normal,
-                    fontFamily = FontFamily.SansSerif,
-                    textAlign = TextAlign.Center
+                OutlinedTextField(
+                    value = "${player.number}",
+                    onValueChange = {},
+                    enabled = false,
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        disabledBorderColor = Color.Gray,
+                        disabledLabelColor = MaterialTheme.colors.onBackground,
+                        disabledTextColor = MaterialTheme.colors.onBackground
+                    ),
+                    label = {
+                        Text(text = "Dorsal", fontSize = 14.sp)
+                    }
                 )
             }
         }
