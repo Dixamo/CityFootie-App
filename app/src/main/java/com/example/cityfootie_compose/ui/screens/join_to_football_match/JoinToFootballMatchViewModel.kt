@@ -60,13 +60,13 @@ class JoinToFootballMatchViewModel @Inject constructor(
         }
     }
 
-    fun putFootballMatch(email: String, latitude: Double, longitude: Double) {
+    fun putFootballMatch(latitude: Double, longitude: Double, email: String) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
             this@JoinToFootballMatchViewModel.email = email
             markerLatitude = latitude
             markerLongitude = longitude
-            response = putFootballMatchUsecases.putFootballMatch(email, latitude, longitude)
+            response = putFootballMatchUsecases.putFootballMatch(latitude, longitude, email)
             if (response != null) {
                 if (response!!.isSuccessful) {
                     isPostCompleted = true

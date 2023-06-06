@@ -120,7 +120,7 @@ fun BodyContent(
 
                 Button(
                     onClick = {
-                        joinToFootballMatchViewModel.putFootballMatch(email, latitude.toDouble(), longitude.toDouble())
+                        joinToFootballMatchViewModel.putFootballMatch(latitude.toDouble(), longitude.toDouble(), email)
                     },
                 ) {
                     Text(text = "Unirse partido")

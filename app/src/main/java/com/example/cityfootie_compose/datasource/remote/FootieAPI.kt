@@ -37,10 +37,10 @@ interface FootieAPI {
         @Query("number") number: Int
     ) :Response<Void>
 
-    @GET("footballMatches")
+    @GET("footballMatches/{latitude}/{longitude}")
     suspend fun getFootballMatch(
-        @Query("latitude") latitude: Double,
-        @Query("longitude") longitude: Double
+        @Path("latitude") latitude: Double,
+        @Path("longitude") longitude: Double
     ): Response<FootballMatch>
 
     @POST("footballMatches")
@@ -48,10 +48,10 @@ interface FootieAPI {
         @Body newFootballMatch: FootballMatch
     ): Response<Void>
 
-    @PUT("footballMatches")
+    @PUT("footballMatches/{latitude}/{longitude}")
     suspend fun putFootballMatch(
-        @Query("email") email: String,
-        @Query("latitude") latitude: Double,
-        @Query("longitude") longitude: Double
+        @Path("latitude") latitude: Double,
+        @Path("longitude") longitude: Double,
+        @Query("email") email: String
     ): Response<Void>
 }

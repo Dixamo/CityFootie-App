@@ -37,9 +37,9 @@ class FootieRemoteDataSourceImpl @Inject constructor(
             return@withContext footieAPI.postFootballMatch(newFootballMatch)
         }
 
-    override suspend fun putFootballMatch(email: String, latitude: Double, longitude: Double): Response<Void> =
+    override suspend fun putFootballMatch(latitude: Double, longitude: Double, email: String): Response<Void> =
         withContext(dispatcherProvider.ioDispatcher) {
-            return@withContext footieAPI.putFootballMatch(email, latitude, longitude)
+            return@withContext footieAPI.putFootballMatch(latitude, longitude, email)
         }
 
     override suspend fun getPlayerByEmail(email: String): Response<Player> =
