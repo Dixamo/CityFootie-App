@@ -31,7 +31,6 @@ class CreateFootballMatchViewModel @Inject constructor(
 ): ViewModel() {
     var dateString: String by mutableStateOf("")
     var numberMax: String by mutableStateOf("")
-    var numberPlayers: String by mutableStateOf("")
 
     private val _isButtonEnabled = MutableLiveData(false)
     val isButtonEnabled: LiveData<Boolean> = _isButtonEnabled
@@ -46,23 +45,17 @@ class CreateFootballMatchViewModel @Inject constructor(
         return string.padStart(2, '0')
     }
 
-    val currentDate = Date()
+    //val currentDate = Date()
     private fun isValidDate(date: String): Boolean = date.length > 1
     fun onDateChange(value: String) {
         dateString = value
-        _isButtonEnabled.value = isValidDate(value) && isValidNumberMax(numberMax) && isValidNumberPlayers(numberPlayers)
+        _isButtonEnabled.value = isValidDate(value) && isValidNumberMax(numberMax)
     }
 
     private fun isValidNumberMax(numberMax: String): Boolean = numberMax.length > 0 && numberMax.toInt() > 1
     fun onNumberMaxChange(value: String) {
         numberMax = value
-        _isButtonEnabled.value = isValidDate(dateString) && isValidNumberMax(value) && isValidNumberPlayers(numberPlayers)
-    }
-
-    private fun isValidNumberPlayers(numberPlayers: String): Boolean = numberPlayers.length > 0
-    fun onNumberPlayersChange(value: String) {
-        numberPlayers = value
-        _isButtonEnabled.value = isValidDate(dateString) && isValidNumberMax(numberMax) && isValidNumberPlayers(value)
+        _isButtonEnabled.value = isValidDate(dateString) && isValidNumberMax(value)
     }
 
     var response: Response<Void>? by mutableStateOf(null)
@@ -76,7 +69,7 @@ class CreateFootballMatchViewModel @Inject constructor(
                 latitude.toDouble(),
                 longitude.toDouble(),
                 numberMax.toInt(),
-                numberPlayers.toInt(),
+                0,
                 formattedDate
             )
             response = postFootballMatchUsecases.postFootballMatch(newFootballMatch)

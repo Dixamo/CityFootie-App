@@ -156,27 +156,6 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(0.dp))
 
-        //NUMERO JUGADORES
-        DataField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp)
-                .padding(top = 0.dp)
-                .focusRequester(focusRequester),
-            label = "Numero de Jugadores",
-            placeholder = "Numero de Jugadores",
-            text = createFootBallMatchViewModel.numberPlayers,
-            imeAction = ImeAction.Next,
-            isEnabled = true,
-            keyBoardActions = KeyboardActions(
-                onNext = {
-                    focusManager.moveFocus(FocusDirection.Down)
-                }
-            ),
-            keyboardType = KeyboardType.Number,
-            onChange = { createFootBallMatchViewModel.onNumberPlayersChange(it) }
-        )
-
         var isError: Boolean = createFootBallMatchViewModel.isError
         Text(
             text = "No puedes crear un partido en el pasado",
@@ -328,7 +307,7 @@ fun DateTimePicker(
     val timePickerDialog = TimePickerDialog(
         context,
         {_, hour : Int, minute: Int ->
-            time.value = "${createFootBallMatchViewModel.addLeadingZero(hour.toString())}:${createFootBallMatchViewModel.addLeadingZero(month.toString())}"
+            time.value = "${createFootBallMatchViewModel.addLeadingZero(hour.toString())}:${createFootBallMatchViewModel.addLeadingZero(minute.toString())}"
         }, hour, minute, false
     )
 
