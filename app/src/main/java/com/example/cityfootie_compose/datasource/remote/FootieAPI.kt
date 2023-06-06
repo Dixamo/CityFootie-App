@@ -35,7 +35,20 @@ interface FootieAPI {
         @Query("surnames") surnames: String,
         @Query("username") username: String,
         @Query("number") number: Int
-    ) :Response<Void>
+    ): Response<Void>
+
+    @PUT("players/{email}/{oldPassword}/{newPassword}")
+    suspend fun changePassword(
+        @Path("email") email: String,
+        @Path("oldPassword") oldPassword: String,
+        @Path("newPassword") newPassword: String
+    ): Response<Void>
+
+    @GET("players/{latitude}/{longitude}")
+    suspend fun getPlayersByFootballMatch(
+        @Path("latitude") latitude: Double,
+        @Path("longitude") longitude: Double
+    ): Response<Set<Player>>
 
     @GET("footballMatches/{latitude}/{longitude}")
     suspend fun getFootballMatch(
