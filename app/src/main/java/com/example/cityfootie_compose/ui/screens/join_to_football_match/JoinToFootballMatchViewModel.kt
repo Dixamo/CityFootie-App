@@ -23,7 +23,7 @@ class JoinToFootballMatchViewModel @Inject constructor(
     private val getPlayersByFootballMatchUsecases: GetPlayersByFootballMatchUsecases,
     private val getFootballMatchUsecases: GetFootballMatchUsecases,
     private val putFootballMatchUsecases: PutFootballMatchUsecases
-): ViewModel(){
+) : ViewModel() {
     var response: Response<Void>? by mutableStateOf(null)
     var footballMatch: FootballMatch? = null
     var email: String by mutableStateOf("")
@@ -46,7 +46,8 @@ class JoinToFootballMatchViewModel @Inject constructor(
             isLoading = true
             markerLatitude = latitude
             markerLongitude = longitude
-            val response = getPlayersByFootballMatchUsecases.getPlayersByFootballMatch(latitude, longitude)
+            val response =
+                getPlayersByFootballMatchUsecases.getPlayersByFootballMatch(latitude, longitude)
             if (response != null) {
                 if (response!!.isSuccessful) {
                     isGetPlayersCompleted = true

@@ -1,7 +1,6 @@
 package com.example.cityfootie_compose.ui.screens.modify
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
@@ -26,7 +24,6 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -34,6 +31,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -44,11 +42,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.cityfootie_compose.ui.screens.register.UsernameField
+import com.example.cityfootie_compose.util.toFloat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -199,13 +196,30 @@ fun BodyContent(
                     onChange = { modifyViewModel.onNumberChange(it) }
                 )
 
+                var response = modifyViewModel.response
+                var isModifyCompleted = modifyViewModel.isModifyCompleted
+                LaunchedEffect(response) {
+                    if (response != null) {
+                        if (isModifyCompleted) {
+                            goBack()
+                        }
+                    }
+                }
+
+                var isError: Boolean = modifyViewModel.isError
+                Text(
+                    text = "Nombre de usuario ya existente",
+                    modifier = Modifier.alpha(isError.toFloat()),
+                    color = MaterialTheme.colors.error
+                )
 
                 Row() {
-                    val isButtonEnabled: Boolean by modifyViewModel.isButtonEnabled.observeAsState(initial = false)
+                    val isButtonEnabled: Boolean by modifyViewModel.isButtonEnabled.observeAsState(
+                        initial = false
+                    )
                     Button(
                         onClick = {
                             modifyViewModel.updatePlayer(email)
-                            goBack()
                         },
                         enabled = isButtonEnabled
                     ) {

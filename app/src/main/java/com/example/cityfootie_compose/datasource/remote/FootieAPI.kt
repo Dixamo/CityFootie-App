@@ -29,19 +29,11 @@ interface FootieAPI {
 
     @PUT("players/{email}")
     suspend fun updatePlayer(
-        //@Body newPlayer: Player,
         @Path("email") email: String,
         @Query("name") name: String,
         @Query("surnames") surnames: String,
         @Query("username") username: String,
         @Query("number") number: Int
-    ): Response<Void>
-
-    @PUT("players/{email}/{oldPassword}/{newPassword}")
-    suspend fun changePassword(
-        @Path("email") email: String,
-        @Path("oldPassword") oldPassword: String,
-        @Path("newPassword") newPassword: String
     ): Response<Void>
 
     @GET("players/{latitude}/{longitude}")

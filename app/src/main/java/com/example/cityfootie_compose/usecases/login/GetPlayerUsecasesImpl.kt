@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class GetPlayerUsecasesImpl @Inject constructor(
     private val footieRepository: FootieRepository
-): GetPlayerUsecases {
+) : GetPlayerUsecases {
     override suspend fun getPlayer(email: String, password: String): Response<Player> {
         return footieRepository.getPlayer(email, password)
     }

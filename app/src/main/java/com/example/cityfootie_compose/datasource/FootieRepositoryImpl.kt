@@ -17,11 +17,20 @@ class FootieRepositoryImpl @Inject constructor(
         return footieRemoteDataSource.postPlayer(newPlayer)
     }
 
-    override suspend fun updatePlayer(email: String, name: String, surnames: String, username: String, number: Int): Response<Void> {
+    override suspend fun updatePlayer(
+        email: String,
+        name: String,
+        surnames: String,
+        username: String,
+        number: Int
+    ): Response<Void> {
         return footieRemoteDataSource.updatePlayer(email, name, surnames, username, number)
     }
 
-    override suspend fun getFootballMatch(latitude: Double, longitude: Double): Response<FootballMatch> {
+    override suspend fun getFootballMatch(
+        latitude: Double,
+        longitude: Double
+    ): Response<FootballMatch> {
         return footieRemoteDataSource.getFootballMatch(latitude, longitude)
     }
 
@@ -29,7 +38,11 @@ class FootieRepositoryImpl @Inject constructor(
         return footieRemoteDataSource.postFootballMatch(newFootballMatch)
     }
 
-    override suspend fun putFootballMatch(latitude: Double, longitude: Double, email: String): Response<Void> {
+    override suspend fun putFootballMatch(
+        latitude: Double,
+        longitude: Double,
+        email: String
+    ): Response<Void> {
         return footieRemoteDataSource.putFootballMatch(latitude, longitude, email)
     }
 
@@ -37,7 +50,10 @@ class FootieRepositoryImpl @Inject constructor(
         return footieRemoteDataSource.getPlayerByEmail(email)
     }
 
-    override suspend fun getPlayersByFootballMatch(latitude: Double, longitude: Double): Response<Set<Player>> {
+    override suspend fun getPlayersByFootballMatch(
+        latitude: Double,
+        longitude: Double
+    ): Response<Set<Player>> {
         return footieRemoteDataSource.getPlayersByFootballMatch(latitude, longitude)
     }
 }

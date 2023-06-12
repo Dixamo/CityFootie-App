@@ -17,9 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val getPlayerUsecases: GetPlayerUsecases
-): ViewModel() {
-    //var email: String by mutableStateOf("")
-    //var password: String by mutableStateOf("")
+) : ViewModel() {
     private val _isButtonEnabled = MutableLiveData(false)
     val isButtonEnabled: LiveData<Boolean> = _isButtonEnabled
 

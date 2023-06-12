@@ -6,9 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cityfootie_compose.model.FootballMatch
-import com.example.cityfootie_compose.model.Player
 import com.example.cityfootie_compose.usecases.get_match.GetFootballMatchUsecases
-import com.example.cityfootie_compose.usecases.login.GetPlayerUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MapViewModel @Inject constructor(
     private val getFootballMatchUsecases: GetFootballMatchUsecases
-): ViewModel() {
+) : ViewModel() {
     var response: Response<FootballMatch>? by mutableStateOf(null)
     var footballMatch: FootballMatch? = null
     var isLoading: Boolean by mutableStateOf(false)
@@ -27,9 +25,11 @@ class MapViewModel @Inject constructor(
     var isError: Boolean by mutableStateOf(false)
     var markerLatitude: Double? by mutableStateOf(null)
     var markerLongitude: Double? by mutableStateOf(null)
+
     init {
         footballMatch = null
     }
+
     fun getFootballMatch(latitude: Double, longitude: Double) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true

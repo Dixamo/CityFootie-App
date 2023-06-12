@@ -102,13 +102,15 @@ fun AppNavigation(navController: NavHostController) {
             )
         }
 
-        composable(route = AppScreens.CreateFootballMatchScreen.route + "/{latitude}/{longitude}", arguments = listOf(
-            navArgument("latitude") {
-                type = NavType.StringType
-            },
-            navArgument("longitude") {
-                type = NavType.StringType
-            })
+        composable(
+            route = AppScreens.CreateFootballMatchScreen.route + "/{latitude}/{longitude}",
+            arguments = listOf(
+                navArgument("latitude") {
+                    type = NavType.StringType
+                },
+                navArgument("longitude") {
+                    type = NavType.StringType
+                })
         ) { backStackEntry ->
             CreateFootballMatchScreen(
                 latitude = backStackEntry.arguments?.getString("latitude") ?: "null",
@@ -120,13 +122,15 @@ fun AppNavigation(navController: NavHostController) {
             )
         }
 
-        composable(route = AppScreens.JoinToFootballMatchScreen.route + "/{email}/{latitude}/{longitude}", arguments = listOf(
-            navArgument("latitude") {
-                type = NavType.StringType
-            },
-            navArgument("longitude") {
-                type = NavType.StringType
-            })
+        composable(
+            route = AppScreens.JoinToFootballMatchScreen.route + "/{email}/{latitude}/{longitude}",
+            arguments = listOf(
+                navArgument("latitude") {
+                    type = NavType.StringType
+                },
+                navArgument("longitude") {
+                    type = NavType.StringType
+                })
         ) { backStackEntry ->
             JoinToFootballMatchScreen(
                 email = backStackEntry.arguments?.getString("email") ?: "null",

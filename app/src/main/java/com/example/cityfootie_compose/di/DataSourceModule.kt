@@ -48,16 +48,12 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun getInterceptor(/*@ApplicationContext context: Context*/): Interceptor {
+    fun getInterceptor(): Interceptor {
         return Interceptor {
             val request = it.request().newBuilder()
             Handler(Looper.getMainLooper()).post {
-                //Toast.makeText(context, request.toString(), Toast.LENGTH_LONG).show()
                 Log.d("SIGNALCALL ", request.toString())
             }
-            //request
-            //.addHeader("FootieAPI-Key", "928e842ff4msh9b152a26f3ab1aap173fbdjsn2e110048ce6c")
-            //.addHeader("FootieAPI-Host", "twelve-data1.p.rapidapi.com")
             val actualRequest = request.build()
             it.proceed(actualRequest)
         }
@@ -66,8 +62,7 @@ object DataSourceModule {
     @Provides
     @Singleton
     fun getLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor {
-        }.apply { level = HttpLoggingInterceptor.Level.BODY }
+        return HttpLoggingInterceptor {}.apply { level = HttpLoggingInterceptor.Level.BODY }
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -75,7 +70,8 @@ object DataSourceModule {
     fun provideGson(): Gson {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss+02:00")
         dateFormat.timeZone = TimeZone.getTimeZone("Europe/Madrid")
-        return GsonBuilder().serializeNulls().setLenient().setDateFormat(dateFormat.toPattern()).create()
+        return GsonBuilder().serializeNulls().setLenient().setDateFormat(dateFormat.toPattern())
+            .create()
     }
 
     @Provides
@@ -83,31 +79,23 @@ object DataSourceModule {
     fun getOkHttpClient(
         interceptor: Interceptor
     ): OkHttpClient {
-        val httpBuilder = OkHttpClient.Builder()
-            .addInterceptor(interceptor)
+        val httpBuilder = OkHttpClient.Builder().addInterceptor(interceptor)
             .addNetworkInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
-            })
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
+            }).connectTimeout(30, TimeUnit.SECONDS).readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(50, TimeUnit.SECONDS)
 
-        return httpBuilder
-            .protocols(mutableListOf(Protocol.HTTP_1_1))
-            .build()
+        return httpBuilder.protocols(mutableListOf(Protocol.HTTP_1_1)).build()
     }
 
     @Provides
     @Singleton
     fun getRetrofit(
-        client: OkHttpClient,
-        gson: Gson
+        client: OkHttpClient, gson: Gson
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl("http://10.0.2.2:8080") // Emulador AndoridStudio 10.0.2.2 // JuanDa 192.168.1.63 / 192.168.88.19 // Miguel 192.168.1.132 // Sebas 192.168.1.11
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .client(client)
-            .build()
+            .addConverterFactory(GsonConverterFactory.create(gson)).client(client).build()
     }
 
     @Provides
@@ -123,8 +111,7 @@ object DataSourceModule {
     @Provides
     @Singleton
     fun provideFootieRemoteDataSource(
-        footieAPI: FootieAPI,
-        dispatcherProvider: DispatcherProvider
+        footieAPI: FootieAPI, dispatcherProvider: DispatcherProvider
     ): FootieRemoteDataSource {
         return FootieRemoteDataSourceImpl(footieAPI, dispatcherProvider)
     }
@@ -171,6 +158,4 @@ object DataSourceModule {
     @Singleton
     fun providesGetPlayersByFootballMatchUsecase(footieRepository: FootieRepository): GetPlayersByFootballMatchUsecases =
         GetPlayersByFootballMatchUsecasesImpl(footieRepository)
-
-
 }

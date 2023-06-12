@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class PostPlayerUsecasesImpl @Inject constructor(
     private val footieRepository: FootieRepository
-) : PostPlayerUsecases{
+) : PostPlayerUsecases {
     override suspend fun postPlayer(newPlayer: Player): Response<Void> {
         return footieRepository.postPlayer(newPlayer)
     }

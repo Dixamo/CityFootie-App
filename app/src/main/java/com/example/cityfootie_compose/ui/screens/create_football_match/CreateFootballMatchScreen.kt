@@ -4,16 +4,12 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
-import android.os.Build
 import android.util.Log
 import android.widget.DatePicker
-import android.widget.TimePicker
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -24,7 +20,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -43,7 +38,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cityfootie_compose.ui.screens.register.DataField
 import com.example.cityfootie_compose.util.toFloat
-import java.time.LocalDateTime
 import java.util.*
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -111,26 +105,6 @@ fun BodyContent(
         val context = LocalContext.current
         DateTimePicker(context)
 
-        /*DataField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp)
-                .padding(top = 0.dp)
-                .focusRequester(focusRequester),
-            label = "Date",
-            placeholder = "Date",
-            text = createFootBallMatchViewModel.dateString,
-            imeAction = ImeAction.Next,
-            isEnabled = true,
-            keyBoardActions = KeyboardActions(
-                onNext = {
-                    focusManager.moveFocus(FocusDirection.Down)
-                }
-            ),
-            keyboardType = KeyboardType.Text,
-            onChange = { createFootBallMatchViewModel.onDateChange(it) }
-        )*/
-
         Spacer(modifier = Modifier.padding(0.dp))
 
         //NUMERO MAXIMO
@@ -165,7 +139,9 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        val isButtonEnabled: Boolean by createFootBallMatchViewModel.isButtonEnabled.observeAsState(initial = false)
+        val isButtonEnabled: Boolean by createFootBallMatchViewModel.isButtonEnabled.observeAsState(
+            initial = false
+        )
 
         Button(
             onClick = {
@@ -189,45 +165,6 @@ fun BodyContent(
 }
 
 @Composable
-fun DataField(
-    modifier: Modifier,
-    text: String,
-    label: String,
-    placeholder: String,
-    onChange: (String) -> Unit,
-    imeAction: ImeAction = ImeAction.Next,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    keyBoardActions: KeyboardActions,
-    isEnabled: Boolean = true
-) {
-    Column(modifier = Modifier.height(90.dp)) {
-        OutlinedTextField(
-            value = text,
-            onValueChange = { onChange(it) },
-            textStyle = TextStyle(fontSize = 18.sp),
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email),
-            keyboardActions = keyBoardActions,
-            enabled = isEnabled,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = MaterialTheme.colors.primary,
-                unfocusedBorderColor = Color.Gray,
-                disabledBorderColor = Color.Gray,
-                disabledTextColor = Color.Black
-            ),
-            placeholder = {
-                Text(
-                    text = placeholder,
-                    style = TextStyle(fontSize = 18.sp, color = Color.LightGray)
-                )
-            },
-            label = {
-                Text(text = label, fontSize = 14.sp)
-            }
-        )
-    }
-}
-
-@Composable
 fun DateField(
     modifier: Modifier = Modifier,
     text: String,
@@ -235,9 +172,6 @@ fun DateField(
     placeholder: String,
     onChange: (String) -> Unit,
     onClick: () -> Unit,
-    //imeAction: ImeAction,
-    //keyboardType: KeyboardType,
-    //keyBoardActions: KeyboardActions,
     isEnabled: Boolean = false
 ) {
     Column(modifier = Modifier.height(90.dp)) {
@@ -248,17 +182,12 @@ fun DateField(
             value = text,
             onValueChange = { onChange(it) },
             textStyle = TextStyle(fontSize = 18.sp),
-            //keyboardOptions = KeyboardOptions(
-            //    keyboardType = keyboardType,
-            //    imeAction = imeAction
-            //),
-            //keyboardActions = keyBoardActions,
             enabled = isEnabled,
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = MaterialTheme.colors.primary,
                 unfocusedBorderColor = Color.Gray,
                 disabledBorderColor = Color.Gray,
-                disabledTextColor = Color.Black
+                disabledTextColor = Color.LightGray
             ),
             placeholder = {
                 Text(
@@ -277,8 +206,7 @@ fun DateField(
 fun DateTimePicker(
     context: Context,
     createFootBallMatchViewModel: CreateFootballMatchViewModel = hiltViewModel(),
-){
-
+) {
     //DIA
     val year: Int
     val month: Int
@@ -294,10 +222,12 @@ fun DateTimePicker(
     val datePickerDialog = DatePickerDialog(
         context,
         { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-            date.value = "$year-${createFootBallMatchViewModel.addLeadingZero((month + 1).toString())}-${createFootBallMatchViewModel.addLeadingZero(dayOfMonth.toString())}"
+            date.value =
+                "$year-${createFootBallMatchViewModel.addLeadingZero((month + 1).toString())}-${
+                    createFootBallMatchViewModel.addLeadingZero(dayOfMonth.toString())
+                }"
         }, year, month, day
     )
-
 
     //HORA
     val hour = calendar[Calendar.HOUR_OF_DAY]
@@ -306,8 +236,10 @@ fun DateTimePicker(
     val time = remember { mutableStateOf("") }
     val timePickerDialog = TimePickerDialog(
         context,
-        {_, hour : Int, minute: Int ->
-            time.value = "${createFootBallMatchViewModel.addLeadingZero(hour.toString())}:${createFootBallMatchViewModel.addLeadingZero(minute.toString())}"
+        { _, hour: Int, minute: Int ->
+            time.value = "${createFootBallMatchViewModel.addLeadingZero(hour.toString())}:${
+                createFootBallMatchViewModel.addLeadingZero(minute.toString())
+            }"
         }, hour, minute, false
     )
 

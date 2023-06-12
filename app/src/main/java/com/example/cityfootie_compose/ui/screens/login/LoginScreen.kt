@@ -32,8 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cityfootie_compose.util.toFloat
-import okhttp3.internal.wait
-import java.lang.Thread.sleep
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -50,7 +48,7 @@ fun BodyContent(
     goRegisterScreen: () -> Unit,
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
-    /*val isLoading: Boolean by loginViewModel.isLoading.observeAsState(initial = false)*/
+
     var isLoading: Boolean = loginViewModel.isLoading
     if (isLoading) {
         Box(

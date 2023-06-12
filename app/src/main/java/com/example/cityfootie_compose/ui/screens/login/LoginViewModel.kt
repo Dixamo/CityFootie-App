@@ -25,11 +25,9 @@ class LoginViewModel @Inject constructor(
     private val _isButtonEnabled = MutableLiveData(false)
     val isButtonEnabled: LiveData<Boolean> = _isButtonEnabled
 
-    // Loading Circular ProgressBar
-    /*private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> get() = _isLoading*/
+    private fun isValidEmail(email: String): Boolean =
+        Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
-    private fun isValidEmail(email: String): Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
     fun onEmailChange(value: String) {
         email = value
         _isButtonEnabled.value = isValidEmail(value) && isValidPassword(password)

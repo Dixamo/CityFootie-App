@@ -80,13 +80,19 @@ fun BodyContent(
 
         if (!isGetCompleted) {
             LaunchedEffect(Unit) {
-                joinToFootballMatchViewModel.getFootballMatch(latitude.toDouble(), longitude.toDouble())
+                joinToFootballMatchViewModel.getFootballMatch(
+                    latitude.toDouble(),
+                    longitude.toDouble()
+                )
             }
         }
         var isGetPlayersCompleted = joinToFootballMatchViewModel.isGetPlayersCompleted
         if (!isGetPlayersCompleted) {
             LaunchedEffect(Unit) {
-                joinToFootballMatchViewModel.getPlayersByFootballMatch(latitude.toDouble(), longitude.toDouble())
+                joinToFootballMatchViewModel.getPlayersByFootballMatch(
+                    latitude.toDouble(),
+                    longitude.toDouble()
+                )
             }
         }
 
@@ -102,8 +108,9 @@ fun BodyContent(
                     fontWeight = FontWeight.Bold
                 )
 
+
                 Text(
-                    text = "Usuarios apuntados:${footballMatch.numberPlayers}/${footballMatch.numberMax}" ,
+                    text = "Usuarios apuntados:${footballMatch.numberPlayers}/${footballMatch.numberMax}",
                     color = MaterialTheme.colors.primary,
                     fontSize = 30.sp,
                     style = MaterialTheme.typography.subtitle1,
@@ -119,9 +126,21 @@ fun BodyContent(
                     )
                 }
 
+                Text(
+                    text = "Fecha y hora: ${footballMatch.date}",
+                    color = MaterialTheme.colors.primary,
+                    fontSize = 20.sp,
+                    style = MaterialTheme.typography.subtitle1,
+                    fontWeight = FontWeight.Light
+                )
+
                 Button(
                     onClick = {
-                        joinToFootballMatchViewModel.putFootballMatch(latitude.toDouble(), longitude.toDouble(), email)
+                        joinToFootballMatchViewModel.putFootballMatch(
+                            latitude.toDouble(),
+                            longitude.toDouble(),
+                            email
+                        )
                     },
                 ) {
                     Text(text = "Unirse partido")
@@ -131,8 +150,8 @@ fun BodyContent(
                 if (isGetPlayersCompleted) {
                     LazyColumn {
                         if (players != null) {
-                            items(players.toList()) {
-                                    player -> UserRow(player = player)
+                            items(players.toList()) { player ->
+                                UserRow(player = player)
                             }
                         }
                     }
@@ -181,8 +200,9 @@ fun UserImage() {
 
 @Composable
 fun UserInfo(player: Player) {
-    Column(modifier = Modifier
-        .padding(start = 8.dp)
+    Column(
+        modifier = Modifier
+            .padding(start = 8.dp)
     ) {
         Text(
             text = player.username!!,

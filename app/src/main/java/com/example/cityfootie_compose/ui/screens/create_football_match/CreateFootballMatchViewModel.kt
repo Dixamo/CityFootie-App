@@ -1,7 +1,6 @@
 package com.example.cityfootie_compose.ui.screens.create_football_match
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -17,18 +16,13 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.Month
-import java.util.Calendar
 import java.util.Date
-import java.util.Locale
-import java.util.TimeZone
 import javax.inject.Inject
 
 @HiltViewModel
 class CreateFootballMatchViewModel @Inject constructor(
     private val postFootballMatchUsecases: PostFootballMatchUsecases
-): ViewModel() {
+) : ViewModel() {
     var dateString: String by mutableStateOf("")
     var numberMax: String by mutableStateOf("")
 
@@ -41,6 +35,7 @@ class CreateFootballMatchViewModel @Inject constructor(
         val date: Date = format.parse(dateTimeString) as Date
         return Timestamp(date.time)
     }
+
     fun addLeadingZero(string: String): String {
         return string.padStart(2, '0')
     }
@@ -51,7 +46,9 @@ class CreateFootballMatchViewModel @Inject constructor(
         _isButtonEnabled.value = isValidDate(value) && isValidNumberMax(numberMax)
     }
 
-    private fun isValidNumberMax(numberMax: String): Boolean = numberMax.length > 0 && numberMax.toInt() > 1 && numberMax.toInt() < 30
+    private fun isValidNumberMax(numberMax: String): Boolean =
+        numberMax.length > 0 && numberMax.toInt() > 1 && numberMax.toInt() < 30
+
     fun onNumberMaxChange(value: String) {
         numberMax = value.filter { it.isDigit() }
         _isButtonEnabled.value = isValidDate(dateString) && isValidNumberMax(value)
@@ -61,7 +58,7 @@ class CreateFootballMatchViewModel @Inject constructor(
     var isLoading: Boolean by mutableStateOf(false)
     var isCompleted: Boolean by mutableStateOf(false)
     var isError: Boolean by mutableStateOf(false)
-    fun postFootballMatch(latitude : String, longitude : String) {
+    fun postFootballMatch(latitude: String, longitude: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val formattedDate = parseStringToTimestamp(dateString)
             val newFootballMatch: FootballMatch = FootballMatch(

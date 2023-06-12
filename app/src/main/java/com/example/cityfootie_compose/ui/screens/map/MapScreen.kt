@@ -79,25 +79,25 @@ fun BodyContent(
     val marker3 = LatLng(40.34924765147908, -3.693923893405747)
     val marker4 = LatLng(40.348042934346815, -3.691662785268137)
     val marker5 = LatLng(40.39041751084235, -3.6600595654305264)
-    val marker6 = LatLng( 40.45055718401559, -3.7117661601773517)
-    val marker7 = LatLng( 40.460822724171685, -3.653721323776217)
-    val marker8 = LatLng( 40.50139811541079, -3.6978673697183617)
-    val marker9 = LatLng( 40.355669347020175, -3.680274938148021)
-    val marker10 = LatLng( 40.3244730386376, -3.733080010735)
-    val marker11 = LatLng( 40.31078603079951, -3.877981530609243)
-    val marker12 = LatLng( 40.3220462657423, -3.7616192611944146)
-    val marker13 = LatLng( 40.33175179320058, -3.7449872851827015)
-    val marker14 = LatLng( 40.344607689124736, -3.7542273213564163)
-    val marker15 = LatLng( 40.29910372790963, -3.7568766516572127)
-    val marker16 = LatLng( 40.33633376914984, -3.7764898101040103)
-    val marker17 = LatLng( 40.322766310753025, -3.778236423660193)
-    val marker18 = LatLng( 40.48751113221966, -3.726553869961957)
-    val marker19 = LatLng( 40.368551136085586, -3.7113168361285678)
-    val marker20 = LatLng( 40.36705638474042, -3.7076461563291905)
+    val marker6 = LatLng(40.45055718401559, -3.7117661601773517)
+    val marker7 = LatLng(40.460822724171685, -3.653721323776217)
+    val marker8 = LatLng(40.50139811541079, -3.6978673697183617)
+    val marker9 = LatLng(40.355669347020175, -3.680274938148021)
+    val marker10 = LatLng(40.3244730386376, -3.733080010735)
+    val marker11 = LatLng(40.31078603079951, -3.877981530609243)
+    val marker12 = LatLng(40.3220462657423, -3.7616192611944146)
+    val marker13 = LatLng(40.33175179320058, -3.7449872851827015)
+    val marker14 = LatLng(40.344607689124736, -3.7542273213564163)
+    val marker15 = LatLng(40.29910372790963, -3.7568766516572127)
+    val marker16 = LatLng(40.33633376914984, -3.7764898101040103)
+    val marker17 = LatLng(40.322766310753025, -3.778236423660193)
+    val marker18 = LatLng(40.48751113221966, -3.726553869961957)
+    val marker19 = LatLng(40.368551136085586, -3.7113168361285678)
+    val marker20 = LatLng(40.36705638474042, -3.7076461563291905)
 
 
-    val cameraPositionState = rememberCameraPositionState{
-        position = CameraPosition.fromLatLngZoom(marker1,12f)
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(marker1, 12f)
     }
     val properties by remember { mutableStateOf(MapProperties(mapType = MapType.HYBRID)) }
     var uiSettings by remember { mutableStateOf(MapUiSettings()) }
@@ -122,103 +122,103 @@ fun BodyContent(
             markerClicked = markerClicked,
             direction = "Dirección: C. de la Vírgen de los Desamparados, 20"
         )
-        
+
         FootieMarker(
             position = marker2,
             markerClicked = markerClicked,
             direction = "Dirección: C. Hermandad de Donantes de Sangre, 7"
         )
-        
+
         FootieMarker(
             position = marker3,
             markerClicked = markerClicked,
             direction = "Dirección: C. Santiago Amón, 8"
         )
-        
+
         FootieMarker(
             position = marker4,
             markerClicked = markerClicked,
             direction = "Dirección: C. Sta. Florencia, 27"
         )
-        
+
         FootieMarker(
             position = marker5,
             markerClicked = markerClicked,
             direction = "Dirección: C. del Payaso Fofó, 9, Madrid"
         )
-        
+
         FootieMarker(
             position = marker6,
             markerClicked = markerClicked,
             direction = "Dirección: P.º de Juan XXIII, 39"
         )
-        
+
         FootieMarker(
             position = marker7,
             markerClicked = markerClicked,
             direction = "Dirección: C. Puerto Real, 7"
         )
-        
+
         FootieMarker(
             position = marker8,
             markerClicked = markerClicked,
             direction = "Dirección: Puente de Tres Olivos"
         )
-        
+
         FootieMarker(
             position = marker9,
             markerClicked = markerClicked,
             direction = "Dirección: Av. de los Rosales, 91"
         )
-        
+
         FootieMarker(
             position = marker10,
             markerClicked = markerClicked,
             direction = "Dirección: C. Juan Bautista de Alderete, 8"
         )
-        
+
         FootieMarker(
             position = marker11,
             markerClicked = markerClicked,
             direction = "Dirección: C. Río Guadiana, 10"
         )
-        
+
         FootieMarker(
             position = marker12,
             markerClicked = markerClicked,
             direction = "Dirección: C. Constitución de Cádiz, 5"
         )
-        
+
         FootieMarker(
             position = marker13,
             markerClicked = markerClicked,
             direction = "Dirección: Avenida Alemania, 2"
         )
-        
+
         FootieMarker(
             position = marker14,
             markerClicked = markerClicked,
             direction = "Dirección: Av. de María Guerrero, 10"
         )
-        
+
         FootieMarker(
             position = marker15,
             markerClicked = markerClicked,
             direction = "Dirección: Paseo de Ramón González Peña, 3"
         )
-        
+
         FootieMarker(
             position = marker16,
             markerClicked = markerClicked,
             direction = "Dirección: C. Zurbarán, 3"
         )
-        
+
         FootieMarker(
             position = marker17,
             markerClicked = markerClicked,
             direction = "Dirección: C. de Francisco Largo Caballero, 21"
         )
-        
+
         FootieMarker(
             position = marker18,
             markerClicked = markerClicked,
@@ -244,25 +244,19 @@ fun BodyContent(
         var latitude = mapViewModel.markerLatitude
         var longitude = mapViewModel.markerLongitude
 
-        LaunchedEffect (isCompleted) {
+        LaunchedEffect(isCompleted) {
             isCompleted = false
             markerClicked.value = false
             if (isSuccessful) {
                 markerClicked.value = false
                 mapViewModel.resetValues()
                 goJoinToFootballMatchScreen(email, latitude.toString(), longitude.toString())
-            }
-            else if (isError) {
+            } else if (isError) {
                 markerClicked.value = false
                 mapViewModel.resetValues()
                 goCreateFootballMatchScreen(latitude.toString(), longitude.toString())
             }
         }
-        /*if (markerClicked.value) {
-            LaunchedEffect(Unit) {
-                goFootballMatch()
-            }
-        }*/
     }
 }
 
@@ -307,6 +301,7 @@ fun FootieMarker(
         }
     }
 }
+
 @Composable
 fun BottomNavigationBar(
     goBack: () -> Unit,

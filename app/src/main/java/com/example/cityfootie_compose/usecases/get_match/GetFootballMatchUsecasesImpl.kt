@@ -7,8 +7,11 @@ import javax.inject.Inject
 
 class GetFootballMatchUsecasesImpl @Inject constructor(
     private val footieRepository: FootieRepository
-): GetFootballMatchUsecases {
-    override suspend fun getFootballMatch(latitude: Double, longitude: Double): Response<FootballMatch> {
+) : GetFootballMatchUsecases {
+    override suspend fun getFootballMatch(
+        latitude: Double,
+        longitude: Double
+    ): Response<FootballMatch> {
         return footieRepository.getFootballMatch(latitude, longitude)
     }
 }

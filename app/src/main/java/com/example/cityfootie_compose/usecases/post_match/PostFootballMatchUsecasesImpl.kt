@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class PostFootballMatchUsecasesImpl @Inject constructor(
     private val footieRepository: FootieRepository
-) : PostFootballMatchUsecases{
+) : PostFootballMatchUsecases {
     override suspend fun postFootballMatch(newFootballMatch: FootballMatch): Response<Void> {
         return footieRepository.postFootballMatch(newFootballMatch)
     }
