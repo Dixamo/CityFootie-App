@@ -8,8 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cityfootie_compose.model.Player
-import com.example.cityfootie_compose.usecases.login.GetPlayerUsecases
-import com.example.cityfootie_compose.usecases.modify.UpdatePlayerUsecases
+import com.example.cityfootie_compose.usecases.get_player.GetPlayerUsecases
+import com.example.cityfootie_compose.usecases.put_player.PutPlayerUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ModifyViewModel @Inject constructor(
-    private val updatePlayerUsecases: UpdatePlayerUsecases,
+    private val putPlayerUsecases: PutPlayerUsecases,
     private val getPlayerUsecases: GetPlayerUsecases
 ) : ViewModel() {
     var player: Player? = null
@@ -99,7 +99,7 @@ class ModifyViewModel @Inject constructor(
     fun updatePlayer(email: String) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
-            response = updatePlayerUsecases.updatePlayer(
+            response = putPlayerUsecases.updatePlayer(
                 email,
                 name,
                 surnames,

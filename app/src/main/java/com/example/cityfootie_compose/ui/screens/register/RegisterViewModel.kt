@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cityfootie_compose.model.Player
-import com.example.cityfootie_compose.usecases.register.PostPlayerUsecases
+import com.example.cityfootie_compose.usecases.post_player.PostPlayerUsecases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.example.cityfootie_compose.usecases.login
+package com.example.cityfootie_compose.usecases.get_player
 
 import com.example.cityfootie_compose.datasource.FootieRepository
 import com.example.cityfootie_compose.model.Player

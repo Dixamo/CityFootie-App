@@ -13,16 +13,16 @@ import com.example.cityfootie_compose.usecases.get_match.GetFootballMatchUsecase
 import com.example.cityfootie_compose.usecases.get_match.GetFootballMatchUsecasesImpl
 import com.example.cityfootie_compose.usecases.get_players_by_match.GetPlayersByFootballMatchUsecases
 import com.example.cityfootie_compose.usecases.get_players_by_match.GetPlayersByFootballMatchUsecasesImpl
-import com.example.cityfootie_compose.usecases.login.GetPlayerUsecases
-import com.example.cityfootie_compose.usecases.login.GetPlayerUsecasesImpl
-import com.example.cityfootie_compose.usecases.modify.UpdatePlayerUsecases
-import com.example.cityfootie_compose.usecases.modify.UpdatePlayerUsecasesImpl
+import com.example.cityfootie_compose.usecases.get_player.GetPlayerUsecases
+import com.example.cityfootie_compose.usecases.get_player.GetPlayerUsecasesImpl
+import com.example.cityfootie_compose.usecases.put_player.PutPlayerUsecases
+import com.example.cityfootie_compose.usecases.put_player.PutPlayerUsecasesImpl
 import com.example.cityfootie_compose.usecases.post_match.PostFootballMatchUsecases
 import com.example.cityfootie_compose.usecases.post_match.PostFootballMatchUsecasesImpl
 import com.example.cityfootie_compose.usecases.put_match.PutFootballMatchUsecases
 import com.example.cityfootie_compose.usecases.put_match.PutFootballMatchUsecasesImpl
-import com.example.cityfootie_compose.usecases.register.PostPlayerUsecases
-import com.example.cityfootie_compose.usecases.register.PostPlayerUsecasesImpl
+import com.example.cityfootie_compose.usecases.post_player.PostPlayerUsecases
+import com.example.cityfootie_compose.usecases.post_player.PostPlayerUsecasesImpl
 import com.example.cityfootie_compose.util.DispatcherProvider
 import com.example.cityfootie_compose.util.DispatcherProviderImpl
 import com.google.gson.Gson
@@ -143,8 +143,8 @@ object DataSourceModule {
     @Singleton
     fun providesUpdatePlayerUseCase(
         footieRepository: FootieRepository
-    ): UpdatePlayerUsecases =
-        UpdatePlayerUsecasesImpl(footieRepository)
+    ): PutPlayerUsecases =
+        PutPlayerUsecasesImpl(footieRepository)
 
     @Provides
     @Singleton
