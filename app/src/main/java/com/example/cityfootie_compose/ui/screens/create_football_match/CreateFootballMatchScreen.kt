@@ -101,7 +101,6 @@ fun BodyContent(
         val focusManager = LocalFocusManager.current
 
         //DATE
-
         val context = LocalContext.current
         DateTimePicker(context)
 
