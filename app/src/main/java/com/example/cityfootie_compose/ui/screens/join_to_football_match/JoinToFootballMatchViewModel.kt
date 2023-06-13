@@ -27,8 +27,8 @@ class JoinToFootballMatchViewModel @Inject constructor(
     var response: Response<Void>? by mutableStateOf(null)
     var footballMatch: FootballMatch? = null
     var email: String by mutableStateOf("")
-    var markerLatitude: Double? by mutableStateOf(null)
-    var markerLongitude: Double? by mutableStateOf(null)
+    private var markerLatitude: Double? by mutableStateOf(null)
+    private var markerLongitude: Double? by mutableStateOf(null)
 
     private val _isButtonEnabled = MutableLiveData(false)
     val isButtonEnabled: LiveData<Boolean> = _isButtonEnabled
@@ -38,7 +38,6 @@ class JoinToFootballMatchViewModel @Inject constructor(
     var isGetPlayersCompleted: Boolean by mutableStateOf(false)
     var isGetCompleted: Boolean by mutableStateOf(false)
     var isPostCompleted: Boolean by mutableStateOf(false)
-    var isSuccessful: Boolean by mutableStateOf(false)
     var isError: Boolean by mutableStateOf(false)
 
     fun getPlayersByFootballMatch(latitude: Double, longitude: Double) {
@@ -49,10 +48,9 @@ class JoinToFootballMatchViewModel @Inject constructor(
             val response =
                 getPlayersByFootballMatchUsecases.getPlayersByFootballMatch(latitude, longitude)
             if (response != null) {
-                if (response!!.isSuccessful) {
+                if (response.isSuccessful) {
                     isGetPlayersCompleted = true
-                    isSuccessful = true
-                    players = response!!.body()
+                    players = response.body()
                 } else {
                     isError = true
                     footballMatch = null
@@ -69,10 +67,9 @@ class JoinToFootballMatchViewModel @Inject constructor(
             markerLongitude = longitude
             val response = getFootballMatchUsecases.getFootballMatch(latitude, longitude)
             if (response != null) {
-                if (response!!.isSuccessful) {
+                if (response.isSuccessful) {
                     isGetCompleted = true
-                    isSuccessful = true
-                    footballMatch = response!!.body()
+                    footballMatch = response.body()
                 } else {
                     isError = true
                     footballMatch = null

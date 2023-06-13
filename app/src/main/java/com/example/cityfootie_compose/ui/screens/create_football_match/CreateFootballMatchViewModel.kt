@@ -61,7 +61,7 @@ class CreateFootballMatchViewModel @Inject constructor(
     fun postFootballMatch(latitude: String, longitude: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val formattedDate = parseStringToTimestamp(dateString)
-            val newFootballMatch: FootballMatch = FootballMatch(
+            val newFootballMatch = FootballMatch(
                 latitude.toDouble(),
                 longitude.toDouble(),
                 numberMax.toInt(),

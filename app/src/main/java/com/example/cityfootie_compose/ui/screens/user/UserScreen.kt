@@ -1,7 +1,6 @@
 package com.example.cityfootie_compose.ui.screens.user
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -15,13 +14,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.cityfootie_compose.ui.components.bottom_navigation_bar.BottomNavigationBar
+import com.example.cityfootie_compose.ui.components.bottom_navigation_bar.BottomNavigationItem
 import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -49,27 +49,24 @@ fun UserScreen(
                 )
             )
             BottomNavigationBar(
-                goMapScreen = { goMapScreen(email) },
+                navMethod = { goMapScreen(email) },
                 items = bottomNavigationItems,
                 selectedItem = selectedItem
             )
         }
     ) {
-        BodyContent(goMapScreen, goModifyScreen, email)
+        BodyContent(goModifyScreen, email)
     }
 }
 
 @Composable
 fun BodyContent(
-    goMapScreen: (String) -> Unit,
     goModifyScreen: (String) -> Unit,
     email: String,
     userViewModel: UserViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
-    var player = userViewModel.player
-    var isCompleted = userViewModel.isCompleted
-    var isLoading: Boolean = userViewModel.isLoading
+    val player = userViewModel.player
 
     LaunchedEffect(Unit) {
         userViewModel.getPlayer(email)
@@ -213,40 +210,3 @@ fun BodyContent(
         }
     }
 }
-
-@Composable
-fun BottomNavigationBar(
-    goMapScreen: () -> Unit,
-    items: List<BottomNavigationItem>,
-    selectedItem: MutableState<Int>
-) {
-    BottomNavigation(
-        modifier = Modifier.background(color = Color.White)
-    ) {
-        items.forEachIndexed { index, item ->
-            BottomNavigationItem(
-                selected = selectedItem.value == index,
-                onClick = {
-                    if (selectedItem.value != index) {
-                        goMapScreen()
-                    }
-                },
-                icon = {
-                    Icon(
-                        imageVector = item.icon,
-                        contentDescription = item.title,
-                        tint = item.color
-                    )
-                },
-                label = { Text(text = item.title) }
-            )
-        }
-    }
-}
-
-data class BottomNavigationItem(
-    val title: String,
-    val icon: ImageVector,
-    val color: Color,
-    val navigation: Unit? = null
-)

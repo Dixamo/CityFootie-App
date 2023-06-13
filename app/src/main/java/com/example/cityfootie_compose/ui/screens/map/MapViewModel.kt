@@ -18,7 +18,7 @@ class MapViewModel @Inject constructor(
     private val getFootballMatchUsecases: GetFootballMatchUsecases
 ) : ViewModel() {
     var response: Response<FootballMatch>? by mutableStateOf(null)
-    var footballMatch: FootballMatch? = null
+    private var footballMatch: FootballMatch? = null
     var isLoading: Boolean by mutableStateOf(false)
     var isCompleted: Boolean by mutableStateOf(false)
     var isSuccessful: Boolean by mutableStateOf(false)

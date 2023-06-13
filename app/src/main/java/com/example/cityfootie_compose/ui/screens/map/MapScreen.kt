@@ -1,9 +1,7 @@
 package com.example.cityfootie_compose.ui.screens.map
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Map
@@ -12,11 +10,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.example.cityfootie_compose.ui.components.bottom_navigation_bar.BottomNavigationBar
+import com.example.cityfootie_compose.ui.components.bottom_navigation_bar.BottomNavigationItem
+import com.example.cityfootie_compose.ui.components.footie_marker.FootieMarker
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.*
@@ -46,25 +44,24 @@ fun MapScreen(
                 )
             )
             BottomNavigationBar(
-                goBack = goBack,
+                navMethod = goBack,
                 items = bottomNavigationItems,
                 selectedItem = selectedItem
             )
         }
     ) {
-        BodyContent(email, goBack, goJoinToFootballMatchScreen, goCreateFootballMatchScreen)
+        BodyContent(email, goJoinToFootballMatchScreen, goCreateFootballMatchScreen)
     }
 }
 
 @Composable
 fun BodyContent(
     email: String,
-    goBack: () -> Unit,
     goJoinToFootballMatchScreen: (String, String, String) -> Unit,
     goCreateFootballMatchScreen: (String, String) -> Unit,
     mapViewModel: MapViewModel = hiltViewModel()
 ) {
-    var isLoading: Boolean = mapViewModel.isLoading
+    val isLoading: Boolean = mapViewModel.isLoading
     if (isLoading) {
         Box(
             contentAlignment = Alignment.Center,
@@ -116,133 +113,111 @@ fun BodyContent(
         properties = properties,
         uiSettings = uiSettings
     ) {
-        var actualMarker: LatLng
         FootieMarker(
             position = marker1,
-            markerClicked = markerClicked,
-            direction = "Dirección: C. de la Vírgen de los Desamparados, 20"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker2,
-            markerClicked = markerClicked,
-            direction = "Dirección: C. Hermandad de Donantes de Sangre, 7"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker3,
-            markerClicked = markerClicked,
-            direction = "Dirección: C. Santiago Amón, 8"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker4,
-            markerClicked = markerClicked,
-            direction = "Dirección: C. Sta. Florencia, 27"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker5,
-            markerClicked = markerClicked,
-            direction = "Dirección: C. del Payaso Fofó, 9, Madrid"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker6,
-            markerClicked = markerClicked,
-            direction = "Dirección: P.º de Juan XXIII, 39"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker7,
-            markerClicked = markerClicked,
-            direction = "Dirección: C. Puerto Real, 7"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker8,
-            markerClicked = markerClicked,
-            direction = "Dirección: Puente de Tres Olivos"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker9,
-            markerClicked = markerClicked,
-            direction = "Dirección: Av. de los Rosales, 91"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker10,
-            markerClicked = markerClicked,
-            direction = "Dirección: C. Juan Bautista de Alderete, 8"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker11,
-            markerClicked = markerClicked,
-            direction = "Dirección: C. Río Guadiana, 10"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker12,
-            markerClicked = markerClicked,
-            direction = "Dirección: C. Constitución de Cádiz, 5"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker13,
-            markerClicked = markerClicked,
-            direction = "Dirección: Avenida Alemania, 2"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker14,
-            markerClicked = markerClicked,
-            direction = "Dirección: Av. de María Guerrero, 10"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker15,
-            markerClicked = markerClicked,
-            direction = "Dirección: Paseo de Ramón González Peña, 3"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker16,
-            markerClicked = markerClicked,
-            direction = "Dirección: C. Zurbarán, 3"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker17,
-            markerClicked = markerClicked,
-            direction = "Dirección: C. de Francisco Largo Caballero, 21"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker18,
-            markerClicked = markerClicked,
-            direction = "Dirección: C. del Cerro Minguete, 156"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker19,
-            markerClicked = markerClicked,
-            direction = "Dirección: C. del Camino Viejo de Villaverde, 32"
+            markerClicked = markerClicked
         )
 
         FootieMarker(
             position = marker20,
-            markerClicked = markerClicked,
-            direction = "Dirección: C. Rda. de las Cooperativas, 10"
+            markerClicked = markerClicked
         )
 
-        var footballMatch = mapViewModel.footballMatch
         var isCompleted = mapViewModel.isCompleted
-        var isSuccessful = mapViewModel.isSuccessful
-        var isError = mapViewModel.isError
-        var latitude = mapViewModel.markerLatitude
-        var longitude = mapViewModel.markerLongitude
+        val isSuccessful = mapViewModel.isSuccessful
+        val isError = mapViewModel.isError
+        val latitude = mapViewModel.markerLatitude
+        val longitude = mapViewModel.markerLongitude
 
         LaunchedEffect(isCompleted) {
             isCompleted = false
@@ -260,81 +235,3 @@ fun BodyContent(
     }
 }
 
-@Composable
-fun FootieMarker(
-    position: LatLng,
-    markerClicked: MutableState<Boolean>,
-    direction: String,
-    mapViewModel: MapViewModel = hiltViewModel()
-) {
-    MarkerInfoWindow(
-        state = MarkerState(position = position),
-        icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN),
-        onInfoWindowClick = {
-            mapViewModel.getFootballMatch(position.latitude, position.longitude)
-            markerClicked.value = true
-            markerClicked.value = false
-        }
-    ) { marker ->
-        Box(
-            modifier = Modifier
-                .background(
-                    color = Color.White,
-                    shape = RoundedCornerShape(35.dp, 35.dp, 35.dp, 35.dp)
-                )
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = direction,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .padding(top = 10.dp)
-                        .width(200.dp),
-                    style = MaterialTheme.typography.h5,
-                    color = MaterialTheme.colors.primary
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun BottomNavigationBar(
-    goBack: () -> Unit,
-    items: List<BottomNavigationItem>,
-    selectedItem: MutableState<Int>
-) {
-    BottomNavigation(
-        modifier = Modifier.background(color = Color.White)
-    ) {
-        items.forEachIndexed { index, item ->
-            BottomNavigationItem(
-                selected = selectedItem.value == index,
-                onClick = {
-                    if (selectedItem.value != index) {
-                        goBack()
-                    }
-                },
-                icon = {
-                    Icon(
-                        imageVector = item.icon,
-                        contentDescription = item.title,
-                        tint = item.color
-                    )
-                },
-                label = { Text(text = item.title) }
-            )
-        }
-    }
-}
-
-data class BottomNavigationItem(
-    val title: String,
-    val icon: ImageVector,
-    val color: Color,
-    val navigation: Unit? = null
-)

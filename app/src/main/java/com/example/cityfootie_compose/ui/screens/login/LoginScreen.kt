@@ -2,11 +2,9 @@ package com.example.cityfootie_compose.ui.screens.login
 
 import android.annotation.SuppressLint
 import android.util.Log
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -18,8 +16,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -31,6 +27,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.cityfootie_compose.ui.components.password_field.PasswordField
+import com.example.cityfootie_compose.ui.components.password_field.SeePassword
+import com.example.cityfootie_compose.ui.components.user_field.UserField
 import com.example.cityfootie_compose.util.toFloat
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -49,7 +48,7 @@ fun BodyContent(
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
 
-    var isLoading: Boolean = loginViewModel.isLoading
+    val isLoading: Boolean = loginViewModel.isLoading
     if (isLoading) {
         Box(
             contentAlignment = Alignment.Center,
@@ -87,7 +86,7 @@ fun BodyContent(
 
         val focusRequester = remember { FocusRequester() }
         val focusManager = LocalFocusManager.current
-        EmailField(
+        UserField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp)
@@ -132,7 +131,7 @@ fun BodyContent(
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 SeePassword(
-                    isVisible = passwordVisible, setVisible = { it ->
+                    isVisible = passwordVisible, setVisible = {
                         passwordVisible = it
                     }
                 )
@@ -140,7 +139,7 @@ fun BodyContent(
             onChange = { loginViewModel.onPasswordChange(it) }
         )
 
-        var isError: Boolean = loginViewModel.isError
+        val isError: Boolean = loginViewModel.isError
         Text(
             text = "Correo o contraseña incorrectas",
             modifier = Modifier.alpha(isError.toFloat()),
@@ -149,8 +148,8 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(8.dp))
 
-        var player = loginViewModel.player
-        var isCompleted = loginViewModel.isCompleted
+        val player = loginViewModel.player
+        val isCompleted = loginViewModel.isCompleted
         val isButtonEnabled: Boolean by loginViewModel.isButtonEnabled.observeAsState(initial = false)
         Button(
             onClick = {
@@ -172,7 +171,7 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(8.dp))
 
-        Row() {
+        Row {
             Text(
                 text = "¿No tienes cuenta? "
             )
@@ -187,130 +186,5 @@ fun BodyContent(
                 }
             )
         }
-    }
-}
-
-@Composable
-fun EmailField(
-    modifier: Modifier,
-    icon: ImageVector,
-    text: String,
-    label: String,
-    placeholder: String,
-    onChange: (String) -> Unit,
-    imeAction: ImeAction,
-    keyboardType: KeyboardType,
-    keyBoardActions: KeyboardActions,
-    isEnabled: Boolean = true
-) {
-    Column(modifier = Modifier.height(90.dp)) {
-        OutlinedTextField(
-            leadingIcon = {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = "User Icon"
-                )
-            },
-            value = text,
-            onValueChange = { onChange(it) },
-            textStyle = TextStyle(fontSize = 18.sp),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = keyboardType,
-                imeAction = imeAction
-            ),
-            keyboardActions = keyBoardActions,
-            enabled = isEnabled,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = MaterialTheme.colors.primary,
-                unfocusedBorderColor = Color.Gray,
-                disabledBorderColor = Color.Gray,
-                disabledTextColor = Color.Black
-            ),
-            placeholder = {
-                Text(
-                    text = placeholder,
-                    style = TextStyle(fontSize = 18.sp, color = Color.LightGray)
-                )
-            },
-            label = {
-                Text(text = label, fontSize = 14.sp)
-            }
-        )
-    }
-}
-
-@Composable
-fun PasswordField(
-    modifier: Modifier,
-    icon: ImageVector,
-    text: String,
-    label: String,
-    placeholder: String,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    onChange: (String) -> Unit,
-    imeAction: ImeAction,
-    keyboardType: KeyboardType,
-    keyBoardActions: KeyboardActions,
-    isEnabled: Boolean = true,
-    visualTransformation: VisualTransformation = VisualTransformation.None
-) {
-    Column(modifier = Modifier.height(90.dp)) {
-        OutlinedTextField(
-            leadingIcon = {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = "Lock Icon"
-                )
-            },
-            value = text,
-            onValueChange = { onChange(it) },
-            trailingIcon = trailingIcon,
-            textStyle = TextStyle(fontSize = 18.sp),
-            visualTransformation = visualTransformation,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = keyboardType,
-                imeAction = imeAction
-            ),
-            keyboardActions = keyBoardActions,
-            enabled = isEnabled,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = MaterialTheme.colors.primary,
-                unfocusedBorderColor = Color.Gray,
-                disabledBorderColor = Color.Gray,
-                disabledTextColor = Color.Black
-            ),
-            placeholder = {
-                Text(
-                    text = placeholder,
-                    style = TextStyle(fontSize = 18.sp, color = Color.LightGray)
-                )
-            },
-            label = {
-                Text(text = label, fontSize = 14.sp)
-            }
-        )
-    }
-}
-
-@Composable
-fun SeePassword(isVisible: Boolean, setVisible: (Boolean) -> Unit) {
-    if (isVisible) {
-        Icon(
-            imageVector = Icons.Default.RemoveRedEye,
-            contentDescription = null,
-            modifier = Modifier.clickable {
-                setVisible(false)
-            },
-            tint = MaterialTheme.colors.primary
-        )
-    } else {
-        Icon(
-            imageVector = Icons.Default.RemoveRedEye,
-            contentDescription = null,
-            modifier = Modifier.clickable {
-                setVisible(true)
-            },
-            tint = MaterialTheme.colors.primary
-        )
     }
 }
