@@ -19,6 +19,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Composable encargado del icono que aparece en el textfield del nombre de usuario.
+ */
 @Composable
 fun UserField(
     modifier: Modifier,

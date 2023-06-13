@@ -29,7 +29,9 @@ fun UserRow(player: Player) {
         .background(MaterialTheme.colors.background)
         .padding(8.dp)
         .clickable {
-            //NAVEGACION
+            /**
+             * Navegación
+             */
         }
     ) {
         UserImage()
@@ -49,6 +51,9 @@ fun UserImage() {
     )
 }
 
+/**
+ * Composable encargado de la organización de la información del usuario mostrada en pantalla.
+ */
 @Composable
 fun UserInfo(player: Player) {
     Column(

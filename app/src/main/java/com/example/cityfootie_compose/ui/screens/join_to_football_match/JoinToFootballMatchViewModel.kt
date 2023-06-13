@@ -40,6 +40,9 @@ class JoinToFootballMatchViewModel @Inject constructor(
     var isPostCompleted: Boolean by mutableStateOf(false)
     var isError: Boolean by mutableStateOf(false)
 
+    /**
+     * Método encargado de obtener los jugadores inscritos en un partido a través de la longitud y de la latitud.
+     */
     fun getPlayersByFootballMatch(latitude: Double, longitude: Double) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
@@ -60,6 +63,9 @@ class JoinToFootballMatchViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Método encargado de obtener un partido ya creado a través de la latitud y la longitud.
+     */
     fun getFootballMatch(latitude: Double, longitude: Double) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
@@ -79,6 +85,9 @@ class JoinToFootballMatchViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Método encargado de inscribir a un jugador en cierto partido (en caso de que no esté inscrito ya) a través de la longitud, latitud y email.
+     */
     fun putFootballMatch(latitude: Double, longitude: Double, email: String) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true

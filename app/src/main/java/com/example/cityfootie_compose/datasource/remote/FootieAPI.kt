@@ -11,6 +11,11 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface FootieAPI {
+
+    /**
+     * Todos los métodos explicados en "FootieRemoteDataSourceImpl
+     */
+
     @GET("players")
     suspend fun getPlayer(
         @Query("email") email: String,

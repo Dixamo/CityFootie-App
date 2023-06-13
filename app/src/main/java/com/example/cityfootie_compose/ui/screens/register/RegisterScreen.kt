@@ -3,7 +3,9 @@ package com.example.cityfootie_compose.ui.screens.register
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -66,7 +68,9 @@ fun BodyContent(
     val isCompleted = registerViewModel.isCompleted
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

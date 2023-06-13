@@ -23,7 +23,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-
+/**
+ * Composable encargado del icono que aparece en los textfields de las contraseñas.
+ */
 @Composable
 fun PasswordField(
     modifier: Modifier,
@@ -77,6 +79,9 @@ fun PasswordField(
     }
 }
 
+/**
+ * Composable encargado de la funcionabnilidad del ojo del textfield de las contraseñas.
+ */
 @Composable
 fun SeePassword(isVisible: Boolean, setVisible: (Boolean) -> Unit) {
     if (isVisible) {

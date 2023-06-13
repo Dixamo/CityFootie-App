@@ -11,18 +11,18 @@ import com.example.cityfootie_compose.datasource.remote.FootieRemoteDataSource
 import com.example.cityfootie_compose.datasource.remote.FootieRemoteDataSourceImpl
 import com.example.cityfootie_compose.usecases.get_match.GetFootballMatchUsecases
 import com.example.cityfootie_compose.usecases.get_match.GetFootballMatchUsecasesImpl
-import com.example.cityfootie_compose.usecases.get_players_by_match.GetPlayersByFootballMatchUsecases
-import com.example.cityfootie_compose.usecases.get_players_by_match.GetPlayersByFootballMatchUsecasesImpl
 import com.example.cityfootie_compose.usecases.get_player.GetPlayerUsecases
 import com.example.cityfootie_compose.usecases.get_player.GetPlayerUsecasesImpl
-import com.example.cityfootie_compose.usecases.put_player.PutPlayerUsecases
-import com.example.cityfootie_compose.usecases.put_player.PutPlayerUsecasesImpl
+import com.example.cityfootie_compose.usecases.get_players_by_match.GetPlayersByFootballMatchUsecases
+import com.example.cityfootie_compose.usecases.get_players_by_match.GetPlayersByFootballMatchUsecasesImpl
 import com.example.cityfootie_compose.usecases.post_match.PostFootballMatchUsecases
 import com.example.cityfootie_compose.usecases.post_match.PostFootballMatchUsecasesImpl
-import com.example.cityfootie_compose.usecases.put_match.PutFootballMatchUsecases
-import com.example.cityfootie_compose.usecases.put_match.PutFootballMatchUsecasesImpl
 import com.example.cityfootie_compose.usecases.post_player.PostPlayerUsecases
 import com.example.cityfootie_compose.usecases.post_player.PostPlayerUsecasesImpl
+import com.example.cityfootie_compose.usecases.put_match.PutFootballMatchUsecases
+import com.example.cityfootie_compose.usecases.put_match.PutFootballMatchUsecasesImpl
+import com.example.cityfootie_compose.usecases.put_player.PutPlayerUsecases
+import com.example.cityfootie_compose.usecases.put_player.PutPlayerUsecasesImpl
 import com.example.cityfootie_compose.util.DispatcherProvider
 import com.example.cityfootie_compose.util.DispatcherProviderImpl
 import com.google.gson.Gson
@@ -70,7 +70,8 @@ object DataSourceModule {
     fun provideGson(): Gson {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss+02:00")
         dateFormat.timeZone = TimeZone.getTimeZone("Europe/Madrid")
-        return GsonBuilder().serializeNulls().setLenient().setDateFormat(dateFormat.toPattern()).create()
+        return GsonBuilder().serializeNulls().setLenient().setDateFormat(dateFormat.toPattern())
+            .create()
     }
 
     @Provides
@@ -93,7 +94,7 @@ object DataSourceModule {
         client: OkHttpClient, gson: Gson
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080") // Emulador AndoridStudio 10.0.2.2 // JuanDa 192.168.1.63 / 192.168.88.19 // Miguel 192.168.1.132 // Sebas 192.168.1.11
+            .baseUrl("http://192.168.1.132:8080") // Emulador AndoridStudio 10.0.2.2 // JuanDa 192.168.1.63 / 192.168.88.19 // Miguel 192.168.1.132 // Sebas 192.168.1.11
             .addConverterFactory(GsonConverterFactory.create(gson)).client(client).build()
     }
 

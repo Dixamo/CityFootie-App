@@ -34,6 +34,9 @@ class CreateFootballMatchViewModel @Inject constructor(
     var isCompleted: Boolean by mutableStateOf(false)
     var isError: Boolean by mutableStateOf(false)
 
+    /**
+     * Se encarga de darle formato al TimeStamp para poder hacer las solicitudes a la BBDD correctamente.
+     */
     @SuppressLint("SimpleDateFormat")
     fun parseStringToTimestamp(dateTimeString: String): Timestamp {
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm")
@@ -59,6 +62,9 @@ class CreateFootballMatchViewModel @Inject constructor(
         _isButtonEnabled.value = isValidDate(dateString) && isValidNumberMax(value)
     }
 
+    /**
+     * Método encargado de crear un partido de fútbol en cierta pista.
+     */
     fun postFootballMatch(latitude: String, longitude: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val formattedDate = parseStringToTimestamp(dateString)

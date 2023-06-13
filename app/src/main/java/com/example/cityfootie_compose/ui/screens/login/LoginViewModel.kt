@@ -44,6 +44,9 @@ class LoginViewModel @Inject constructor(
         _isButtonEnabled.value = isValidEmail(email) && isValidPassword(value)
     }
 
+    /**
+     * Método encargado de obtener el jugador a través del email y la contraseña.
+     */
     fun getPlayer() {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true

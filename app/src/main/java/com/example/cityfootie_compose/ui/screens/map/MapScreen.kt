@@ -84,7 +84,8 @@ fun BodyContent(
 
     val isLoading: Boolean = mapViewModel.isLoading
 
-    val cameraPositionState = rememberCameraPositionState { position = CameraPosition.fromLatLngZoom(marker1, 12f) }
+    val cameraPositionState =
+        rememberCameraPositionState { position = CameraPosition.fromLatLngZoom(marker1, 12f) }
     val properties by remember { mutableStateOf(MapProperties(mapType = MapType.HYBRID)) }
     var uiSettings by remember { mutableStateOf(MapUiSettings()) }
     val markerClicked = remember { mutableStateOf(false) }

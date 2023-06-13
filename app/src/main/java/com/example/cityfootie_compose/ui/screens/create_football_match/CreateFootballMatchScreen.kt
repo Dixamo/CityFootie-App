@@ -70,7 +70,9 @@ fun BodyContent(
     val focusManager = LocalFocusManager.current
 
     val isError: Boolean = createFootBallMatchViewModel.isError
-    val isButtonEnabled: Boolean by createFootBallMatchViewModel.isButtonEnabled.observeAsState(initial = false)
+    val isButtonEnabled: Boolean by createFootBallMatchViewModel.isButtonEnabled.observeAsState(
+        initial = false
+    )
 
 
     if (isLoading) {
@@ -100,12 +102,16 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        //DATE
+        /**
+         * DATE
+         */
         DateTimePicker(context)
 
         Spacer(modifier = Modifier.padding(0.dp))
 
-        //NUMERO MAXIMO
+        /**
+         * NÚMERO MÁXIMO
+         */
         DataField(
             modifier = Modifier
                 .fillMaxWidth()

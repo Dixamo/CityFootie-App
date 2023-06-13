@@ -74,6 +74,9 @@ class ModifyViewModel @Inject constructor(
             )
     }
 
+    /**
+     * Método encargado de obtener un jugador a través del email..
+     */
     fun getPlayer(email: String) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
@@ -96,6 +99,9 @@ class ModifyViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Método encargado de modificar los datos del jugador obtenido a través del email.
+     */
     fun updatePlayer(email: String) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true

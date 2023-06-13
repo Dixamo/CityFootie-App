@@ -31,6 +31,9 @@ class MapViewModel @Inject constructor(
         footballMatch = null
     }
 
+    /**
+     * Método encargado de obtener un partido de futbol ya creado a través de la latitud y de la longitud.
+     */
     fun getFootballMatch(latitude: Double, longitude: Double) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true

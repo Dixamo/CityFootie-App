@@ -7,6 +7,7 @@ interface GetPlayerUsecases {
     suspend fun getPlayer(
         email: String, password: String
     ): Response<Player>?
+
     suspend fun getPlayerByEmail(
         email: String
     ): Response<Player>?

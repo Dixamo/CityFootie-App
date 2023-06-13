@@ -25,6 +25,9 @@ fun AppNavigation(
         navController = navController,
         startDestination = AppScreens.SplashScreen.route
     ) {
+        /**
+         * Composable de SplashScreen
+         */
         composable(
             route = AppScreens.SplashScreen.route
         ) {
@@ -36,6 +39,9 @@ fun AppNavigation(
             )
         }
 
+        /**
+         * Composable de MainScreen
+         */
         composable(
             route = AppScreens.MainScreen.route
         ) {
@@ -47,6 +53,9 @@ fun AppNavigation(
             )
         }
 
+        /**
+         * Composable de LoginScreen
+         */
         composable(
             route = AppScreens.LoginScreen.route
         ) {
@@ -61,6 +70,9 @@ fun AppNavigation(
             )
         }
 
+        /**
+         * Composable de UserScreen
+         */
         composable(
             route = AppScreens.UserScreen.route + "/{email}",
             arguments = listOf(
@@ -88,6 +100,9 @@ fun AppNavigation(
             )
         }
 
+        /**
+         * Composable de MapScreen
+         */
         composable(
             route = AppScreens.MapScreen.route + "/{email}",
             arguments = listOf(
@@ -110,6 +125,9 @@ fun AppNavigation(
             )
         }
 
+        /**
+         * Composable de CreateFootballMatchScreen.
+         */
         composable(
             route = AppScreens.CreateFootballMatchScreen.route + "/{latitude}/{longitude}",
             arguments = listOf(
@@ -130,6 +148,9 @@ fun AppNavigation(
             )
         }
 
+        /**
+         * Composable de JoinToFootballMatchScreen.
+         */
         composable(
             route = AppScreens.JoinToFootballMatchScreen.route + "/{email}/{latitude}/{longitude}",
             arguments = listOf(
@@ -151,6 +172,9 @@ fun AppNavigation(
             )
         }
 
+        /**
+         * Composable de la ModifyScreen.
+         */
         composable(
             route = AppScreens.ModifyScreen.route + "/{email}", arguments = listOf(
                 navArgument("email") {

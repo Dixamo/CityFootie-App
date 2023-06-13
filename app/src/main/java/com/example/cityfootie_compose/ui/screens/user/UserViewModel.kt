@@ -26,6 +26,9 @@ class UserViewModel @Inject constructor(
     var isCompleted: Boolean by mutableStateOf(false)
     var isError: Boolean by mutableStateOf(false)
 
+    /**
+     * Método encargado de obtener un usuario a través del email.
+     */
     fun getPlayer(email: String) {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true

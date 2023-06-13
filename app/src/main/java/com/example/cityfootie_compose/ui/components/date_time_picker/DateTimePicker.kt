@@ -35,7 +35,9 @@ fun DateTimePicker(
     context: Context,
     createFootBallMatchViewModel: CreateFootballMatchViewModel = hiltViewModel(),
 ) {
-    //DIA
+    /**
+     * Datos del día, mes y año.
+     */
     val year: Int
     val month: Int
     val day: Int
@@ -57,7 +59,9 @@ fun DateTimePicker(
         }, year, month, day
     )
 
-    //HORA
+    /**
+     * Datos de la Hora.
+     */
     val hour = calendar[Calendar.HOUR_OF_DAY]
     val minute = calendar[Calendar.MINUTE]
 
