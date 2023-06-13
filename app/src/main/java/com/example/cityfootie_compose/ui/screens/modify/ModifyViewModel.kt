@@ -27,6 +27,15 @@ class ModifyViewModel @Inject constructor(
     var username: String by mutableStateOf("")
     var number: String by mutableStateOf("")
 
+    private val _isButtonEnabled = MutableLiveData(false)
+    val isButtonEnabled: LiveData<Boolean> = _isButtonEnabled
+
+    var response: Response<Void>? by mutableStateOf(null)
+    var isLoading: Boolean by mutableStateOf(false)
+    var isCompleted: Boolean by mutableStateOf(false)
+    var isError: Boolean by mutableStateOf(false)
+    var isModifyCompleted: Boolean by mutableStateOf(false)
+
     private fun isValidName(name: String): Boolean = name.length > 1
     fun onNameChange(value: String) {
         name = value.filter { it.isLetter() }
@@ -64,16 +73,6 @@ class ModifyViewModel @Inject constructor(
                 value
             )
     }
-
-    private val _isButtonEnabled = MutableLiveData(false)
-    val isButtonEnabled: LiveData<Boolean> = _isButtonEnabled
-
-
-    var response: Response<Void>? by mutableStateOf(null)
-    var isLoading: Boolean by mutableStateOf(false)
-    var isCompleted: Boolean by mutableStateOf(false)
-    var isError: Boolean by mutableStateOf(false)
-    var isModifyCompleted: Boolean by mutableStateOf(false)
 
     fun getPlayer(email: String) {
         viewModelScope.launch(Dispatchers.IO) {

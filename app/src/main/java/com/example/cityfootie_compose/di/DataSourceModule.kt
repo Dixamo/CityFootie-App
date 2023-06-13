@@ -70,8 +70,7 @@ object DataSourceModule {
     fun provideGson(): Gson {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss+02:00")
         dateFormat.timeZone = TimeZone.getTimeZone("Europe/Madrid")
-        return GsonBuilder().serializeNulls().setLenient().setDateFormat(dateFormat.toPattern())
-            .create()
+        return GsonBuilder().serializeNulls().setLenient().setDateFormat(dateFormat.toPattern()).create()
     }
 
     @Provides
@@ -100,7 +99,9 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun provideFootieService(retrofit: Retrofit): FootieAPI {
+    fun provideFootieService(
+        retrofit: Retrofit
+    ): FootieAPI {
         return retrofit.create(FootieAPI::class.java)
     }
 
@@ -126,36 +127,50 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun providesGetLoginUseCase(footieRepository: FootieRepository): GetPlayerUsecases =
+    fun providesGetLoginUseCase(
+        footieRepository: FootieRepository
+    ): GetPlayerUsecases =
         GetPlayerUsecasesImpl(footieRepository)
 
     @Provides
     @Singleton
-    fun providesPostPlayerUseCase(footieRepository: FootieRepository): PostPlayerUsecases =
+    fun providesPostPlayerUseCase(
+        footieRepository: FootieRepository
+    ): PostPlayerUsecases =
         PostPlayerUsecasesImpl(footieRepository)
 
     @Provides
     @Singleton
-    fun providesUpdatePlayerUseCase(footieRepository: FootieRepository): UpdatePlayerUsecases =
+    fun providesUpdatePlayerUseCase(
+        footieRepository: FootieRepository
+    ): UpdatePlayerUsecases =
         UpdatePlayerUsecasesImpl(footieRepository)
 
     @Provides
     @Singleton
-    fun providesGetFootballMatchUseCase(footieRepository: FootieRepository): GetFootballMatchUsecases =
+    fun providesGetPlayersByFootballMatchUsecase(
+        footieRepository: FootieRepository
+    ): GetPlayersByFootballMatchUsecases =
+        GetPlayersByFootballMatchUsecasesImpl(footieRepository)
+
+    @Provides
+    @Singleton
+    fun providesGetFootballMatchUseCase(
+        footieRepository: FootieRepository
+    ): GetFootballMatchUsecases =
         GetFootballMatchUsecasesImpl(footieRepository)
 
     @Provides
     @Singleton
-    fun providesPostFootballMatchUsecase(footieRepository: FootieRepository): PostFootballMatchUsecases =
+    fun providesPostFootballMatchUsecase(
+        footieRepository: FootieRepository
+    ): PostFootballMatchUsecases =
         PostFootballMatchUsecasesImpl(footieRepository)
 
     @Provides
     @Singleton
-    fun providesPutFootballMatchUsecase(footieRepository: FootieRepository): PutFootballMatchUsecases =
+    fun providesPutFootballMatchUsecase(
+        footieRepository: FootieRepository
+    ): PutFootballMatchUsecases =
         PutFootballMatchUsecasesImpl(footieRepository)
-
-    @Provides
-    @Singleton
-    fun providesGetPlayersByFootballMatchUsecase(footieRepository: FootieRepository): GetPlayersByFootballMatchUsecases =
-        GetPlayersByFootballMatchUsecasesImpl(footieRepository)
 }

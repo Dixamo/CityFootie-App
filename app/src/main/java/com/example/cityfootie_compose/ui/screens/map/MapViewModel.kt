@@ -23,6 +23,7 @@ class MapViewModel @Inject constructor(
     var isCompleted: Boolean by mutableStateOf(false)
     var isSuccessful: Boolean by mutableStateOf(false)
     var isError: Boolean by mutableStateOf(false)
+
     var markerLatitude: Double? by mutableStateOf(null)
     var markerLongitude: Double? by mutableStateOf(null)
 

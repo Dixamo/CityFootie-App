@@ -31,7 +31,6 @@ fun UserScreen(
     goModifyScreen: (String) -> Unit,
     email: String
 ) {
-
     val selectedItem = remember { mutableStateOf(0) }
 
     Scaffold(

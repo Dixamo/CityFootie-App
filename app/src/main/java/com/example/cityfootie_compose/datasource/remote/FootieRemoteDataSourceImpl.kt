@@ -11,6 +11,7 @@ class FootieRemoteDataSourceImpl @Inject constructor(
     private val footieAPI: FootieAPI,
     private val dispatcherProvider: DispatcherProvider
 ) : FootieRemoteDataSource {
+
     /**
      * Método encargado de obtener el jugador a través del email y de la contraseña.
      *
@@ -18,9 +19,25 @@ class FootieRemoteDataSourceImpl @Inject constructor(
      * @param password
      * @return Response<Player>
      */
-    override suspend fun getPlayer(email: String, password: String): Response<Player> =
+    override suspend fun getPlayer(
+        email: String,
+        password: String
+    ): Response<Player> =
         withContext(dispatcherProvider.ioDispatcher) {
             return@withContext footieAPI.getPlayer(email, password)
+        }
+
+    /**
+     * Método encargado de obtener un jugador a través del email (evitando la circulación de la contraseña entre pantallas).
+     *
+     * @param email
+     * @return Response<Player>
+     */
+    override suspend fun getPlayerByEmail(
+        email: String
+    ): Response<Player> =
+        withContext(dispatcherProvider.ioDispatcher) {
+            return@withContext footieAPI.getPlayerByEmail(email)
         }
 
     /**
@@ -29,7 +46,9 @@ class FootieRemoteDataSourceImpl @Inject constructor(
      * @param newPlayer
      * @return Response<Void>
      */
-    override suspend fun postPlayer(newPlayer: Player): Response<Void> =
+    override suspend fun postPlayer(
+        newPlayer: Player
+    ): Response<Void> =
         withContext(dispatcherProvider.ioDispatcher) {
             return@withContext footieAPI.postPlayer(newPlayer)
         }
@@ -56,6 +75,21 @@ class FootieRemoteDataSourceImpl @Inject constructor(
         }
 
     /**
+     * Método encargado de obtener a los jugadores apuntados a un partido.
+     *
+     * @param latitude
+     * @param longitude
+     * @return Response<Set<Player>>
+     */
+    override suspend fun getPlayersByFootballMatch(
+        latitude: Double,
+        longitude: Double
+    ): Response<Set<Player>> =
+        withContext(dispatcherProvider.ioDispatcher) {
+            return@withContext footieAPI.getPlayersByFootballMatch(latitude, longitude)
+        }
+
+    /**
      * Método encargado de obtener el partido de fútbol creado en cierta pista (obtenida con la latitud y longitud).
      *
      * @param latitude
@@ -76,7 +110,9 @@ class FootieRemoteDataSourceImpl @Inject constructor(
      * @param newFootballMatch
      * @return Response<Void>
      */
-    override suspend fun postFootballMatch(newFootballMatch: FootballMatch): Response<Void> =
+    override suspend fun postFootballMatch(
+        newFootballMatch: FootballMatch
+    ): Response<Void> =
         withContext(dispatcherProvider.ioDispatcher) {
             return@withContext footieAPI.postFootballMatch(newFootballMatch)
         }
@@ -97,31 +133,4 @@ class FootieRemoteDataSourceImpl @Inject constructor(
         withContext(dispatcherProvider.ioDispatcher) {
             return@withContext footieAPI.putFootballMatch(latitude, longitude, email)
         }
-
-    /**
-     * Método encargado de obtener un jugador a través del email (evitando la circulación de la contraseña entre pantallas).
-     *
-     * @param email
-     * @return Response<Player>
-     */
-    override suspend fun getPlayerByEmail(email: String): Response<Player> =
-        withContext(dispatcherProvider.ioDispatcher) {
-            return@withContext footieAPI.getPlayerByEmail(email)
-        }
-
-    /**
-     * Método encargado de obtener a los jugadores apuntados a un partido.
-     *
-     * @param latitude
-     * @param longitude
-     * @return Response<Set<Player>>
-     */
-    override suspend fun getPlayersByFootballMatch(
-        latitude: Double,
-        longitude: Double
-    ): Response<Set<Player>> =
-        withContext(dispatcherProvider.ioDispatcher) {
-            return@withContext footieAPI.getPlayersByFootballMatch(latitude, longitude)
-        }
-
 }

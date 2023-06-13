@@ -8,7 +8,9 @@ import javax.inject.Inject
 class PostFootballMatchUsecasesImpl @Inject constructor(
     private val footieRepository: FootieRepository
 ) : PostFootballMatchUsecases {
-    override suspend fun postFootballMatch(newFootballMatch: FootballMatch): Response<Void> {
+    override suspend fun postFootballMatch(
+        newFootballMatch: FootballMatch
+    ): Response<Void> {
         return footieRepository.postFootballMatch(newFootballMatch)
     }
 }

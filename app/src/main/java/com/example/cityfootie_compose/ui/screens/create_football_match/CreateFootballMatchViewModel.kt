@@ -29,6 +29,11 @@ class CreateFootballMatchViewModel @Inject constructor(
     private val _isButtonEnabled = MutableLiveData(false)
     val isButtonEnabled: LiveData<Boolean> = _isButtonEnabled
 
+    var response: Response<Void>? by mutableStateOf(null)
+    var isLoading: Boolean by mutableStateOf(false)
+    var isCompleted: Boolean by mutableStateOf(false)
+    var isError: Boolean by mutableStateOf(false)
+
     @SuppressLint("SimpleDateFormat")
     fun parseStringToTimestamp(dateTimeString: String): Timestamp {
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm")
@@ -54,10 +59,6 @@ class CreateFootballMatchViewModel @Inject constructor(
         _isButtonEnabled.value = isValidDate(dateString) && isValidNumberMax(value)
     }
 
-    var response: Response<Void>? by mutableStateOf(null)
-    var isLoading: Boolean by mutableStateOf(false)
-    var isCompleted: Boolean by mutableStateOf(false)
-    var isError: Boolean by mutableStateOf(false)
     fun postFootballMatch(latitude: String, longitude: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val formattedDate = parseStringToTimestamp(dateString)

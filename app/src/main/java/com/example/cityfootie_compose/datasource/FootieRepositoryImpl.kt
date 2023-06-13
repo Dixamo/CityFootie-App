@@ -9,11 +9,22 @@ import javax.inject.Inject
 class FootieRepositoryImpl @Inject constructor(
     private val footieRemoteDataSource: FootieRemoteDataSource
 ) : FootieRepository {
-    override suspend fun getPlayer(email: String, password: String): Response<Player> {
+    override suspend fun getPlayer(
+        email: String,
+        password: String
+    ): Response<Player> {
         return footieRemoteDataSource.getPlayer(email, password)
     }
 
-    override suspend fun postPlayer(newPlayer: Player): Response<Void> {
+    override suspend fun getPlayerByEmail(
+        email: String
+    ): Response<Player> {
+        return footieRemoteDataSource.getPlayerByEmail(email)
+    }
+
+    override suspend fun postPlayer(
+        newPlayer: Player
+    ): Response<Void> {
         return footieRemoteDataSource.postPlayer(newPlayer)
     }
 
@@ -27,6 +38,13 @@ class FootieRepositoryImpl @Inject constructor(
         return footieRemoteDataSource.updatePlayer(email, name, surnames, username, number)
     }
 
+    override suspend fun getPlayersByFootballMatch(
+        latitude: Double,
+        longitude: Double
+    ): Response<Set<Player>> {
+        return footieRemoteDataSource.getPlayersByFootballMatch(latitude, longitude)
+    }
+
     override suspend fun getFootballMatch(
         latitude: Double,
         longitude: Double
@@ -34,7 +52,9 @@ class FootieRepositoryImpl @Inject constructor(
         return footieRemoteDataSource.getFootballMatch(latitude, longitude)
     }
 
-    override suspend fun postFootballMatch(newFootballMatch: FootballMatch): Response<Void> {
+    override suspend fun postFootballMatch(
+        newFootballMatch: FootballMatch
+    ): Response<Void> {
         return footieRemoteDataSource.postFootballMatch(newFootballMatch)
     }
 
@@ -44,16 +64,5 @@ class FootieRepositoryImpl @Inject constructor(
         email: String
     ): Response<Void> {
         return footieRemoteDataSource.putFootballMatch(latitude, longitude, email)
-    }
-
-    override suspend fun getPlayerByEmail(email: String): Response<Player> {
-        return footieRemoteDataSource.getPlayerByEmail(email)
-    }
-
-    override suspend fun getPlayersByFootballMatch(
-        latitude: Double,
-        longitude: Double
-    ): Response<Set<Player>> {
-        return footieRemoteDataSource.getPlayersByFootballMatch(latitude, longitude)
     }
 }

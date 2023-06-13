@@ -47,8 +47,19 @@ fun BodyContent(
     goRegisterScreen: () -> Unit,
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
-
     val isLoading: Boolean = loginViewModel.isLoading
+
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
+
+    var passwordVisible by remember { mutableStateOf(false) }
+
+    val isError: Boolean = loginViewModel.isError
+    val player = loginViewModel.player
+    val isCompleted = loginViewModel.isCompleted
+
+    val isButtonEnabled: Boolean by loginViewModel.isButtonEnabled.observeAsState(initial = false)
+
     if (isLoading) {
         Box(
             contentAlignment = Alignment.Center,
@@ -84,8 +95,6 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(25.dp))
 
-        val focusRequester = remember { FocusRequester() }
-        val focusManager = LocalFocusManager.current
         UserField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -109,7 +118,6 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(8.dp))
 
-        var passwordVisible by remember { mutableStateOf(false) }
         PasswordField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -139,7 +147,6 @@ fun BodyContent(
             onChange = { loginViewModel.onPasswordChange(it) }
         )
 
-        val isError: Boolean = loginViewModel.isError
         Text(
             text = "Correo o contraseña incorrectas",
             modifier = Modifier.alpha(isError.toFloat()),
@@ -148,9 +155,6 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(8.dp))
 
-        val player = loginViewModel.player
-        val isCompleted = loginViewModel.isCompleted
-        val isButtonEnabled: Boolean by loginViewModel.isButtonEnabled.observeAsState(initial = false)
         Button(
             onClick = {
                 loginViewModel.getPlayer()

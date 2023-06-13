@@ -54,6 +54,17 @@ fun BodyContent(
     goBack: () -> Unit,
     registerViewModel: RegisterViewModel = hiltViewModel()
 ) {
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
+
+    var passwordVisible by remember { mutableStateOf(false) }
+
+    val isButtonEnabled: Boolean by registerViewModel.isButtonEnabled.observeAsState(initial = false)
+
+    val isError: Boolean = registerViewModel.isError
+    val response = registerViewModel.response
+    val isCompleted = registerViewModel.isCompleted
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
@@ -69,9 +80,6 @@ fun BodyContent(
         )
 
         Spacer(modifier = Modifier.padding(0.dp))
-
-        val focusRequester = remember { FocusRequester() }
-        val focusManager = LocalFocusManager.current
 
         //NOMBRE
         DataField(
@@ -186,7 +194,6 @@ fun BodyContent(
         Spacer(modifier = Modifier.padding(0.dp))
 
         //PASSWORD
-        var passwordVisible by remember { mutableStateOf(false) }
         PasswordField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -217,17 +224,12 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(1.dp))
 
-        val isButtonEnabled: Boolean by registerViewModel.isButtonEnabled.observeAsState(initial = false)
-
-        val isError: Boolean = registerViewModel.isError
         Text(
             text = "Nombre de Usuario o correo existentes",
             modifier = Modifier.alpha(isError.toFloat()),
             color = MaterialTheme.colors.error
         )
 
-        val response = registerViewModel.response
-        val isCompleted = registerViewModel.isCompleted
         LaunchedEffect(response) {
             if (response != null) {
                 if (isCompleted) {

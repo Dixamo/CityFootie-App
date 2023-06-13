@@ -68,6 +68,13 @@ fun BodyContent(
         val isGetCompleted = joinToFootballMatchViewModel.isGetCompleted
         val footballMatch = joinToFootballMatchViewModel.footballMatch
 
+        val isGetPlayersCompleted = joinToFootballMatchViewModel.isGetPlayersCompleted
+        val isError: Boolean = joinToFootballMatchViewModel.isError
+        val players = joinToFootballMatchViewModel.players
+
+        val isPostCompleted = joinToFootballMatchViewModel.isPostCompleted
+        val response = joinToFootballMatchViewModel.response
+
         if (!isGetCompleted) {
             LaunchedEffect(Unit) {
                 joinToFootballMatchViewModel.getFootballMatch(
@@ -76,7 +83,7 @@ fun BodyContent(
                 )
             }
         }
-        val isGetPlayersCompleted = joinToFootballMatchViewModel.isGetPlayersCompleted
+
         if (!isGetPlayersCompleted) {
             LaunchedEffect(Unit) {
                 joinToFootballMatchViewModel.getPlayersByFootballMatch(
@@ -98,7 +105,6 @@ fun BodyContent(
                     fontWeight = FontWeight.Bold
                 )
 
-
                 Text(
                     text = "Usuarios apuntados:${footballMatch.numberPlayers}/${footballMatch.numberMax}",
                     color = MaterialTheme.colors.primary,
@@ -108,7 +114,6 @@ fun BodyContent(
                 )
 
                 Column(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                    val isError: Boolean = joinToFootballMatchViewModel.isError
                     Text(
                         text = "Ya estas apuntado o el partido esta lleno",
                         modifier = Modifier.alpha(isError.toFloat()),
@@ -136,7 +141,6 @@ fun BodyContent(
                     Text(text = "Unirse partido")
                 }
 
-                val players = joinToFootballMatchViewModel.players
                 if (isGetPlayersCompleted) {
                     LazyColumn {
                         if (players != null) {
@@ -147,8 +151,6 @@ fun BodyContent(
                     }
                 }
 
-                val isPostCompleted = joinToFootballMatchViewModel.isPostCompleted
-                val response = joinToFootballMatchViewModel.response
                 LaunchedEffect(response) {
                     if (response != null) {
                         if (isPostCompleted) {

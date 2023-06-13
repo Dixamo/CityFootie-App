@@ -18,29 +18,42 @@ import com.example.cityfootie_compose.ui.screens.user.UserScreen
 
 
 @Composable
-fun AppNavigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = AppScreens.SplashScreen.route) {
-        composable(route = AppScreens.SplashScreen.route) {
-            SplashScreen(goMainScreen = {
-                navController.popBackStack()
-                navController.navigate(AppScreens.MainScreen.route)
-            })
+fun AppNavigation(
+    navController: NavHostController
+) {
+    NavHost(
+        navController = navController,
+        startDestination = AppScreens.SplashScreen.route
+    ) {
+        composable(
+            route = AppScreens.SplashScreen.route
+        ) {
+            SplashScreen(
+                goMainScreen = {
+                    navController.popBackStack()
+                    navController.navigate(AppScreens.MainScreen.route)
+                }
+            )
         }
 
-        composable(route = AppScreens.MainScreen.route) {
-            MainScreen(goLoginScreen = {
-                navController.popBackStack()
-                navController.navigate(route = AppScreens.LoginScreen.route)
-            })
+        composable(
+            route = AppScreens.MainScreen.route
+        ) {
+            MainScreen(
+                goLoginScreen = {
+                    navController.popBackStack()
+                    navController.navigate(AppScreens.LoginScreen.route)
+                }
+            )
         }
 
-        composable(route = AppScreens.LoginScreen.route) {
+        composable(
+            route = AppScreens.LoginScreen.route
+        ) {
             LoginScreen(
                 goUserScreen = { email ->
                     navController.popBackStack()
-                    navController.navigate(
-                        AppScreens.UserScreen.route + "/${email}"
-                    )
+                    navController.navigate(AppScreens.UserScreen.route + "/${email}")
                 },
                 goRegisterScreen = {
                     navController.navigate(AppScreens.RegisterScreen.route)
@@ -49,7 +62,8 @@ fun AppNavigation(navController: NavHostController) {
         }
 
         composable(
-            route = AppScreens.UserScreen.route + "/{email}", arguments = listOf(
+            route = AppScreens.UserScreen.route + "/{email}",
+            arguments = listOf(
                 navArgument("email") {
                     type = NavType.StringType
                 }
@@ -61,9 +75,7 @@ fun AppNavigation(navController: NavHostController) {
                     navController.navigate(AppScreens.MapScreen.route + "/${email}")
                 },
                 goModifyScreen = { email ->
-                    navController.navigate(
-                        AppScreens.ModifyScreen.route + "/${email}"
-                    )
+                    navController.navigate(AppScreens.ModifyScreen.route + "/${email}")
                 }
             )
         }
@@ -90,14 +102,10 @@ fun AppNavigation(navController: NavHostController) {
                     navController.navigateUp()
                 },
                 goJoinToFootballMatchScreen = { email, latitude, longitude ->
-                    navController.navigate(
-                        AppScreens.JoinToFootballMatchScreen.route + "/${email}/${latitude}/${longitude}"
-                    )
+                    navController.navigate(AppScreens.JoinToFootballMatchScreen.route + "/${email}/${latitude}/${longitude}")
                 },
                 goCreateFootballMatchScreen = { latitude, longitude ->
-                    navController.navigate(
-                        AppScreens.CreateFootballMatchScreen.route + "/${latitude}/${longitude}"
-                    )
+                    navController.navigate(AppScreens.CreateFootballMatchScreen.route + "/${latitude}/${longitude}")
                 }
             )
         }
@@ -110,12 +118,12 @@ fun AppNavigation(navController: NavHostController) {
                 },
                 navArgument("longitude") {
                     type = NavType.StringType
-                })
+                }
+            )
         ) { backStackEntry ->
             CreateFootballMatchScreen(
                 latitude = backStackEntry.arguments?.getString("latitude") ?: "null",
                 longitude = backStackEntry.arguments?.getString("longitude") ?: "null",
-
                 goBack = {
                     navController.navigateUp()
                 }
@@ -130,13 +138,13 @@ fun AppNavigation(navController: NavHostController) {
                 },
                 navArgument("longitude") {
                     type = NavType.StringType
-                })
+                }
+            )
         ) { backStackEntry ->
             JoinToFootballMatchScreen(
                 email = backStackEntry.arguments?.getString("email") ?: "null",
                 latitude = backStackEntry.arguments?.getString("latitude") ?: "null",
                 longitude = backStackEntry.arguments?.getString("longitude") ?: "null",
-
                 goBack = {
                     navController.navigateUp()
                 }
@@ -147,7 +155,8 @@ fun AppNavigation(navController: NavHostController) {
             route = AppScreens.ModifyScreen.route + "/{email}", arguments = listOf(
                 navArgument("email") {
                     type = NavType.StringType
-                })
+                }
+            )
         ) { backStackEntry ->
             ModifyScreen(
                 email = backStackEntry.arguments?.getString("email") ?: "null",

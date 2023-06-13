@@ -75,6 +75,15 @@ fun BodyContent(
 ) {
     val player = modifyViewModel.player
 
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
+
+    val response = modifyViewModel.response
+    val isModifyCompleted = modifyViewModel.isModifyCompleted
+    val isError: Boolean = modifyViewModel.isError
+
+    val isButtonEnabled: Boolean by modifyViewModel.isButtonEnabled.observeAsState(initial = false)
+
     if (!isCompleted) {
         LaunchedEffect(Unit) {
             modifyViewModel.getPlayer(email)
@@ -105,9 +114,6 @@ fun BodyContent(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-
-                val focusRequester = remember { FocusRequester() }
-                val focusManager = LocalFocusManager.current
 
                 DataField(
                     modifier = Modifier
@@ -192,8 +198,6 @@ fun BodyContent(
                     onChange = { modifyViewModel.onNumberChange(it) }
                 )
 
-                val response = modifyViewModel.response
-                val isModifyCompleted = modifyViewModel.isModifyCompleted
                 LaunchedEffect(response) {
                     if (response != null) {
                         if (isModifyCompleted) {
@@ -202,7 +206,6 @@ fun BodyContent(
                     }
                 }
 
-                val isError: Boolean = modifyViewModel.isError
                 Text(
                     text = "Nombre de usuario ya existente",
                     modifier = Modifier.alpha(isError.toFloat()),
@@ -210,9 +213,6 @@ fun BodyContent(
                 )
 
                 Row {
-                    val isButtonEnabled: Boolean by modifyViewModel.isButtonEnabled.observeAsState(
-                        initial = false
-                    )
                     Button(
                         onClick = {
                             modifyViewModel.updatePlayer(email)

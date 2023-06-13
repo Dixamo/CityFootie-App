@@ -36,7 +36,7 @@ fun FootieMarker(
             markerClicked.value = true
             markerClicked.value = false
         }
-    ) { marker ->
+    ) {
         Box(
             modifier = Modifier
                 .background(

@@ -7,5 +7,5 @@ interface GetPlayersByFootballMatchUsecases {
     suspend fun getPlayersByFootballMatch(
         latitude: Double,
         longitude: Double
-    ): Response<Set<Player>>
+    ): Response<Set<Player>>?
 }

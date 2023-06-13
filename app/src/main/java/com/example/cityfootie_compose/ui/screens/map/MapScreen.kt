@@ -61,16 +61,6 @@ fun BodyContent(
     goCreateFootballMatchScreen: (String, String) -> Unit,
     mapViewModel: MapViewModel = hiltViewModel()
 ) {
-    val isLoading: Boolean = mapViewModel.isLoading
-    if (isLoading) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            CircularProgressIndicator()
-        }
-    }
-
     val marker1 = LatLng(40.35105282074944, -3.700295054544909)
     val marker2 = LatLng(40.354911925370416, -3.7005084128650765)
     val marker3 = LatLng(40.34924765147908, -3.693923893405747)
@@ -92,14 +82,28 @@ fun BodyContent(
     val marker19 = LatLng(40.368551136085586, -3.7113168361285678)
     val marker20 = LatLng(40.36705638474042, -3.7076461563291905)
 
+    val isLoading: Boolean = mapViewModel.isLoading
 
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(marker1, 12f)
-    }
+    val cameraPositionState = rememberCameraPositionState { position = CameraPosition.fromLatLngZoom(marker1, 12f) }
     val properties by remember { mutableStateOf(MapProperties(mapType = MapType.HYBRID)) }
     var uiSettings by remember { mutableStateOf(MapUiSettings()) }
-
     val markerClicked = remember { mutableStateOf(false) }
+
+    var isCompleted = mapViewModel.isCompleted
+    val isSuccessful = mapViewModel.isSuccessful
+    val isError = mapViewModel.isError
+
+    val latitude = mapViewModel.markerLatitude
+    val longitude = mapViewModel.markerLongitude
+
+    if (isLoading) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
+        }
+    }
 
     Switch(checked = uiSettings.zoomControlsEnabled,
         onCheckedChange = {
@@ -212,12 +216,6 @@ fun BodyContent(
             position = marker20,
             markerClicked = markerClicked
         )
-
-        var isCompleted = mapViewModel.isCompleted
-        val isSuccessful = mapViewModel.isSuccessful
-        val isError = mapViewModel.isError
-        val latitude = mapViewModel.markerLatitude
-        val longitude = mapViewModel.markerLongitude
 
         LaunchedEffect(isCompleted) {
             isCompleted = false

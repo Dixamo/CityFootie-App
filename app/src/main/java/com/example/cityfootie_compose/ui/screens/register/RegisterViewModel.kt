@@ -26,69 +26,52 @@ class RegisterViewModel @Inject constructor(
     var number: String by mutableStateOf("")
     var username: String by mutableStateOf("")
     var password: String by mutableStateOf("")
+
     private val _isButtonEnabled = MutableLiveData(false)
     val isButtonEnabled: LiveData<Boolean> = _isButtonEnabled
-
-    private fun isValidName(name: String): Boolean = name.length > 1
-    fun onNameChange(value: String) {
-        name = value
-        _isButtonEnabled.value =
-            isValidName(value) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(
-                number
-            ) && isValidUsername(username) && isValidPassword(password)
-    }
-
-    private fun isValidSurnames(surnames: String): Boolean = surnames.length > 1
-    fun onSurnamesChange(value: String) {
-        surnames = value
-        _isButtonEnabled.value =
-            isValidName(name) && isValidSurnames(value) && isValidEmail(email) && isValidNumber(
-                number
-            ) && isValidUsername(username) && isValidPassword(password)
-    }
-
-    private fun isValidEmail(email: String): Boolean =
-        Patterns.EMAIL_ADDRESS.matcher(email).matches()
-
-    fun onEmailChange(value: String) {
-        email = value
-        _isButtonEnabled.value =
-            isValidName(name) && isValidSurnames(surnames) && isValidEmail(value) && isValidNumber(
-                number
-            ) && isValidUsername(username) && isValidPassword(password)
-    }
-
-    private fun isValidNumber(number: String): Boolean = number.length in 1..2
-    fun onNumberChange(value: String) {
-        number = value.filter { it.isDigit() }
-        _isButtonEnabled.value =
-            isValidName(name) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(
-                value
-            ) && isValidUsername(username) && isValidPassword(password)
-    }
-
-    private fun isValidUsername(username: String): Boolean = username.length > 2
-    fun onUsernameChange(value: String) {
-        username = value
-        _isButtonEnabled.value =
-            isValidName(name) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(
-                number
-            ) && isValidUsername(value) && isValidPassword(password)
-    }
-
-    private fun isValidPassword(password: String): Boolean = password.length > 3
-    fun onPasswordChange(value: String) {
-        password = value
-        _isButtonEnabled.value =
-            isValidName(name) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(
-                number
-            ) && isValidUsername(username) && isValidPassword(value)
-    }
 
     var response: Response<Void>? by mutableStateOf(null)
     var isLoading: Boolean by mutableStateOf(false)
     var isCompleted: Boolean by mutableStateOf(false)
     var isError: Boolean by mutableStateOf(false)
+
+    private fun isValidName(name: String): Boolean = name.length > 1
+    fun onNameChange(value: String) {
+        name = value
+        _isButtonEnabled.value = isValidName(value) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(number) && isValidUsername(username) && isValidPassword(password)
+    }
+
+    private fun isValidSurnames(surnames: String): Boolean = surnames.length > 1
+    fun onSurnamesChange(value: String) {
+        surnames = value
+        _isButtonEnabled.value = isValidName(name) && isValidSurnames(value) && isValidEmail(email) && isValidNumber(number) && isValidUsername(username) && isValidPassword(password)
+    }
+
+    private fun isValidEmail(email: String): Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+
+    fun onEmailChange(value: String) {
+        email = value
+        _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidEmail(value) && isValidNumber(number) && isValidUsername(username) && isValidPassword(password)
+    }
+
+    private fun isValidNumber(number: String): Boolean = number.length in 1..2
+    fun onNumberChange(value: String) {
+        number = value.filter { it.isDigit() }
+        _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(value) && isValidUsername(username) && isValidPassword(password)
+    }
+
+    private fun isValidUsername(username: String): Boolean = username.length > 2
+    fun onUsernameChange(value: String) {
+        username = value
+        _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(number) && isValidUsername(value) && isValidPassword(password)
+    }
+
+    private fun isValidPassword(password: String): Boolean = password.length > 3
+    fun onPasswordChange(value: String) {
+        password = value
+        _isButtonEnabled.value = isValidName(name) && isValidSurnames(surnames) && isValidEmail(email) && isValidNumber(number) && isValidUsername(username) && isValidPassword(value)
+    }
+
     fun postUser() {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true

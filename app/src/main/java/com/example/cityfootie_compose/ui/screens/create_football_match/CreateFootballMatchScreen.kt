@@ -63,6 +63,16 @@ fun BodyContent(
     createFootBallMatchViewModel: CreateFootballMatchViewModel = hiltViewModel(),
 ) {
     val isLoading: Boolean = createFootBallMatchViewModel.isLoading
+
+    val context = LocalContext.current
+
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
+
+    val isError: Boolean = createFootBallMatchViewModel.isError
+    val isButtonEnabled: Boolean by createFootBallMatchViewModel.isButtonEnabled.observeAsState(initial = false)
+
+
     if (isLoading) {
         Box(
             contentAlignment = Alignment.Center,
@@ -90,11 +100,7 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(10.dp))
 
-        val focusRequester = remember { FocusRequester() }
-        val focusManager = LocalFocusManager.current
-
         //DATE
-        val context = LocalContext.current
         DateTimePicker(context)
 
         Spacer(modifier = Modifier.padding(0.dp))
@@ -122,7 +128,6 @@ fun BodyContent(
 
         Spacer(modifier = Modifier.padding(0.dp))
 
-        val isError: Boolean = createFootBallMatchViewModel.isError
         Text(
             text = "No puedes crear un partido en el pasado",
             modifier = Modifier.alpha(isError.toFloat()),
@@ -130,10 +135,6 @@ fun BodyContent(
         )
 
         Spacer(modifier = Modifier.padding(10.dp))
-
-        val isButtonEnabled: Boolean by createFootBallMatchViewModel.isButtonEnabled.observeAsState(
-            initial = false
-        )
 
         Button(
             onClick = {

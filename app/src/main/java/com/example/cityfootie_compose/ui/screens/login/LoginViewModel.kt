@@ -19,11 +19,16 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val getPlayerUsecases: GetPlayerUsecases
 ) : ViewModel() {
-
     var email: String by mutableStateOf("")
     var password: String by mutableStateOf("")
+
     private val _isButtonEnabled = MutableLiveData(false)
     val isButtonEnabled: LiveData<Boolean> = _isButtonEnabled
+
+    var player: Player? = null
+    var isLoading: Boolean by mutableStateOf(false)
+    var isCompleted: Boolean by mutableStateOf(false)
+    var isError: Boolean by mutableStateOf(false)
 
     private fun isValidEmail(email: String): Boolean =
         Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -39,10 +44,6 @@ class LoginViewModel @Inject constructor(
         _isButtonEnabled.value = isValidEmail(email) && isValidPassword(value)
     }
 
-    var player: Player? = null
-    var isLoading: Boolean by mutableStateOf(false)
-    var isCompleted: Boolean by mutableStateOf(false)
-    var isError: Boolean by mutableStateOf(false)
     fun getPlayer() {
         viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
