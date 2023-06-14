@@ -94,7 +94,7 @@ object DataSourceModule {
         client: OkHttpClient, gson: Gson
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.132:8080") // Emulador AndoridStudio 10.0.2.2 // JuanDa 192.168.1.63 / 192.168.88.19 // Miguel 192.168.1.132 // Sebas 192.168.1.11
+            .baseUrl("http://192.168.1.132:8080") // Emulador AndoridStudio 10.0.2.2
             .addConverterFactory(GsonConverterFactory.create(gson)).client(client).build()
     }
 
