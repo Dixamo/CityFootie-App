@@ -38,7 +38,7 @@ class LoginViewModel @Inject constructor(
         _isButtonEnabled.value = isValidEmail(value) && isValidPassword(password)
     }
 
-    private fun isValidPassword(password: String): Boolean = password.length > 4
+    private fun isValidPassword(password: String): Boolean = password.length > 3
     fun onPasswordChange(value: String) {
         password = value
         _isButtonEnabled.value = isValidEmail(email) && isValidPassword(value)
